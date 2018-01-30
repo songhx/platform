@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>智慧云店</title>
+    #parse("sys/header.html")
+    <link href="${rc.contextPath}/statics/plugins/video-js-6/video-js.min.css" rel="stylesheet">
+    <script src="${rc.contextPath}/statics/plugins/video-js-6/ie8/videojs-ie8.js"></script>
+    <script src="${rc.contextPath}/statics/plugins/video-js-6/video.js"></script>
+</head>
+<body>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h1>项目介绍</h1>
+        </div>
+        <div class="ibox-content">
+            <div class="signin-info">
+                <video id="media_show" class="video-js vjs-default-skin" autoplay="true" controls preload="none" width="960" height="550"  data-setup="{}">
+                    <source src="../../../statics/media/WeChatSight22.mp4" type="video/mp4">
+                    <!-- Tracks need an ending tag thanks to IE9 -->
+                    <track kind="subtitles" src="${rc.contextPath}/statics/plugins/video-js-6/examples/shared/example-captions.vtt" srclang="en" label="English"></track>
+                    <!-- Tracks need an ending tag thanks to IE9 -->
+                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                </video>
+            </div>
+
+        </div>
+    </div>
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h1>版权声明</h1>
+        </div>
+        <div class="ibox-content">
+            <div class="signin-info">
+                <ul>
+                    <li><i class="fa fa-copyright m-r-xs"></i> 所有权属于智慧云店团队</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
