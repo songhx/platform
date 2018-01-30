@@ -26,6 +26,7 @@ $(function () {
                 return '-';
             }
             },
+            {label: '发放张数', name: 'maxSheet', index: 'max_sheet', width: 80},
             {label: '最小金额', name: 'minAmount', index: 'min_amount', width: 80},
             {label: '最大金额', name: 'maxAmount', index: 'max_amount', width: 80},
             {
@@ -124,7 +125,7 @@ var vm = new Vue({
             vm.showCard = true;
             vm.showGoods = false;
             vm.title = "新增";
-            vm.coupon = {sendType: 0};
+            vm.coupon = {sendType: 0 , oldSheet : 0 , minAmount : 1 , maxSheet : 1, maxAmount : 1, minGoodsAmount : 0  };
         },
         update: function (event) {
             var id = getSelectedRow();
@@ -139,6 +140,10 @@ var vm = new Vue({
             vm.getInfo(id)
         },
         saveOrUpdate: function (event) {
+            if(vm.coupon.maxSheet < vm.coupon.oldSheet){
+                alert("发送张数不能比上一次编辑的数量少，请修改后提交谢谢！");
+                return;
+            }
             var url = vm.coupon.id == null ? "../coupon/save" : "../coupon/update";
             $.ajax({
                 type: "POST",
@@ -183,6 +188,7 @@ var vm = new Vue({
         getInfo: function (id) {
             $.get("../coupon/info/" + id, function (r) {
                 vm.coupon = r.coupon;
+                vm.coupon.oldSheet =  vm.coupon.maxSheet ;
             });
         },
         reload: function (event) {

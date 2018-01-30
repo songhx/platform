@@ -65,6 +65,23 @@
 		WHERE 1=1
 	</select>
 
+    <select id="queryCount" parameterType="java.util.Map" resultType="int">
+        select count(*) from nideshop_coupon_codes
+        WHERE 1=1
+        <if test="id != null ">
+            AND id = #{id}
+        </if>
+        <if test="couponId != null ">
+            AND coupon_id = #{couponId}
+        </if>
+        <if test="isSend != null ">
+            AND is_send = #{isSend}
+        </if>
+        <if test="status != null ">
+            AND status = #{status}
+        </if>
+    </select>
+
     <insert id="save" parameterType="com.platform.entity.CouponCodesEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into nideshop_coupon_codes(
 			`coupon_id`,

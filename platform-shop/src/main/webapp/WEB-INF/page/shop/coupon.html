@@ -43,34 +43,37 @@
             </Form-item>
             <Form-item label="发放方式" prop="sendType">
                 <Radio-group v-model="coupon.sendType">
-                    <Radio label="0">
+                    <!--<Radio label="0">
                         <span>按订单发放</span>
-                    </Radio>
+                    </Radio>-->
                     <Radio label="1">
                         <span>按用户发放</span>
                     </Radio>
-                    <Radio label="2">
+                    <!--<Radio label="2">
                         <span>商品转发送券</span>
-                    </Radio>
+                    </Radio>-->
                     <!--<Radio label="3">-->
                     <!--<span>按商品发放</span>-->
                     <!--</Radio>-->
-                    <Radio label="4">
+                    <!--<Radio label="4">
                         <span>新用户注册</span>
+                    </Radio>-->
+                    <Radio label="5">
+                    <span>线下发放</span>
                     </Radio>
-                    <!--<Radio label="5">-->
-                    <!--<span>线下发放</span>-->
-                    <!--</Radio>-->
-                    <Radio label="7">
+                    <!--<Radio label="7">
                         <span>包邮优惠</span>
-                    </Radio>
+                    </Radio>-->
                 </Radio-group>
             </Form-item>
+            <Form-item label="发放张数" prop="maxSheet">
+                <Input-number :min="1" v-model="coupon.maxSheet" placeholder="发放张数" style="width: 188px;"/>
+            </Form-item>
             <Form-item label="最小金额" prop="minAmount">
-                <Input-number :min="0" v-model="coupon.minAmount" placeholder="最小金额" style="width: 188px;"/>
+                <Input-number :min="1" v-model="coupon.minAmount" placeholder="最小金额" style="width: 188px;"/>
             </Form-item>
             <Form-item label="最大金额" prop="maxAmount">
-                <Input-number :min="0" v-model="coupon.maxAmount" placeholder="最大金额" style="width: 188px;"/>
+                <Input-number :min="1" v-model="coupon.maxAmount" placeholder="最大金额" style="width: 188px;"/>
             </Form-item>
             <Form-item label="发放开始时间" prop="sendStartDate">
                 <Date-picker v-model="coupon.sendStartDate" placeholder="发放开始时间"></Date-picker>

@@ -42,8 +42,8 @@
         nideshop_user_coupon.order_id,
         nideshop_user.username user_name,
         nideshop_coupon.name coupon_name,
-        nideshop_coupon.is_used,
-        nideshop_coupon.is_transmit
+        nideshop_user_coupon.is_used,
+        nideshop_user_coupon.is_transmit
         from nideshop_user_coupon
         LEFT JOIN nideshop_coupon_codes ON nideshop_coupon_codes.id = nideshop_user_coupon.coupon_code_id
         LEFT JOIN nideshop_user ON nideshop_user_coupon.user_id = nideshop_user.id
@@ -91,7 +91,7 @@
 			`used_time`,
 			`add_time`,
 			`order_id`,
-			coupon_code_id,
+			coupon_code_id
 			)
 		values(
 			#{couponId},
@@ -113,8 +113,8 @@
             <if test="userId != null">`user_id` = #{userId},</if>
             <if test="usedTime != null">`used_time` = #{usedTime},</if>
             <if test="addTime != null">`add_time` = #{addTime},</if>
-            <if test="orderId != null">`order_id` = #{orderId}</if>
-            <if test="isUsed != null">`is_used` = #{isUsed}</if>
+            <if test="orderId != null">`order_id` = #{orderId},</if>
+            <if test="isUsed != null">`is_used` = #{isUsed},</if>
             <if test="isTransmit != null">`is_transmit` = #{isTransmit}</if>
         </set>
         where id = #{id}

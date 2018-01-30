@@ -112,8 +112,8 @@
             <if test="sendEndDate != null">`send_end_date` = #{sendEndDate},</if>
             <if test="useStartDate != null">`use_start_date` = #{useStartDate},</if>
             <if test="useEndDate != null">`use_end_date` = #{useEndDate},</if>
-            <if test="minGoodsAmount != null">`min_goods_amount` = #{minGoodsAmount}</if>
-            <if test="maxSheet != null">`min_goods_amount` = #{max_sheet}</if>
+            <if test="minGoodsAmount != null">`min_goods_amount` = #{minGoodsAmount},</if>
+            <if test="maxSheet != null">`max_sheet` = #{maxSheet}</if>
         </set>
         where id = #{id}
     </update>
