@@ -43,8 +43,9 @@ public class CouponVo implements Serializable {
     private Date use_end_date;
     //最小商品金额
     private BigDecimal min_goods_amount;
-    //优惠券说明
-    private String coupon_txt;
+
+    private String useDesc; //使用说明;
+
     //优惠券会员Id
     private String user_id;
     //优惠券编码
@@ -146,12 +147,12 @@ public class CouponVo implements Serializable {
         this.min_goods_amount = min_goods_amount;
     }
 
-    public String getCoupon_txt() {
-        return coupon_txt;
+    public String getUseDesc() {
+        return useDesc;
     }
 
-    public void setCoupon_txt(String coupon_txt) {
-        this.coupon_txt = coupon_txt;
+    public void setUseDesc(String useDesc) {
+        this.useDesc = useDesc;
     }
 
     public String getUser_id() {

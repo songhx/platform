@@ -1,17 +1,16 @@
 package com.platform.api;
 
 import com.alibaba.fastjson.JSONObject;
+import com.platform.entity.*;
+import com.platform.service.ApiCouponCodesService;
 import com.qiniu.util.StringUtils;
 import com.platform.annotation.LoginUser;
-import com.platform.entity.CouponVo;
-import com.platform.entity.SmsLogVo;
-import com.platform.entity.UserCouponVo;
-import com.platform.entity.UserVo;
 import com.platform.service.ApiCouponService;
 import com.platform.service.ApiUserCouponService;
 import com.platform.service.ApiUserService;
 import com.platform.util.ApiBaseAction;
 import com.platform.utils.CharUtil;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +33,8 @@ public class ApiCouponController extends ApiBaseAction {
     private ApiCouponService apiCouponService;
     @Autowired
     private ApiUserCouponService apiUserCouponService;
+    @Autowired
+    private ApiCouponCodesService apiCouponCodesService;
 
     /**
      * 获取优惠券列表
@@ -53,30 +54,48 @@ public class ApiCouponController extends ApiBaseAction {
     @RequestMapping("exchange")
     public Object exchange(@LoginUser UserVo loginUser) {
         JSONObject jsonParam = getJsonRequest();
+        //1.优惠码，不能为空
         String coupon_number = jsonParam.getString("coupon_number");
         if (StringUtils.isNullOrEmpty(coupon_number)) {
-            return toResponsFail("当前优惠码无效");
+            return toResponsFail("兑换码不能为空");
         }
-        //
-        Map param = new HashMap();
-        param.put("coupon_number", coupon_number);
-        List<UserCouponVo> couponVos = apiUserCouponService.queryList(param);
-        UserCouponVo userCouponVo = null;
-        if (null == couponVos || couponVos.size() == 0) {
-            return toResponsFail("当前优惠码无效");
+
+        //2.检查该优惠码，是否符合要求
+        Map<String, Object> map = new HashedMap();
+        map.put("couponNumber",coupon_number);
+        map.put("isSend",1);
+        List<CouponCodesVo> codesVoList =  apiCouponCodesService.queryList(map);
+
+        if (null != codesVoList && codesVoList.size() > 0){
+            CouponCodesVo couponCodesVo = codesVoList.get(0);
+            if (couponCodesVo.getStatus().intValue() == 1){
+                return toResponsFail("当前兑换码已被使用");
+            }else   if (couponCodesVo.getStatus().intValue() == 2){
+                return toResponsFail("当前兑换码已过期");
+            }else {
+                // 3.系统中未被使用的兑换码
+                Map param = new HashMap();
+                param.put("coupon_number", coupon_number);
+                List<UserCouponVo> couponVos = apiUserCouponService.queryList(param);
+                if (null != couponVos && couponVos.size() > 0) {
+                    return toResponsFail("当前优惠码已经兑换");
+                }else{
+                    //4.未被任何人兑换过，则兑换成功
+                    UserCouponVo userCouponVo = new UserCouponVo();
+                    userCouponVo.setCoupon_id(couponCodesVo.getCouponId());
+                    userCouponVo.setCoupon_code_id(couponCodesVo.getId());
+                    userCouponVo.setCoupon_number(couponCodesVo.getCouponNumber());
+                    userCouponVo.setUser_id(loginUser.getUserId());
+                    userCouponVo.setAdd_time(new Date());
+                    apiUserCouponService.save(userCouponVo);
+                    return toResponsSuccess("兑换成功");
+                }
+            }
+        }else{
+            return toResponsFail("当前兑换码无效");
         }
-        userCouponVo = couponVos.get(0);
-        if (null != userCouponVo.getUser_id() && !userCouponVo.getUser_id().equals(0L)) {
-            return toResponsFail("当前优惠码已经兑换");
-        }
-        CouponVo couponVo = apiCouponService.queryObject(userCouponVo.getCoupon_id());
-        if (null == couponVo || null == couponVo.getUse_end_date() || couponVo.getUse_end_date().before(new Date())) {
-            return toResponsFail("当前优惠码已经过期");
-        }
-        userCouponVo.setUser_id(loginUser.getUserId());
-        userCouponVo.setAdd_time(new Date());
-        apiUserCouponService.update(userCouponVo);
-        return toResponsSuccess(userCouponVo);
+
+
     }
 
     /**

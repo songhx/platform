@@ -63,7 +63,8 @@
     <insert id="save" parameterType="com.platform.entity.UserCouponVo" useGeneratedKeys="true" keyProperty="id">
 		insert into nideshop_user_coupon
 		(
-			`coupon_id`, 
+			`coupon_id`,
+			coupon_code_id,
 			`coupon_number`, 
 			`user_id`, 
 			`used_time`, 
@@ -75,6 +76,7 @@
 		values
 		(
             #{coupon_id},
+            #{coupon_code_id},
 			#{coupon_number},
 			#{user_id},
 			#{used_time},

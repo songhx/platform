@@ -16,7 +16,7 @@
         <result property="use_start_date" column="use_start_date"/>
         <result property="use_end_date" column="use_end_date"/>
         <result property="min_goods_amount" column="min_goods_amount"/>
-        <result property="coupon_txt" column="coupon_txt"/>
+        <result property="useDesc" column="use_desc"/>
         <result property="user_id" column="user_id"/>
         <result property="coupon_number" column="coupon_number"/>
         <result property="couponCodeId" column="coupon_id"/>

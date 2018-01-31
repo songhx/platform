@@ -16,6 +16,9 @@ public class UserCouponVo implements Serializable {
     private Integer id;
     //优惠券Id
     private Integer coupon_id;
+
+    private Integer coupon_code_id;
+
     //优惠券数量
     private String coupon_number;
     //会员Id
@@ -102,5 +105,13 @@ public class UserCouponVo implements Serializable {
 
     public void setReferrer(Long referrer) {
         this.referrer = referrer;
+    }
+
+    public Integer getCoupon_code_id() {
+        return coupon_code_id;
+    }
+
+    public void setCoupon_code_id(Integer coupon_code_id) {
+        this.coupon_code_id = coupon_code_id;
     }
 }
