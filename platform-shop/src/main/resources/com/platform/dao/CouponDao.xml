@@ -15,6 +15,7 @@
         <result property="useStartDate" column="use_start_date"/>
         <result property="useEndDate" column="use_end_date"/>
         <result property="minGoodsAmount" column="min_goods_amount"/>
+        <result property="useDesc" column="use_desc"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.CouponEntity">
@@ -30,7 +31,8 @@
 			`use_start_date`,
 			`use_end_date`,
 			`min_goods_amount`,
-			`max_sheet`
+			`max_sheet`,
+			use_desc
 		from nideshop_coupon
 		where id = #{id}
 	</select>
@@ -48,7 +50,8 @@
         `use_start_date`,
         `use_end_date`,
         `min_goods_amount`,
-        `max_sheet`
+        `max_sheet`,
+        use_desc
         from nideshop_coupon
         WHERE 1=1
         <if test="name != null and name.trim() != ''">
@@ -84,7 +87,8 @@
 			`use_start_date`,
 			`use_end_date`,
 			`min_goods_amount`,
-			`max_sheet`)
+			`max_sheet`,
+			use_desc)
 		values(
 			#{name},
 			#{typeMoney},
@@ -96,7 +100,8 @@
 			#{useStartDate},
 			#{useEndDate},
 			#{minGoodsAmount},
-			#{maxSheet}
+			#{maxSheet},
+			#{useDesc}
 			)
 	</insert>
 
@@ -113,7 +118,18 @@
             <if test="useStartDate != null">`use_start_date` = #{useStartDate},</if>
             <if test="useEndDate != null">`use_end_date` = #{useEndDate},</if>
             <if test="minGoodsAmount != null">`min_goods_amount` = #{minGoodsAmount},</if>
-            <if test="maxSheet != null">`max_sheet` = #{maxSheet}</if>
+            <if test="maxSheet != null">`max_sheet` = #{maxSheet},</if>
+            <if test="useDesc != null">`use_desc` = #{useDesc}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateCouponSheet" parameterType="java.util.Map">
+        update nideshop_coupon
+        <set>
+
+            <if test="uopt == 'add'">`max_sheet` = `max_sheet` + #{num}</if>
+            <if test="uopt == 'reduce'">`max_sheet` = `max_sheet` - #{num}</if>
         </set>
         where id = #{id}
     </update>

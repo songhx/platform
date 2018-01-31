@@ -78,4 +78,11 @@ public interface CouponService {
      * @return
      */
     R publish(Map<String, Object> params);
+
+    /**
+     * 更新张数
+     * @param map
+     * @return
+     */
+    int  updateCouponSheet(Map<String, Object> map);
 }

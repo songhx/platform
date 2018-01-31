@@ -10,4 +10,6 @@ import java.util.Map;
 public interface CouponCodesDao extends BaseDao<CouponCodesEntity> {
 
     int  queryCount(Map<String, Object> map);
+
+
 }

@@ -58,13 +58,18 @@ $(function () {
             }
             },
             {label: '最小商品金额', name: 'minGoodsAmount', index: 'min_goods_amount', width: 80},
+            {label: '使用说明', name: 'useDesc', index: 'use_desc', width: 180},
             {
                 label: '操作', width: 70, sortable: false, formatter: function (value, col, row) {
                 if (row.sendType == 1 || row.sendType == 3) {
                     return '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.publish(' + row.id + ',' + row.sendType + ')"><i class="ivu-icon ivu-icon-android-send"></i>发放</button>';
                 }
+                if (row.sendType == 5) {
+                    return '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.codeInput(' + row.id + ',\'' + row.name + '\')"><i class="ivu-icon ivu-icon-android-folder-open"></i>录入</button>';
+                }
                 return '';
             }
+
             }],
         viewrecords: true,
         height: 385,
@@ -91,6 +96,58 @@ $(function () {
             $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
         }
     });
+    $("#codesGrid").jqGrid({
+        url: '../couponCode/list',
+        datatype: "json",
+        colModel: [
+            {label: 'id', name: 'id', index: 'id', key: true, hidden: true},
+            {label: '优惠码', name: 'couponNumber', index: 'coupon_number', width: 300},
+            {
+                label: '状态', name: 'status', index: 'status', width: 80, formatter: function (value) {
+                if (value == 0) {
+                    return '未使用';
+                } else if (value == 1) {
+                    return '已使用';
+                } else if (value == 2) {
+                    return '过期';
+                }
+                return '-';
+            }
+            },
+            {
+                label: '操作', width: 70, sortable: false, formatter: function (value, col, row) {
+                if (row.status == 0) {
+                    return '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.delCode(' + row.id + ')"><i class="fa fa-trash-o"></i>删除</button>';
+                }
+
+                return '';
+            }
+            }],
+        viewrecords: true,
+        height: 330,
+        rowNum: 10,
+        rowList: [10, 30, 50],
+        rownumbers: true,
+        rownumWidth: 25,
+        autowidth: true,
+        multiselect: false,
+        pager: "#codesGridPager",
+        jsonReader: {
+            root: "page.list",
+            page: "page.currPage",
+            total: "page.totalPage",
+            records: "page.totalCount"
+        },
+        prmNames: {
+            page: "page",
+            rows: "limit",
+            order: "order"
+        },
+        gridComplete: function () {
+            //隐藏grid底部滚动条
+            $("#codesGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
+        }
+    });
 });
 
 var vm = new Vue({
@@ -99,6 +156,7 @@ var vm = new Vue({
         showList: true,
         showCard: false,
         showGoods: false,
+        showCodes:false,
         title: null,
         coupon: {sendType: 0},
         ruleValidate: {
@@ -114,7 +172,9 @@ var vm = new Vue({
         user: [],
         users: [],
         selectData: {},
-        sendSms: ''//是否发送短信
+        sendSms: '',//是否发送短信
+        code : '' ,// 优惠码
+        selectedCouponId : 0
     },
     methods: {
         query: function () {
@@ -210,6 +270,86 @@ var vm = new Vue({
         handleReset: function (name) {
             handleResetForm(this, name);
         },
+        ///优惠码录入
+        codeInput : function(id, mame){
+            vm.showCodes = true;
+            vm.selectedCouponId = id;
+            ///获取已录入的优惠码
+            vm.getCouponCodes(id , mame);
+            openWindow({
+                title: "录入礼券码",
+                area: ['520px', '533px'],
+                content: jQuery("#inputDiv")
+            })
+        },
+        ///获取已录入的优惠码
+        getCouponCodes : function (id,name) {
+            console.log("id-----------" + id);
+            var page = $("#codesGrid").jqGrid('getGridParam', 'page');
+            $("#codesGrid").jqGrid('setGridParam', {
+                postData: {'couponId': id},
+                page: page
+            }).trigger("reloadGrid");
+        },
+        //删除优惠码
+        delCode : function (id) {
+            confirm('确定删除该优惠码？', function () {
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: "../couponCode/delete",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        couponId: vm.selectedCouponId,
+                        id: id
+                    }),
+                    success: function (r) {
+                        if (r.code == 0) {
+                            alert('操作成功', function (index) {
+                                $("#codesGrid").trigger("reloadGrid");
+                                vm.reload();
+                            });
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            });
+        },
+        ///保存优惠码
+        saveCode : function () {
+            if ( vm.code == "") {
+                vm.$Message.error('请输入优惠码！');
+                return;
+            }
+            if ( vm.code.length > 50) {
+                vm.$Message.error('优惠码长度不能大于50个字！');
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: "../couponCode/save",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    couponId: vm.selectedCouponId,
+                    couponNumber: vm.code,
+                    isSend: 1,
+                    status: 0
+                }),
+                success: function (r) {
+                    if (r.code == 0) {
+                        alert('操作成功', function (index) {
+                            vm.code = ""; //清空code
+                            $("#codesGrid").trigger("reloadGrid");
+                             vm.reload();
+                        });
+                    } else {
+                        alert(r.msg);
+                    }
+                }
+            });
+        },
         publish: function (id, sendType) {
             vm.showGoods = true;
             vm.goods = [];
@@ -241,6 +381,7 @@ var vm = new Vue({
                 return;
             }
             confirm('确定下发优惠券？', function () {
+                vm.showGoods = false;
                 $.ajax({
                     type: "POST",
                     dataType: 'json',
@@ -257,7 +398,6 @@ var vm = new Vue({
                         if (r.code == 0) {
                             alert('操作成功', function (index) {
                                 $("#jqGrid").trigger("reloadGrid");
-                                vm.showGoods = false;
                                 vm.showList = true;
                             });
                         } else {

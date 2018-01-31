@@ -51,4 +51,6 @@ public class CouponCodesServiceImpl implements CouponCodesService {
     public int deleteBatch(Integer[] ids) {
         return couponCodesDao.deleteBatch(ids);
     }
+
+
 }

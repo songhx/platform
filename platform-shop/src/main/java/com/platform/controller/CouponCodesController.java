@@ -2,9 +2,11 @@ package com.platform.controller;
 
 import com.platform.entity.CouponCodesEntity;
 import com.platform.service.CouponCodesService;
+import com.platform.service.CouponService;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class CouponCodesController {
     @Autowired
     private CouponCodesService couponCodesService;
 
+    @Autowired
+    private CouponService couponService;
+
     /**
      * 查看列表
      */
@@ -28,7 +33,6 @@ public class CouponCodesController {
     public R list(@RequestParam Map<String, Object> params) {
         //查询列表数据
         Query query = new Query(params);
-
         List<CouponCodesEntity> couponList = couponCodesService.queryList(query);
         int total = couponCodesService.queryTotal(query);
 
@@ -54,7 +58,12 @@ public class CouponCodesController {
     @RequestMapping("/save")
     public R save(@RequestBody CouponCodesEntity code) {
         couponCodesService.save(code);
+        Map<String, Object> map = new HashedMap();
+        map.put("id", code.getCouponId());
+        map.put("uopt", "add");
+        map.put("num", 1);
 
+        couponService.updateCouponSheet(map);
         return R.ok();
     }
 
@@ -62,7 +71,6 @@ public class CouponCodesController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("coupon:update")
     public R update(@RequestBody CouponCodesEntity code) {
         couponCodesService.update(code);
 
@@ -73,10 +81,14 @@ public class CouponCodesController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("coupon:delete")
-    public R delete(@RequestBody Integer[] ids) {
-        couponCodesService.deleteBatch(ids);
+    public R delete(@RequestBody CouponCodesEntity code) {
+        couponCodesService.delete(code.getId());
+        Map<String, Object> map = new HashedMap();
+        map.put("id", code.getCouponId());
+        map.put("uopt", "reduce");
+        map.put("num", 1);
 
+        couponService.updateCouponSheet(map);
         return R.ok();
     }
 

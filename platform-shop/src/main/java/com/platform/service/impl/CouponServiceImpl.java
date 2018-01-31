@@ -164,6 +164,11 @@ public class CouponServiceImpl implements CouponService {
         return R.ok("发放成功");
     }
 
+    @Override
+    public int updateCouponSheet(Map<String, Object> map) {
+        return couponDao.updateCouponSheet(map);
+    }
+
     //发放优惠码
     private void sendCouponCode( UserCouponEntity userCouponVo, Integer id){
         Map<String, Object> map = new HashedMap();
@@ -185,20 +190,23 @@ public class CouponServiceImpl implements CouponService {
 
     ///创建优惠码
     private void createCouponCodes(CouponEntity coupon){
-        int newSheetNum = coupon.getMaxSheet();
-        Map<String, Object> map = new HashedMap();
-        map.put("couponId", coupon.getId());
-        int num = couponCodesDao.queryCount(map);
-        if (newSheetNum > num){
-            int addNum = newSheetNum - num;
-            CouponCodesEntity cce = null;
-            for (int i = 0 ; i < addNum ; i ++){
-                cce = new CouponCodesEntity();
-                cce.setCouponId(coupon.getId());
-                cce.setCouponNumber(RedeemCodeUtils.createBigSmallLetterStrOrNumberRadom(32));
-                cce.setIsSend((coupon.getSendType() != null && coupon.getSendType().intValue() == 5) ? 1 : 0);
-                couponCodesDao.save(cce);
+        if (coupon.getSendType() != null && coupon.getSendType().intValue() == 1 ){
+            int newSheetNum = coupon.getMaxSheet();
+            Map<String, Object> map = new HashedMap();
+            map.put("couponId", coupon.getId());
+            int num = couponCodesDao.queryCount(map);
+            if (newSheetNum > num){
+                int addNum = newSheetNum - num;
+                CouponCodesEntity cce = null;
+                for (int i = 0 ; i < addNum ; i ++){
+                    cce = new CouponCodesEntity();
+                    cce.setCouponId(coupon.getId());
+                    cce.setCouponNumber(RedeemCodeUtils.createBigSmallLetterStrOrNumberRadom(32));
+                    cce.setIsSend((coupon.getSendType() != null && coupon.getSendType().intValue() == 5) ? 1 : 0);
+                    couponCodesDao.save(cce);
+                }
             }
         }
+
     }
 }

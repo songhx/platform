@@ -90,6 +90,9 @@
             <Form-item label="最小商品金额" prop="minGoodsAmount">
                 <Input-number :min="0" v-model="coupon.minGoodsAmount" placeholder="最小商品金额" style="width: 188px;"/>
             </Form-item>
+            <Form-item label="使用说明" prop="useDesc">
+                <i-input v-model="coupon.useDesc" placeholder="使用说明"/>
+            </Form-item>
             <Form-item>
                 <i-button type="primary" @click="handleSubmit('formValidate')">提交</i-button>
                 <i-button type="warning" @click="reload" style="margin-left: 8px"/>
@@ -120,6 +123,18 @@
             </Form-item>
         </i-form>
     </Card>
+
+    <Card id="inputDiv" v-show="showCodes">
+        <Row :gutter="16">
+            <i-col span="12">
+                <i-input v-model="code" @on-enter="saveCode" placeholder="优惠券码" />
+            </i-col>
+            <i-button @click="saveCode">录入</i-button>
+        </Row>
+        <table id="codesGrid"></table>
+        <div id="codesGridPager"></div>
+    </Card>
+
 </div>
 
 <script src="${rc.contextPath}/js/shop/coupon.js?_${date.systemTime}"></script>

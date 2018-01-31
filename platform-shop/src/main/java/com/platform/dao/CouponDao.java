@@ -2,6 +2,8 @@ package com.platform.dao;
 
 import com.platform.entity.CouponEntity;
 
+import java.util.Map;
+
 /**
  * Dao
  *
@@ -11,4 +13,5 @@ import com.platform.entity.CouponEntity;
  */
 public interface CouponDao extends BaseDao<CouponEntity> {
 
+    int  updateCouponSheet(Map<String, Object> map);
 }

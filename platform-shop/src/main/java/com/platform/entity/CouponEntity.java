@@ -41,6 +41,8 @@ public class CouponEntity implements Serializable {
     //最小商品金额
     private BigDecimal minGoodsAmount;
 
+    private String useDesc; //使用说明
+
     /**
      * 设置：主键
      */
@@ -201,5 +203,13 @@ public class CouponEntity implements Serializable {
 
     public void setMaxSheet(Integer maxSheet) {
         this.maxSheet = maxSheet;
+    }
+
+    public String getUseDesc() {
+        return useDesc;
+    }
+
+    public void setUseDesc(String useDesc) {
+        this.useDesc = useDesc;
     }
 }
