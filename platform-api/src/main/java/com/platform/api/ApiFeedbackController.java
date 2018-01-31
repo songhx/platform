@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 作者: @author Harmon <br>
+ * 作者: @author bjsonghongxu <br>
  * 时间: 2017-08-11 08:32<br>
  * 描述: ApiFeedbackController <br>
  */

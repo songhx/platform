@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * API搭配减价管理
  *
- * @author lipengjun
+ * @author bjsonghongxu
  * @email 939961241@qq.com
  * @date 2017-03-23 15:31
  */
