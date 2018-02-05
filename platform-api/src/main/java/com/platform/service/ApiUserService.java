@@ -97,4 +97,13 @@ public class ApiUserService {
         }
         return result;
     }
+
+    /**
+     * 更新会员钱包
+     * @param map
+     * @return
+     */
+    public int  updateUserWallet(Map<String,Object> map){
+        return  userDao.updateUserWallet(map);
+    }
 }

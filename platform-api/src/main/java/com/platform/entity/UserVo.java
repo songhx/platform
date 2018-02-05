@@ -16,6 +16,10 @@ public class UserVo implements Serializable {
     private Long userId;
     //会员名称
     private String username;
+    //账户余额
+    private  Double balance;
+    //冻结金额
+    private  Double freeze;
     //会员密码
     private String password;
     //性别
@@ -151,5 +155,21 @@ public class UserVo implements Serializable {
 
     public void setWeixin_openid(String weixin_openid) {
         this.weixin_openid = weixin_openid;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public Double getFreeze() {
+        return freeze;
+    }
+
+    public void setFreeze(Double freeze) {
+        this.freeze = freeze;
     }
 }

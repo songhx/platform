@@ -20,6 +20,10 @@ public class UserEntity implements Serializable {
     private String username;
     //会员密码
     private String password;
+    //账户余额
+    private  Double balance;
+    //冻结金额
+    private  Double freeze;
     //性别
     private Integer gender;
     //出生日期
@@ -251,5 +255,21 @@ public class UserEntity implements Serializable {
 
     public void setLevelName(String levelName) {
         this.levelName = levelName;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public Double getFreeze() {
+        return freeze;
+    }
+
+    public void setFreeze(Double freeze) {
+        this.freeze = freeze;
     }
 }

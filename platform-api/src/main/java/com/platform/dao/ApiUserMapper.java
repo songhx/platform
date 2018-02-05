@@ -4,6 +4,8 @@ import com.platform.entity.SmsLogVo;
 import com.platform.entity.UserVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
+
 /**
  * 用户
  *
@@ -32,4 +34,11 @@ public interface ApiUserMapper extends BaseDao<UserVo> {
      * @return
      */
     int saveSmsCodeLog(SmsLogVo smsLogVo);
+
+    /**
+     * 更新会员钱包
+     * @param map
+     * @return
+     */
+    int  updateUserWallet(Map<String,Object> map);
 }

@@ -52,9 +52,9 @@
                     <!--<Radio label="2">
                         <span>商品转发送券</span>
                     </Radio>-->
-                    <!--<Radio label="3">-->
-                    <!--<span>按商品发放</span>-->
-                    <!--</Radio>-->
+                    <Radio label="3">
+                    <span>按商品发放</span>
+                    </Radio>
                     <!--<Radio label="4">
                         <span>新用户注册</span>
                     </Radio>-->
@@ -68,6 +68,20 @@
             </Form-item>
             <Form-item label="发放张数" prop="maxSheet">
                 <Input-number :min="1" v-model="coupon.maxSheet" placeholder="发放张数" style="width: 188px;"/>
+            </Form-item>
+            <Form-item label="是否折现" prop="isDiscount">
+                <Radio-group v-model="coupon.isDiscount">
+                    <Radio label="0">
+                        <span>是</span>
+                    </Radio>
+
+                    <Radio label="1">
+                        <span>否</span>
+                    </Radio>
+                </Radio-group>
+            </Form-item>
+            <Form-item label="折现率" prop="discountRate">
+                <Input-number :min="0" v-model="coupon.discountRate" placeholder="折现率" style="width: 188px;"/>
             </Form-item>
             <Form-item label="最小金额" prop="minAmount">
                 <Input-number :min="1" v-model="coupon.minAmount" placeholder="最小金额" style="width: 188px;"/>

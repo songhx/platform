@@ -55,9 +55,15 @@ public class CouponVo implements Serializable {
     //转发次数
     private Integer min_transmit_num;
 
+    private Integer userCouponId;
     private Integer couponCodeId; //兑换码ID
     private Integer isUsed; //是否被使用
     private Integer isTransmit; //是否转送 0 否 1是
+
+    private Integer isDiscount; // 是否可以折现 0 是 1 否
+
+    private Double discountRate; // 折现率
+
 
     public Integer getId() {
         return id;
@@ -209,5 +215,29 @@ public class CouponVo implements Serializable {
 
     public void setIsTransmit(Integer isTransmit) {
         this.isTransmit = isTransmit;
+    }
+
+    public Integer getIsDiscount() {
+        return isDiscount;
+    }
+
+    public void setIsDiscount(Integer isDiscount) {
+        this.isDiscount = isDiscount;
+    }
+
+    public Double getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(Double discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public Integer getUserCouponId() {
+        return userCouponId;
+    }
+
+    public void setUserCouponId(Integer userCouponId) {
+        this.userCouponId = userCouponId;
     }
 }

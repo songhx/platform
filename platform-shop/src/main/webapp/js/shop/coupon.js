@@ -7,6 +7,16 @@ $(function () {
             {label: '优惠券名称', name: 'name', index: 'name', width: 120},
             {label: '金额', name: 'typeMoney', index: 'type_money', width: 80},
             {
+                label: '折现', name: 'isDiscount', index: 'is_discount', width: 80, formatter: function (value) {
+                return value == 0 ? "是" : "否";
+            }
+            },
+            {
+                label: '折现率', name: 'discountRate', index: 'discount_rate', width: 80, formatter: function (value) {
+                return value != null ? value + "%" : "--";
+            }
+            },
+            {
                 label: '发放方式', name: 'sendType', index: 'send_type', width: 80, formatter: function (value) {
                 if (value == 0) {
                     return '按订单发放';
@@ -61,13 +71,14 @@ $(function () {
             {label: '使用说明', name: 'useDesc', index: 'use_desc', width: 180},
             {
                 label: '操作', width: 70, sortable: false, formatter: function (value, col, row) {
+                var returnStr = "";
                 if (row.sendType == 1 || row.sendType == 3) {
-                    return '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.publish(' + row.id + ',' + row.sendType + ')"><i class="ivu-icon ivu-icon-android-send"></i>发放</button>';
+                    returnStr += '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.publish(' + row.id + ',' + row.sendType + ')"><i class="ivu-icon ivu-icon-android-send"></i>发放</button>';
                 }
-                if (row.sendType == 5) {
-                    return '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.codeInput(' + row.id + ',\'' + row.name + '\')"><i class="ivu-icon ivu-icon-android-folder-open"></i>录入</button>';
+                if (row.sendType == 3 || row.sendType == 5) {
+                    returnStr += '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.codeInput(' + row.id + ',\'' + row.name + '\')"><i class="ivu-icon ivu-icon-android-folder-open"></i>录入</button>';
                 }
-                return '';
+                return 'returnStr';
             }
 
             }],
@@ -185,7 +196,7 @@ var vm = new Vue({
             vm.showCard = true;
             vm.showGoods = false;
             vm.title = "新增";
-            vm.coupon = {sendType: 0 , oldSheet : 0 , minAmount : 1 , maxSheet : 1, maxAmount : 1, minGoodsAmount : 0  };
+            vm.coupon = {sendType: 0 , oldSheet : 0 , minAmount : 1 , maxSheet : 1, maxAmount : 1, minGoodsAmount : 0 , isDiscount : 0  };
         },
         update: function (event) {
             var id = getSelectedRow();

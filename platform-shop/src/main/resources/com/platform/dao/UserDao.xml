@@ -18,6 +18,8 @@
         <result property="registerIp" column="register_ip"/>
         <result property="avatar" column="avatar"/>
         <result property="weixinOpenid" column="weixin_openid"/>
+        <result property="balance" column="balance"/>
+        <result property="freeze" column="freeze"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.UserEntity">
@@ -35,7 +37,9 @@
 			mobile,
 			register_ip,
 			avatar,
-			weixin_openid
+			weixin_openid,
+			balance,
+			freeze
 		from nideshop_user
 		where id = #{id}
 	</select>
@@ -56,7 +60,9 @@
         nideshop_user.register_ip,
         nideshop_user.avatar,
         nideshop_user.weixin_openid,
-        nideshop_user_level.name levelName
+        nideshop_user_level.name levelName ,
+        nideshop_user.balance,
+        nideshop_user.freeze
         from nideshop_user LEFT JOIN nideshop_user_level ON nideshop_user.user_level_id=nideshop_user_level.id
         WHERE 1=1
         <if test="username != null and username.trim() != ''">
@@ -97,7 +103,9 @@
 			`mobile`,
 			`register_ip`,
 			`avatar`,
-			`weixin_openid`)
+			`weixin_openid`,
+			balance,
+			freeze)
 		values(
 			#{username},
 			#{password},
@@ -111,7 +119,10 @@
 			#{mobile},
 			#{registerIp},
 			#{avatar},
-			#{weixinOpenid})
+			#{weixinOpenid},
+			#{balance},
+			#{freeze}
+			)
 	</insert>
 
     <update id="update" parameterType="com.platform.entity.UserEntity">
@@ -129,9 +140,22 @@
             <if test="mobile != null">`mobile` = #{mobile},</if>
             <if test="registerIp != null">`register_ip` = #{registerIp},</if>
             <if test="avatar != null">`avatar` = #{avatar},</if>
-            <if test="weixinOpenid != null">`weixin_openid` = #{weixinOpenid}</if>
+            <if test="weixinOpenid != null">`weixin_openid` = #{weixinOpenid},</if>
+            <if test="balance != null">`balance` = #{balance},</if>
+            <if test="freeze != null">`freeze` = #{freeze}</if>
         </set>
         where id = #{id}
+    </update>
+
+    <update id="updateUserWallet" parameterType="java.util.Map">
+        update nideshop_user
+        <set>
+            <if test="addBalance != null">`balance` = `balance` + #{money},</if>
+            <if test="reduceBalance != null">`balance` = `balance` - #{money},</if>
+            <if test="addFreeze != null">`freeze` = `freeze` + #{money}</if>
+            <if test="reduceFreeze != null">`freeze` = `freeze` - #{money}</if>
+        </set>
+        where id = #{userId}
     </update>
 
     <delete id="delete">

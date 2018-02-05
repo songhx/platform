@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <Row :gutter="16">
+            <i-col span="4">
+                <i-input v-model="q.name" @on-enter="query" placeholder="会员姓名"/>
+            </i-col>
+            <i-button @click="query">查询</i-button>
+
+        </Row>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+</div>
+
+<script src="${rc.contextPath}/js/shop/userwithdraw.js?_${date.systemTime}"></script>
+</body>
+</html>

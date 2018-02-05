@@ -16,6 +16,8 @@
         <result property="useEndDate" column="use_end_date"/>
         <result property="minGoodsAmount" column="min_goods_amount"/>
         <result property="useDesc" column="use_desc"/>
+        <result property="isDiscount" column="is_discount"/>
+        <result property="discountRate" column="discount_rate"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.CouponEntity">
@@ -32,7 +34,9 @@
 			`use_end_date`,
 			`min_goods_amount`,
 			`max_sheet`,
-			use_desc
+			use_desc,
+			is_discount,
+			discount_rate
 		from nideshop_coupon
 		where id = #{id}
 	</select>
@@ -51,7 +55,9 @@
         `use_end_date`,
         `min_goods_amount`,
         `max_sheet`,
-        use_desc
+        use_desc,
+        is_discount,
+        discount_rate
         from nideshop_coupon
         WHERE 1=1
         <if test="name != null and name.trim() != ''">
@@ -88,7 +94,9 @@
 			`use_end_date`,
 			`min_goods_amount`,
 			`max_sheet`,
-			use_desc)
+			use_desc,
+			is_discount,
+			discount_rate)
 		values(
 			#{name},
 			#{typeMoney},
@@ -101,7 +109,9 @@
 			#{useEndDate},
 			#{minGoodsAmount},
 			#{maxSheet},
-			#{useDesc}
+			#{useDesc},
+			#{isDiscount},
+			#{discountRate}
 			)
 	</insert>
 
@@ -119,7 +129,9 @@
             <if test="useEndDate != null">`use_end_date` = #{useEndDate},</if>
             <if test="minGoodsAmount != null">`min_goods_amount` = #{minGoodsAmount},</if>
             <if test="maxSheet != null">`max_sheet` = #{maxSheet},</if>
-            <if test="useDesc != null">`use_desc` = #{useDesc}</if>
+            <if test="useDesc != null">`use_desc` = #{useDesc},</if>
+            <if test="isDiscount != null">`is_discount` = #{isDiscount},</if>
+            <if test="discountRate != null">`discount_rate` = #{discountRate}</if>
         </set>
         where id = #{id}
     </update>

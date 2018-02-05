@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService {
     public int deleteBatch(Integer[] ids) {
         return userDao.deleteBatch(ids);
     }
+
+    @Override
+    public int updateUserWallet(Map<String, Object> map) {
+        return userDao.updateUserWallet(map);
+    }
 }

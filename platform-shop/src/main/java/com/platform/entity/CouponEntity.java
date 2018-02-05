@@ -43,6 +43,10 @@ public class CouponEntity implements Serializable {
 
     private String useDesc; //使用说明
 
+    private Integer isDiscount; // 是否可以折现 0 是 1 否
+
+    private Double discountRate; // 折现率
+
     /**
      * 设置：主键
      */
@@ -211,5 +215,21 @@ public class CouponEntity implements Serializable {
 
     public void setUseDesc(String useDesc) {
         this.useDesc = useDesc;
+    }
+
+    public Integer getIsDiscount() {
+        return isDiscount;
+    }
+
+    public void setIsDiscount(Integer isDiscount) {
+        this.isDiscount = isDiscount;
+    }
+
+    public Double getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(Double discountRate) {
+        this.discountRate = discountRate;
     }
 }

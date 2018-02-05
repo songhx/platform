@@ -19,6 +19,8 @@
         <result property="register_ip" column="register_ip"/>
         <result property="avatar" column="avatar"/>
         <result property="weixin_openid" column="weixin_openid"/>
+        <result property="balance" column="balance"/>
+        <result property="freeze" column="freeze"/>
     </resultMap>
 
     <select id="queryObject" resultMap="userMap">
@@ -102,7 +104,20 @@
             <if test="mobile != null">`mobile` = #{mobile},</if>
             <if test="register_ip != null">`register_ip` = #{register_ip},</if>
             <if test="avatar != null">`avatar` = #{avatar},</if>
-            <if test="weixin_openid != null">`weixin_openid` = #{weixin_openid}</if>
+            <if test="weixin_openid != null">`weixin_openid` = #{weixin_openid},</if>
+            <if test="balance != null">`balance` = #{balance},</if>
+            <if test="freeze != null">`freeze` = #{freeze}</if>
+        </set>
+        where id = #{userId}
+    </update>
+
+    <update id="updateUserWallet" parameterType="java.util.Map">
+        update nideshop_user
+        <set>
+            <if test="addBalance != null">`balance` = `balance` + #{money},</if>
+            <if test="reduceBalance != null">`balance` = `balance` - #{money},</if>
+            <if test="addFreeze != null">`freeze` = `freeze` + #{money}</if>
+            <if test="reduceFreeze != null">`freeze` = `freeze` - #{money}</if>
         </set>
         where id = #{userId}
     </update>

@@ -4,15 +4,25 @@ $(function () {
         datatype: "json",
         colModel: [{
             label: 'id', name: 'id', index: 'id', key: true, hidden: true
-        }, {
+        }
+        , {
             label: '会员名称', name: 'username', index: 'username', width: 80
-        }, {
+        }
+        , {
+            label: '账户余额', name: 'balance', index: 'balance', hidden: true
+        }
+        , {
+            label: '冻结金额', name: 'freeze', index: 'freeze', hidden: true
+        }
+        , {
             label: '会员密码', name: 'password', index: 'password', hidden: true
-        }, {
+        }
+        , {
             label: '性别', name: 'gender', index: 'gender', width: 40, formatter: function (value) {
                 return transGender(value);
             }
-        }, {
+        }
+        , {
             label: '出生日期', name: 'birthday', index: 'birthday', width: 80, formatter: function (value) {
                 return transDate(value);
             }

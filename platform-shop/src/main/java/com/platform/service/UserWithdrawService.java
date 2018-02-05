@@ -1,18 +1,17 @@
 package com.platform.service;
 
-import com.platform.entity.UserEntity;
+import com.platform.entity.UserWithdraw;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Service接口
+ * 提现服务
  *
- * @author lipengjun
- * @email 939961241@qq.com
- * @date 2017-08-16 15:02:28
- */
-public interface UserService {
+ * @author bjsonghongxu
+ * @create 2018-02-05 15:56
+ **/
+public interface UserWithdrawService {
 
     /**
      * 根据主键查询实体
@@ -20,7 +19,7 @@ public interface UserService {
      * @param id 主键
      * @return 实体
      */
-    UserEntity queryObject(Integer id);
+    UserWithdraw queryObject(Integer id);
 
     /**
      * 分页查询
@@ -28,7 +27,7 @@ public interface UserService {
      * @param map 参数
      * @return list
      */
-    List<UserEntity> queryList(Map<String, Object> map);
+    List<UserWithdraw> queryList(Map<String, Object> map);
 
     /**
      * 分页统计总数
@@ -44,7 +43,7 @@ public interface UserService {
      * @param user 实体
      * @return 保存条数
      */
-    int save(UserEntity user);
+    int save(UserWithdraw user);
 
     /**
      * 根据主键更新实体
@@ -52,7 +51,7 @@ public interface UserService {
      * @param user 实体
      * @return 更新条数
      */
-    int update(UserEntity user);
+    int update(UserWithdraw user);
 
     /**
      * 根据主键删除
@@ -69,11 +68,4 @@ public interface UserService {
      * @return 删除条数
      */
     int deleteBatch(Integer[] ids);
-
-    /**
-     * 更新会员钱包
-     * @param map
-     * @return
-     */
-    int  updateUserWallet(Map<String,Object> map);
 }
