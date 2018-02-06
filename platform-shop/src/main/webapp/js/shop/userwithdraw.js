@@ -16,15 +16,20 @@ $(function () {
             },
             {label: '微信昵称', name: 'nickName', index: 'nick_name', width: 80},
             {label: '手机号码', name: 'mobile', index: 'mobile', width: 80},
-            {label: 'openid', name: 'weixinOpenid', index: 'weixin_openid', width: 80},
+            {label: 'openid', name: 'weixinOpenid', index: 'weixin_openid', width: 120},
+            {
+                label: '操作时间', name: 'updateTime', index: 'update_time', width: 120, formatter: function (value) {
+                return transDate(value);
+            }
+            },
             {
                 label: '操作', width: 70, sortable: false, formatter: function (value, col, row) {
                 var returnStr = "";
                 if (row.status == 0) {
-                    returnStr += '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.pass(' + row.id  + ')"><i class="ivu-icon ivu-icon-android-send"></i>发放</button>';
-                    returnStr += '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.refuse(' + row.id  + ')"><i class="ivu-icon ivu-icon-android-folder-open"></i>拒绝</button>';
+                    returnStr += '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.pass(' + row.id  + ')">发放</button>';
+                    returnStr += '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.refuse(' + row.id  + ')">拒绝</button>';
                 }
-                return 'returnStr';
+                return returnStr;
              }
             }
             ],

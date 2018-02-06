@@ -51,11 +51,8 @@ public class ApiWalletController extends ApiBaseAction {
     @RequestMapping("discount")
     public Object discount(@LoginUser UserVo loginUser) {
         JSONObject jsonObject = this.getJsonRequest();
-        //主键
         Integer id = null;
-        //优惠券Id
         Integer coupon_id = null;
-
         Integer coupon_code_id = null;
         if (jsonObject != null){
             id = jsonObject.getInteger("id");
@@ -71,7 +68,7 @@ public class ApiWalletController extends ApiBaseAction {
         try {
             //验证该卡券是否可以折现
             CouponVo couponVo = apiCouponService.queryObject(coupon_id);
-            CouponCodesVo codesVo = apiCouponCodesService.queryObject(144);
+            CouponCodesVo codesVo = apiCouponCodesService.queryObject(coupon_code_id);
             //卡券存在且兑换码未被使用
             if (null != couponVo && couponVo.getIsDiscount().intValue() == 0 &&  codesVo != null && codesVo.getStatus().intValue() == 0){
                 ///增加账户余额
@@ -124,14 +121,26 @@ public class ApiWalletController extends ApiBaseAction {
      */
     @RequestMapping("withDraw")
     public Object withDraw(@LoginUser UserVo loginUser, Double money) {
-        money = this.getJsonRequest().getDouble("money");
+        JSONObject jsonObject = this.getJsonRequest();
+        if(jsonObject != null){
+            money = jsonObject.getDouble("money");
+        }
         if (loginUser.getUserId() == null){
             return toResponsFail("提现申请失败，用户不存在！");
+        }
+        UserVo user = userService.queryObject(loginUser.getUserId());
+        if (user == null){
+            return toResponsFail("提现申请失败，用户不存在！");
+        }
+
+        if (user.getBalance() == null || (user.getBalance() != null &&  user.getBalance().doubleValue() - money.doubleValue() < 0)){
+            return toResponsFail("账户余额不足！");
         }
         if (null == money || (money != null && money.intValue() <=0 )){
             return toResponsFail("提现申请失败，提现金额不符合要求！");
         }
         try {
+
             ///冻结申请提现金额
             Map<String,Object> map = new HashedMap();
             map.put("reduceBalance","reduceBalance");
@@ -144,10 +153,10 @@ public class ApiWalletController extends ApiBaseAction {
                 Date time = new Date();
                 //记录提现申请
                 UserWithdrawVo userWithdrawVo = new UserWithdrawVo();
-                userWithdrawVo.setMobile(loginUser.getMobile());
-                userWithdrawVo.setNickName(loginUser.getNickname());
-                userWithdrawVo.setUserId(Integer.parseInt(String.valueOf(loginUser.getUserId())));
-                userWithdrawVo.setWeixinOpenid(loginUser.getWeixin_openid());
+                userWithdrawVo.setMobile(user.getMobile());
+                userWithdrawVo.setNickName(user.getNickname());
+                userWithdrawVo.setUserId(Integer.parseInt(String.valueOf(user.getUserId())));
+                userWithdrawVo.setWeixinOpenid(user.getWeixin_openid());
                 userWithdrawVo.setUpdateTime(time);
                 userWithdrawVo.setCreateTime(time);
                 userWithdrawVo.setStatus(0);
@@ -165,6 +174,7 @@ public class ApiWalletController extends ApiBaseAction {
 
 
     }
+
 
     /**
      * 提现申请列表
