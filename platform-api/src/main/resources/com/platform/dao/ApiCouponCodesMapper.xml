@@ -12,10 +12,9 @@
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.CouponCodesVo">
-		SELECT  nideshop_coupon_codes.id,
-                nideshop_coupon_codes.coupon_id,
-                nideshop_coupon_codes.coupon_number,
-                nideshop_coupon_codes.is_send,
+		SELECT  nideshop_coupon_codes.id AS  id,
+                nideshop_coupon_codes.coupon_id AS couponId ,
+                nideshop_coupon_codes.is_send AS isSend,
                 nideshop_coupon_codes.`status`
         FROM nideshop_coupon_codes
 		where 1=1

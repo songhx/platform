@@ -34,6 +34,9 @@ public class UserCouponVo implements Serializable {
     //分享人
     private Long referrer;
 
+    private Integer isUsed; //是否被使用
+    private Integer isTransmit; //是否转送 0 否 1是
+
     public Integer getId() {
         return id;
     }
@@ -113,5 +116,21 @@ public class UserCouponVo implements Serializable {
 
     public void setCoupon_code_id(Integer coupon_code_id) {
         this.coupon_code_id = coupon_code_id;
+    }
+
+    public Integer getIsUsed() {
+        return isUsed;
+    }
+
+    public void setIsUsed(Integer isUsed) {
+        this.isUsed = isUsed;
+    }
+
+    public Integer getIsTransmit() {
+        return isTransmit;
+    }
+
+    public void setIsTransmit(Integer isTransmit) {
+        this.isTransmit = isTransmit;
     }
 }

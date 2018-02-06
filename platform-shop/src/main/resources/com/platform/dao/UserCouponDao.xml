@@ -11,6 +11,8 @@
         <result property="usedTime" column="used_time"/>
         <result property="orderId" column="order_id"/>
         <result property="addTime" column="add_time"/>
+        <result property="isUsed" column="is_used"/>
+        <result property="isTransmit" column="is_transmit"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.UserCouponEntity">

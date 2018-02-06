@@ -1,12 +1,15 @@
 package com.platform.api;
 
+import com.alibaba.fastjson.JSONObject;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.*;
 import com.platform.service.*;
 import com.platform.util.ApiBaseAction;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -43,21 +46,32 @@ public class ApiWalletController extends ApiBaseAction {
     /**
      * 折现操作
      * @param loginUser
-     * @param userCouponVo
      * @return
      */
     @RequestMapping("discount")
-    public Object discount(@LoginUser UserVo loginUser, UserCouponVo userCouponVo) {
-        if (loginUser.getUserId() != null){
+    public Object discount(@LoginUser UserVo loginUser) {
+        JSONObject jsonObject = this.getJsonRequest();
+        //主键
+        Integer id = null;
+        //优惠券Id
+        Integer coupon_id = null;
+
+        Integer coupon_code_id = null;
+        if (jsonObject != null){
+            id = jsonObject.getInteger("id");
+            coupon_id = jsonObject.getInteger("coupon_id");
+            coupon_code_id = jsonObject.getInteger("coupon_code_id");
+        }
+        if (loginUser.getUserId() == null){
             return toResponsFail("折现操作失败，用户不存在！");
         }
-        if (userCouponVo.getCoupon_id() == null || userCouponVo.getCoupon_code_id() == null){
+        if (coupon_id == null || coupon_code_id == null){
             return toResponsFail("折现操作失败，参数错误！");
         }
         try {
             //验证该卡券是否可以折现
-            CouponVo couponVo = apiCouponService.queryObject(userCouponVo.getCoupon_id());
-            CouponCodesVo codesVo = apiCouponCodesService.queryObject(userCouponVo.getCoupon_code_id());
+            CouponVo couponVo = apiCouponService.queryObject(coupon_id);
+            CouponCodesVo codesVo = apiCouponCodesService.queryObject(144);
             //卡券存在且兑换码未被使用
             if (null != couponVo && couponVo.getIsDiscount().intValue() == 0 &&  codesVo != null && codesVo.getStatus().intValue() == 0){
                 ///增加账户余额
@@ -68,7 +82,8 @@ public class ApiWalletController extends ApiBaseAction {
                 int rs = userService.updateUserWallet(map);
                 if (rs > 0){
                     UserCouponVo ucv = new UserCouponVo();
-                    ucv.setId(userCouponVo.getId());
+                    ucv.setId(id);
+                    ucv.setIsUsed(1);
                     ucv.setUsed_time(new Date());
                     apiUserCouponService.update(ucv);
 
@@ -109,7 +124,8 @@ public class ApiWalletController extends ApiBaseAction {
      */
     @RequestMapping("withDraw")
     public Object withDraw(@LoginUser UserVo loginUser, Double money) {
-        if (loginUser.getUserId() != null){
+        money = this.getJsonRequest().getDouble("money");
+        if (loginUser.getUserId() == null){
             return toResponsFail("提现申请失败，用户不存在！");
         }
         if (null == money || (money != null && money.intValue() <=0 )){
@@ -120,7 +136,7 @@ public class ApiWalletController extends ApiBaseAction {
             Map<String,Object> map = new HashedMap();
             map.put("reduceBalance","reduceBalance");
             map.put("addFreeze","addFreeze");
-            map.put("money","money");
+            map.put("money",money);
             map.put("userId",loginUser.getUserId());
             int rs = userService.updateUserWallet(map);
 

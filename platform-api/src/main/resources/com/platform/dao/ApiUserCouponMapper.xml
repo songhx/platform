@@ -14,6 +14,8 @@
         <result property="order_id" column="order_id"/>
         <result property="source_key" column="source_key"/>
         <result property="referrer" column="referrer"/>
+        <result property="isUsed" column="is_used"/>
+        <result property="isTransmit" column="is_transmit"/>
     </resultMap>
 
     <select id="queryObject" resultMap="userCouponMap">
@@ -98,6 +100,8 @@
             <if test="add_time != null">`add_time` = #{add_time}</if>
             <if test="source_key != null">`source_key` = #{source_key}</if>
             <if test="referrer != null">`referrer` = #{referrer}</if>
+            <if test="isUsed != null">`is_used` = #{isUsed},</if>
+            <if test="isTransmit != null">`is_transmit` = #{isTransmit}</if>
         </set>
         where id = #{id}
     </update>

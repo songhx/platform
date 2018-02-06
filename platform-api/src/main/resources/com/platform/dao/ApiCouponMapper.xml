@@ -121,7 +121,7 @@
     </delete>
 
     <select id="queryUserCoupons" resultMap="couponMap">
-        select a.*,b.coupon_number,b.user_id,b.coupon_code_id,b.id AS user_coupon_id
+        select a.*,b.coupon_number,b.user_id,b.coupon_code_id,b.id AS user_coupon_id,b.is_used,b.is_transmit
         from nideshop_coupon a
         left join nideshop_user_coupon b on a.id = b.coupon_id
         where 1 = 1
