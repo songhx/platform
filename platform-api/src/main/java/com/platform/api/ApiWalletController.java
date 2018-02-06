@@ -194,4 +194,24 @@ public class ApiWalletController extends ApiBaseAction {
     }
 
 
+    /**
+     * 查询用户钱包信息
+     * @param loginUser
+     * @return
+     */
+    @RequestMapping("userWallet")
+    public Object userWallet(@LoginUser UserVo loginUser) {
+
+        if (loginUser.getUserId() == null){
+            return toResponsFail("用户不存在！");
+        }
+        UserVo user = userService.queryObject(loginUser.getUserId());
+        if (user == null){
+            return toResponsFail("用户不存在！");
+        }else {
+            user.setPassword("");
+            return toResponsSuccess(user);
+        }
+    }
+
 }

@@ -49,6 +49,122 @@ public class ApiCouponController extends ApiBaseAction {
     }
 
     /**
+     * 卡券领取界面查询卡券信息
+     * @return
+     */
+    @RequestMapping("info")
+    public Object info() {
+        JSONObject jsonParam = getJsonRequest();
+        if(null != jsonParam){
+            Integer id = jsonParam.getInteger("id");
+            Map param = new HashMap();
+            param.put("user_coupon_id", id);
+            List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
+            if (null != couponVos && couponVos.size() > 0){
+                CouponVo couponVo = couponVos.get(0);
+                if (couponVo.getIsTransmit().intValue() == 2){ //转送中
+                    return toResponsSuccess(couponVo);
+                }else {
+                    return toResponsFail(couponVo.getName() + "已被领取~");
+                }
+            }else{
+                return toResponsFail("卡券不存在或已被领取~");
+            }
+        }else{
+            return toResponsFail("非法请求~");
+        }
+
+    }
+
+    /**
+     *  开始转送
+     * @param loginUser
+     * @return
+     */
+    @RequestMapping("send")
+    public Object send(@LoginUser UserVo loginUser) {
+        JSONObject jsonParam = getJsonRequest();
+        if (loginUser.getUserId() == null) {
+            return toResponsFail("转增操作失败，用户不存在！");
+        }
+        if (null != jsonParam) {
+            Integer id = jsonParam.getInteger("id");
+            Map param = new HashMap();
+            param.put("user_coupon_id", id);
+            List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
+            if (null != couponVos && couponVos.size() > 0) {
+                CouponVo couponVo = couponVos.get(0);
+                if (couponVo.getIsTransmit().intValue() == 2) { //转送中
+                    ///修改原有用户的转送状态为转送中
+                    UserCouponVo ucv = new UserCouponVo();
+                    ucv.setId(id);
+                    ucv.setIsTransmit(2);
+                    apiUserCouponService.update(ucv);
+
+                    return toResponsSuccess("成功");
+
+                } else {
+                    return toResponsFail(couponVo.getName() + "无效卡券~");
+                }
+            } else {
+                return toResponsFail("卡券不存在或已被领取~");
+            }
+        } else {
+            return toResponsFail("非法请求~");
+        }
+    }
+
+
+    /**
+     * 领取
+     */
+    @RequestMapping("receive")
+    public Object receive(@LoginUser UserVo loginUser) {
+        JSONObject jsonParam = getJsonRequest();
+        if (loginUser.getUserId() == null) {
+            return toResponsFail("领取礼品卡失败，用户不存在！");
+        }
+        if (null != jsonParam) {
+            Integer id = jsonParam.getInteger("id");
+            Map param = new HashMap();
+            param.put("user_coupon_id", id);
+            List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
+            if (null != couponVos && couponVos.size() > 0) {
+                CouponVo couponVo = couponVos.get(0);
+                if (couponVo.getIsTransmit().intValue() == 2) { //转送中
+
+                    ///为接受用户创建卡券信息
+                    UserCouponVo userCouponVo = new UserCouponVo();
+                    userCouponVo.setCoupon_id(couponVo.getId());
+                    userCouponVo.setCoupon_code_id(couponVo.getCouponCodeId());
+                    userCouponVo.setCoupon_number(couponVo.getCoupon_number());
+                    userCouponVo.setUser_id(loginUser.getUserId());
+                    userCouponVo.setAdd_time(new Date());
+                    apiUserCouponService.save(userCouponVo);
+
+                    ///修改原有用户的转送状态为已转送
+                    UserCouponVo ucv = new UserCouponVo();
+                    ucv.setId(id);
+                    ucv.setIsTransmit(1);
+                    apiUserCouponService.update(ucv);
+
+                    return toResponsSuccess("转送成功");
+
+                } else {
+                    return toResponsFail(couponVo.getName() + "已被领取~");
+                }
+            } else {
+                return toResponsFail("卡券不存在或已被领取~");
+            }
+        } else {
+            return toResponsFail("非法请求~");
+        }
+
+    }
+
+
+
+    /**
      * 兑换优惠券
      */
     @RequestMapping("exchange")
