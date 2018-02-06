@@ -94,7 +94,7 @@ public class ApiCouponController extends ApiBaseAction {
             List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
             if (null != couponVos && couponVos.size() > 0) {
                 CouponVo couponVo = couponVos.get(0);
-                if (couponVo.getIsTransmit().intValue() == 2) { //转送中
+                if (couponVo.getIsTransmit().intValue() == 0) { //转送中
                     ///修改原有用户的转送状态为转送中
                     UserCouponVo ucv = new UserCouponVo();
                     ucv.setId(id);
@@ -131,7 +131,7 @@ public class ApiCouponController extends ApiBaseAction {
             List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
             if (null != couponVos && couponVos.size() > 0) {
                 CouponVo couponVo = couponVos.get(0);
-                if (couponVo.getIsTransmit().intValue() == 2) { //转送中
+                if (null != couponVo.getIsTransmit() && couponVo.getIsTransmit().intValue() == 2) { //转送中
 
                     ///为接受用户创建卡券信息
                     UserCouponVo userCouponVo = new UserCouponVo();
