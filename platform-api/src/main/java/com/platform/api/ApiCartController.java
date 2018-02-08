@@ -328,18 +328,25 @@ public class ApiCartController extends ApiBaseAction {
     @RequestMapping("delete")
     public Object delete(@LoginUser UserVo loginUser) {
         JSONObject jsonObject = getJsonRequest();
-//        String productIds = jsonObject.getString("productIds");
-        Integer cartId = jsonObject.getInteger("cartId");
-        if (null == cartId) {
+        String cartIds = jsonObject.getString("cartIds");
+
+        if (StringUtils.isNullOrEmpty(cartIds)) {
             return toResponsFail("删除出错");
         }
-//        if (StringUtils.isNullOrEmpty(productIds)) {
-//            return toResponsFail("删除出错");
-//        }
-//        String[] productIdsArray = productIds.split(",");
-//        cartService.deleteByProductIds(productIdsArray);
-        cartService.delete(cartId);
-        return toResponsSuccess(getCart(loginUser));
+        String[] idsArray = cartIds.split(",");
+        Integer [] ids = null;
+        if (idsArray != null && idsArray.length > 0){
+            ids = new Integer[idsArray.length];
+            for (int i = 0 ; i < idsArray.length; i++){
+                ids[i] = Integer.parseInt(idsArray[i]);
+            }
+            cartService.deleteBatch(ids);
+            return toResponsSuccess(getCart(loginUser));
+        }else {
+            return toResponsFail("删除出错");
+        }
+
+
     }
 
     //  获取购物车商品的总件件数

@@ -121,15 +121,15 @@ public class ApiPayController extends ApiBaseAction {
             String return_code = MapUtils.getString("return_code", resultUn);
             String return_msg = MapUtils.getString("return_msg", resultUn);
             //
-            if (return_code.equalsIgnoreCase("FAIL")) {
-                return toResponsFail("支付失败," + return_msg);
-            } else if (return_code.equalsIgnoreCase("SUCCESS")) {
+//            if (return_code.equalsIgnoreCase("FAIL")) {
+//                return toResponsFail("支付失败," + return_msg);
+//            } else if (return_code.equalsIgnoreCase("SUCCESS")) {
                 // 返回数据
                 String result_code = MapUtils.getString("result_code", resultUn);
                 String err_code_des = MapUtils.getString("err_code_des", resultUn);
-                if (result_code.equalsIgnoreCase("FAIL")) {
-                    return toResponsFail("支付失败," + err_code_des);
-                } else if (result_code.equalsIgnoreCase("SUCCESS")) {
+//                if (result_code.equalsIgnoreCase("FAIL")) {
+//                    return toResponsFail("支付失败," + err_code_des);
+//                } else if (result_code.equalsIgnoreCase("SUCCESS")) {
                     String prepay_id = MapUtils.getString("prepay_id", resultUn);
                     // 先生成paySign 参考https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_7&index=5
                     resultObj.put("appId", ResourceUtil.getConfigByName("wx.appId"));
@@ -145,13 +145,13 @@ public class ApiPayController extends ApiBaseAction {
                     orderInfo.setPay_status(1);
                     orderService.update(orderInfo);
                     return toResponsObject(0, "微信统一订单下单成功", resultObj);
-                }
-            }
+//                }
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             return toResponsFail("下单失败,error=" + e.getMessage());
         }
-        return toResponsFail("下单失败");
+        //return toResponsFail("下单失败");
     }
 
     /**
