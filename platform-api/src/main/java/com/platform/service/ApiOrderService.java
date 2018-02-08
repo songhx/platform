@@ -124,7 +124,9 @@ public class ApiOrderService {
         BigDecimal orderTotalPrice = goodsTotalPrice.add(new BigDecimal(freightPrice)); //订单的总价
 
         BigDecimal actualPrice = orderTotalPrice.subtract(fullCutCouponDec).subtract(couponPrice);  //减去其它支付的金额后，要实际支付的金额
-
+        if (actualPrice.compareTo(BigDecimal.ZERO) == -1){
+            actualPrice = BigDecimal.ZERO;
+        }
         Long currentTime = System.currentTimeMillis() / 1000;
 
         //

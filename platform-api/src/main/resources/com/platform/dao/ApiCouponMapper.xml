@@ -140,8 +140,11 @@
         <if test="source_key != null and source_key != ''">
             and b.source_key = #{source_key}
         </if>
-        <if test="unUsed != null and unUsed == true">
-            and b.used_time is null and (b.order_id  is null or b.order_id =0)
+        <if test="isUsed != null">
+            and b.is_used = #{isUsed}
+        </if>
+        <if test="isTransmit != null">
+            and b.is_transmit = #{isTransmit}
         </if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">

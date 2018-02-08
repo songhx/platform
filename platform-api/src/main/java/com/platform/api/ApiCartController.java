@@ -440,6 +440,9 @@ public class ApiCartController extends ApiBaseAction {
 
         //
         BigDecimal actualPrice = orderTotalPrice.subtract(fullCutCouponDec).subtract(couponPrice);  //减去其它支付的金额后，要实际支付的金额
+        if (actualPrice.compareTo(BigDecimal.ZERO) == -1){
+            actualPrice = BigDecimal.ZERO;
+        }
 
         resultObj.put("freightPrice", freightPrice);
         resultObj.put("checkedCoupon", checkedCoupon);

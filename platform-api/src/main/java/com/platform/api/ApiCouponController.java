@@ -41,9 +41,19 @@ public class ApiCouponController extends ApiBaseAction {
      */
     @RequestMapping("list")
     public Object list(@LoginUser UserVo loginUser) {
-
+        JSONObject jsonParam = getJsonRequest();
         Map param = new HashMap();
         param.put("user_id", loginUser.getUserId());
+        if(null != jsonParam){
+            if (null != jsonParam.getInteger("isUsed")){
+                param.put("isUsed", jsonParam.getInteger("isUsed"));
+            }
+
+            if (null != jsonParam.getInteger("isTransmit")){
+                param.put("isTransmit", jsonParam.getInteger("isTransmit"));
+            }
+
+        }
         List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
         return toResponsSuccess(couponVos);
     }
