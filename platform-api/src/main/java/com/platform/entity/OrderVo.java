@@ -80,12 +80,18 @@ public class OrderVo implements Serializable {
     private Date add_time;
     //确认时间
     private Date confirm_time;
+
+    //支付方式  多种用逗号隔开 1 余额  2 微信 3卡券
+    private  String pay_ways;
+
     //付款时间
     private Date pay_time;
     //配送费用
-    private Integer freight_price;
+    private Double freight_price;
     //使用的优惠券id
     private Integer coupon_id;
+    //使用的优惠券id
+    private Integer user_coupon_id;
     //
     private Integer parent_id;
     //优惠价格
@@ -345,11 +351,11 @@ public class OrderVo implements Serializable {
         this.pay_time = pay_time;
     }
 
-    public Integer getFreight_price() {
+    public Double getFreight_price() {
         return freight_price;
     }
 
-    public void setFreight_price(Integer freight_price) {
+    public void setFreight_price(Double freight_price) {
         this.freight_price = freight_price;
     }
 
@@ -507,5 +513,21 @@ public class OrderVo implements Serializable {
 
     public void setShipping_no(String shipping_no) {
         this.shipping_no = shipping_no;
+    }
+
+    public Integer getUser_coupon_id() {
+        return user_coupon_id;
+    }
+
+    public void setUser_coupon_id(Integer user_coupon_id) {
+        this.user_coupon_id = user_coupon_id;
+    }
+
+    public String getPay_ways() {
+        return pay_ways;
+    }
+
+    public void setPay_ways(String pay_ways) {
+        this.pay_ways = pay_ways;
     }
 }

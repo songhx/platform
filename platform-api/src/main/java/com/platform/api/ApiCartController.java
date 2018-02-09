@@ -378,7 +378,7 @@ public class ApiCartController extends ApiBaseAction {
      * 订单提交前的检验和填写相关订单信息
      */
     @RequestMapping("checkout")
-    public Object checkout(@LoginUser UserVo loginUser, Integer couponId) {
+    public Object checkout(@LoginUser UserVo loginUser, Integer userCouponId) {
         Map<String, Object> resultObj = new HashMap();
         //根据收货地址计算运费
         BigDecimal freightPrice = new BigDecimal(10.00);
@@ -402,11 +402,6 @@ public class ApiCartController extends ApiBaseAction {
         BigDecimal goodsTotalPrice = (BigDecimal) ((HashMap) cartData.get("cartTotal")).get("checkedGoodsAmount");
 
         //获取可用的优惠券信息
-//        Map usercouponMap = new HashMap();
-//        usercouponMap.put("user_id", loginUser.getUserId());
-//        usercouponMap.put("isUsed", 0);
-//        usercouponMap.put("isTransmit", 0);
-//        List<CouponVo> couponList = apiCouponService.queryUserCouponList(usercouponMap);
         Map couponParam = new HashMap();
         couponParam.put("user_id", loginUser.getUserId());
         couponParam.put("isUsed",0);
@@ -418,7 +413,7 @@ public class ApiCartController extends ApiBaseAction {
         BigDecimal couponPrice = new BigDecimal(0.00);  //使用优惠券减免的金额
         if (null != couponList && couponList.size() > 0) {
             for (CouponVo couponVo : couponList) {
-                if (null != couponId && couponId.equals(couponVo.getId())) {
+                if (null != userCouponId && userCouponId.equals(couponVo.getUserCouponId())) {
                     couponPrice = couponVo.getType_money();
                     checkedCoupon = couponVo;
                 }

@@ -70,17 +70,22 @@ public class ApiOrderService {
     public Map submit(JSONObject jsonParam, UserVo loginUser) {
         Map resultObj = new HashMap();
 
-        Integer couponId = jsonParam.getInteger("couponId");
-        String couponNumber = jsonParam.getString("couponNumber");
+        String payWays = jsonParam.getString("payWays"); ///支付方式
+        Integer userCouponId = jsonParam.getInteger("userCouponId");//用户卡券id
+        String postscript = jsonParam.getString("postscript");//补充说明
+        Integer addressId = jsonParam.getInteger("addressId");
+        Double freightPrice = jsonParam.getDouble("freightPrice");//配送费用
+        if (freightPrice == null){freightPrice =10.00;}//默认10元
+        if (addressId == null){
+            resultObj.put("errno", 400);
+            resultObj.put("errmsg", "请选择收货地址");
+            return resultObj;
+        }
         BigDecimal fullCutCouponDec = jsonParam.getBigDecimal("fullCutCouponDec");
         if(fullCutCouponDec == null ){
             fullCutCouponDec = BigDecimal.valueOf(0);
         }
-        String postscript = jsonParam.getString("postscript");
-//        AddressVo addressVo = jsonParam.getObject("checkedAddress",AddressVo.class);
-        AddressVo addressVo = apiAddressMapper.queryObject(jsonParam.getInteger("addressId"));
 
-        Integer freightPrice = 10;
         //获取要购买的商品
         Map param = new HashMap();
         param.put("user_id", loginUser.getUserId());
@@ -98,42 +103,40 @@ public class ApiOrderService {
             goodsTotalPrice = goodsTotalPrice.add(cartItem.getRetail_price().multiply(new BigDecimal(cartItem.getNumber())));
         }
 
+        //创建订单实例
+        OrderVo orderInfo = new OrderVo();
+        orderInfo.setPay_ways(payWays);
+
         //获取订单使用的优惠券
         BigDecimal couponPrice = new BigDecimal(0.00);
-        if (null != couponId && 0 != couponId) {
-            CouponVo couponVo = apiCouponMapper.queryObject(couponId);
-            if (null != couponVo && null != couponVo.getType_money()) {
-                couponPrice = couponVo.getType_money();
+
+        ///获取用户卡券信息
+        CouponVo couponVo = null;
+        if (null != userCouponId && 0 != userCouponId) {
+            Map userCouponParam = new HashMap();
+            userCouponParam.put("user_coupon_id", userCouponId);
+            List<CouponVo> couponVoList = apiCouponMapper.queryUserCoupons(userCouponParam);
+            if (null != couponVoList && couponVoList.size() > 0){
+                couponVo = couponVoList.get(0);
             }
+
         }
-        // 获取优惠信息提示
-        Map couponParam = new HashMap();
-        couponParam.put("enabled", true);
-        Integer[] send_types = new Integer[]{7};
-        couponParam.put("send_types", send_types);
-        List<CouponVo> couponVos = apiCouponMapper.queryList(couponParam);
-        if (null != couponVos && couponVos.size() > 0) {
-            for (CouponVo couponVo : couponVos) {
-                // 是否免运费
-                if (couponVo.getSend_type() == 7 && couponVo.getMin_amount().compareTo(goodsTotalPrice) <= 0) {
-                    freightPrice = 0;
-                }
-            }
+        if (null != couponVo && null != couponVo.getType_money()) {
+            couponPrice = couponVo.getType_money();
+
         }
         //订单价格计算
         BigDecimal orderTotalPrice = goodsTotalPrice.add(new BigDecimal(freightPrice)); //订单的总价
-
         BigDecimal actualPrice = orderTotalPrice.subtract(fullCutCouponDec).subtract(couponPrice);  //减去其它支付的金额后，要实际支付的金额
         if (actualPrice.compareTo(BigDecimal.ZERO) == -1){
             actualPrice = BigDecimal.ZERO;
         }
         Long currentTime = System.currentTimeMillis() / 1000;
 
-        //
-        OrderVo orderInfo = new OrderVo();
         orderInfo.setOrder_sn(CommonUtil.generateOrderNumber());
         orderInfo.setUser_id(loginUser.getUserId());
         //收货地址和运费
+        AddressVo addressVo = apiAddressMapper.queryObject(addressId);
         orderInfo.setConsignee(addressVo.getUserName());
         orderInfo.setMobile(addressVo.getTelNumber());
         orderInfo.setCountry(addressVo.getNationalCode());
@@ -147,12 +150,15 @@ public class ApiOrderService {
         orderInfo.setPostscript(postscript);
         //使用的优惠券
         orderInfo.setFull_cut_price(fullCutCouponDec);
-        orderInfo.setCoupon_id(couponId);
         orderInfo.setCoupon_price(couponPrice);
         orderInfo.setAdd_time(new Date());
         orderInfo.setGoods_price(goodsTotalPrice);
         orderInfo.setOrder_price(orderTotalPrice);
         orderInfo.setActual_price(actualPrice);
+        if (null != couponVo){
+            orderInfo.setCoupon_id(couponVo.getId());
+            orderInfo.setUser_coupon_id(couponVo.getUserCouponId()); //用户优惠券
+        }
         // 待付款
         orderInfo.setOrder_status(0);
         orderInfo.setShipping_status(0);
@@ -198,8 +204,8 @@ public class ApiOrderService {
         //
         resultObj.put("data", orderInfoMap);
         // 优惠券标记已用
-        if (!StringUtils.isEmpty(couponNumber)) {
-            UserCouponVo userCouponVo = apiUserCouponMapper.queryByCouponNumber(couponNumber);
+        if (null != couponVo) {
+            UserCouponVo userCouponVo = apiUserCouponMapper.queryObject(couponVo.getUserCouponId());
             if (null != userCouponVo && null == userCouponVo.getOrder_id()) {
                 userCouponVo.setUsed_time(new Date());
                 userCouponVo.setOrder_id(orderInfo.getId());
@@ -208,6 +214,27 @@ public class ApiOrderService {
             }
         }
         return resultObj;
+    }
+
+
+    //是否减获取配送费用
+    private  Double getFreightPrice(BigDecimal goodsTotalPrice){
+        Double freightPrice = 0.00;
+        // 获取优惠信息提示
+        Map couponParam = new HashMap();
+        couponParam.put("enabled", true);
+        Integer[] send_types = new Integer[]{7};
+        couponParam.put("send_types", send_types);
+        List<CouponVo> couponVos = apiCouponMapper.queryList(couponParam);
+        if (null != couponVos && couponVos.size() > 0) {
+            for (CouponVo cv : couponVos) {
+                // 是否免运费
+                if (cv.getSend_type() == 7 && cv.getMin_amount().compareTo(goodsTotalPrice) <= 0) {
+                    freightPrice = 0.00;
+                }
+            }
+        }
+        return freightPrice;
     }
 
 }

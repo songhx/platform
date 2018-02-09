@@ -139,7 +139,7 @@ public class ApiOrderController extends ApiBaseAction {
     }
 
     /**
-     * 获取订单列表
+     * 取消订单
      */
     @RequestMapping("cancelOrder")
     public Object cancelOrder(@LoginUser UserVo loginUser, Integer orderId) {
@@ -153,7 +153,7 @@ public class ApiOrderController extends ApiBaseAction {
             // 需要退款
             if (orderVo.getPay_status() == 2) {
                 WechatRefundApiResult result = WechatUtil.wxRefund(orderVo.getId().toString(),
-                        0.01, 0.01);
+                        orderVo.getActual_price().doubleValue(), orderVo.getActual_price().doubleValue());
                 if (result.getResult_code().equals("SUCCESS")) {
                     if (orderVo.getOrder_status() == 201) {
                         orderVo.setOrder_status(401);
@@ -188,7 +188,7 @@ public class ApiOrderController extends ApiBaseAction {
             orderVo.setShipping_status(2);
             orderVo.setConfirm_time(new Date());
             orderService.update(orderVo);
-            return toResponsSuccess("取消成功");
+            return toResponsSuccess("确认收货成功");
         } catch (Exception e) {
             e.printStackTrace();
         }

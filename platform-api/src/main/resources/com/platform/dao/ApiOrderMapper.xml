@@ -33,9 +33,11 @@
         <result property="goods_price" column="goods_price"/>
         <result property="add_time" column="add_time"/>
         <result property="confirm_time" column="confirm_time"/>
+        <result property="pay_ways" column="pay_ways"/>
         <result property="pay_time" column="pay_time"/>
         <result property="freight_price" column="freight_price"/>
         <result property="coupon_id" column="coupon_id"/>
+        <result property="user_coupon_id" column="user_coupon_id"/>
         <result property="parent_id" column="parent_id"/>
         <result property="coupon_price" column="coupon_price"/>
         <result property="callback_status" column="callback_status"/>
@@ -102,8 +104,10 @@
 			`add_time`,
 			`confirm_time`,
 			`pay_time`,
+			pay_ways,
 			`freight_price`,
 			`coupon_id`,
+			`user_coupon_id`,
 			`parent_id`,
 			`coupon_price`,
 			`callback_status`,
@@ -137,8 +141,10 @@
 			#{add_time},
 			#{confirm_time},
 			#{pay_time},
+			#{pay_ways},
 			#{freight_price},
 			#{coupon_id},
+			#{user_coupon_id},
 			#{parent_id},
 			#{coupon_price},
 			#{callback_status},
@@ -177,6 +183,7 @@
             <if test="pay_time != null">`pay_time` = #{pay_time},</if>
             <if test="freight_price != null">`freight_price` = #{freight_price},</if>
             <if test="coupon_id != null">`coupon_id` = #{coupon_id},</if>
+            <if test="user_coupon_id != null">`user_coupon_id` = #{user_coupon_id},</if>
             <if test="parent_id != null">`parent_id` = #{parent_id},</if>
             <if test="coupon_price != null">`coupon_price` = #{coupon_price},</if>
             <if test="callback_status != null">`callback_status` = #{callback_status}</if>
