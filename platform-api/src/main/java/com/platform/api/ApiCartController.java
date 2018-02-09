@@ -402,9 +402,18 @@ public class ApiCartController extends ApiBaseAction {
         BigDecimal goodsTotalPrice = (BigDecimal) ((HashMap) cartData.get("cartTotal")).get("checkedGoodsAmount");
 
         //获取可用的优惠券信息
-        Map usercouponMap = new HashMap();
-        usercouponMap.put("user_id", loginUser.getUserId());
-        List<CouponVo> couponList = apiCouponService.queryUserCouponList(usercouponMap);
+//        Map usercouponMap = new HashMap();
+//        usercouponMap.put("user_id", loginUser.getUserId());
+//        usercouponMap.put("isUsed", 0);
+//        usercouponMap.put("isTransmit", 0);
+//        List<CouponVo> couponList = apiCouponService.queryUserCouponList(usercouponMap);
+        Map couponParam = new HashMap();
+        couponParam.put("user_id", loginUser.getUserId());
+        couponParam.put("isUsed",0);
+        couponParam.put("isTransmit",0);
+
+        List<CouponVo> couponList = apiCouponService.queryUserCoupons(couponParam);
+
         CouponVo checkedCoupon = null;
         BigDecimal couponPrice = new BigDecimal(0.00);  //使用优惠券减免的金额
         if (null != couponList && couponList.size() > 0) {
@@ -415,25 +424,26 @@ public class ApiCartController extends ApiBaseAction {
                 }
             }
         }
-        // 获取优惠信息提示
-        Map couponParam = new HashMap();
-        couponParam.put("enabled", true);
-        Integer[] send_types = new Integer[]{0, 7};
-        couponParam.put("send_types", send_types);
-        List<CouponVo> couponVos = apiCouponService.queryList(couponParam);
+        // 获取用户的可用的卡券信息
+//        Map couponParam = new HashMap();
+//        couponParam.put("user_id", loginUser.getUserId());
+//        couponParam.put("isUsed",0);
+//        couponParam.put("isTransmit",0);
+//
+//        List<CouponVo> couponVos = apiCouponService.queryUserCoupons(couponParam);
         BigDecimal fullCutCouponDec = new BigDecimal(0);
-        if (null != couponVos && couponVos.size() > 0) {
-            for (CouponVo couponVo : couponVos) {
-                if (couponVo.getSend_type() == 0 && couponVo.getMin_amount().compareTo(goodsTotalPrice) <= 0
-                        && fullCutCouponDec.compareTo(couponVo.getType_money()) < 0) {
-                    fullCutCouponDec = couponVo.getType_money();
-                }
-                // 是否免运费
-                if (couponVo.getSend_type() == 7 && couponVo.getMin_amount().compareTo(goodsTotalPrice) <= 0) {
-                    freightPrice = new BigDecimal(0);
-                }
-            }
-        }
+//        if (null != couponVos && couponVos.size() > 0) {
+//            for (CouponVo couponVo : couponVos) {
+//                if (couponVo.getSend_type() == 0 && couponVo.getMin_amount().compareTo(goodsTotalPrice) <= 0
+//                        && fullCutCouponDec.compareTo(couponVo.getType_money()) < 0) {
+//                    fullCutCouponDec = couponVo.getType_money();
+//                }
+//                // 是否免运费
+//                if (couponVo.getSend_type() == 7 && couponVo.getMin_amount().compareTo(goodsTotalPrice) <= 0) {
+//                    freightPrice = new BigDecimal(0);
+//                }
+//            }
+//        }
         resultObj.put("fullCutCouponDec", fullCutCouponDec);
         //订单的总价
         BigDecimal orderTotalPrice = goodsTotalPrice.add(freightPrice);

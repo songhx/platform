@@ -203,6 +203,7 @@ public class ApiOrderService {
             if (null != userCouponVo && null == userCouponVo.getOrder_id()) {
                 userCouponVo.setUsed_time(new Date());
                 userCouponVo.setOrder_id(orderInfo.getId());
+                userCouponVo.setIsUsed(1); // 标记为已使用
                 apiUserCouponMapper.update(userCouponVo);
             }
         }

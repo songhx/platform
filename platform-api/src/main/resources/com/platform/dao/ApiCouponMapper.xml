@@ -36,6 +36,7 @@
     <select id="queryList" resultMap="couponMap">
         select * from nideshop_coupon a
         where 1 = 1
+
         <if test="send_types != null">
             and send_type in
             <foreach item="item" collection="send_types" open="(" separator="," close=")">
