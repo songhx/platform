@@ -48,6 +48,8 @@ public class ApiIndexController extends ApiBaseAction {
         //
         Map param = new HashMap();
         param.put("ad_position_id", 1);
+        param.put("enabled", 1);
+
         List<AdVo> banner = adService.queryList(param);
         resultObj.put("banner", banner);
         //
