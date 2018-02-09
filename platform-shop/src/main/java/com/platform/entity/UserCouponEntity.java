@@ -34,6 +34,9 @@ public class UserCouponEntity implements Serializable {
     private Integer isUsed; //是否被使用
     private Integer isTransmit; //是否转送 0 否 1是
 
+    private Integer clearUseTime; // 1 清除
+    private  Integer clearOrderId;// 1 清除
+
 
     /**
      * 翻译用字段
@@ -175,5 +178,21 @@ public class UserCouponEntity implements Serializable {
 
     public void setIsTransmit(Integer isTransmit) {
         this.isTransmit = isTransmit;
+    }
+
+    public Integer getClearUseTime() {
+        return clearUseTime;
+    }
+
+    public void setClearUseTime(Integer clearUseTime) {
+        this.clearUseTime = clearUseTime;
+    }
+
+    public Integer getClearOrderId() {
+        return clearOrderId;
+    }
+
+    public void setClearOrderId(Integer clearOrderId) {
+        this.clearOrderId = clearOrderId;
     }
 }

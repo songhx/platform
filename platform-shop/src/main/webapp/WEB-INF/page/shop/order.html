@@ -37,6 +37,9 @@
             #if($shiro.hasPermission("order:confirm"))
             <i-button type="error" @click="confirm">确认收货</i-button>
             #end
+            #if($shiro.hasPermission("order:refund"))
+            <i-button type="error" @click="refund">取消订单</i-button>
+            #end
         </Row>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
@@ -73,13 +76,13 @@
             <Form-item label="会员" prop="userName">
                 <i-input v-model="order.userName" readonly/>
             </Form-item>
-            <Form-item label="订单类型" prop="orderType">
-                <i-select v-model="order.orderType" disabled>
-                    <i-option value="1">普通订单</i-option>
-                    <i-option value="2">团购订单</i-option>
-                    <i-option value="3">砍价订单</i-option>
-                </i-select>
-            </Form-item>
+            <!--<Form-item label="订单类型" prop="orderType">-->
+                <!--<i-select v-model="order.orderType" disabled>-->
+                    <!--<i-option value="1">普通订单</i-option>-->
+                    <!--<i-option value="2">团购订单</i-option>-->
+                    <!--<i-option value="3">砍价订单</i-option>-->
+                <!--</i-select>-->
+            <!--</Form-item>-->
             <Form-item label="订单状态" prop="orderStatus" readonly>
                 <Radio-group v-model="order.orderStatus">
                     <Radio label="0" disabled>
@@ -139,6 +142,15 @@
             </Form-item>
             <Form-item label="收货人" prop="consignee">
                 <i-input v-model="order.consignee" readonly/>
+            </Form-item>
+            <Form-item label="省" prop="province">
+                <i-input v-model="order.province" readonly/>
+            </Form-item>
+            <Form-item label="地市" prop="city">
+                <i-input v-model="order.city" readonly/>
+            </Form-item>
+            <Form-item label="区县" prop="district">
+                <i-input v-model="order.district" readonly/>
             </Form-item>
             <Form-item label="收货地址" prop="address">
                 <i-input v-model="order.address" readonly/>

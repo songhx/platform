@@ -134,4 +134,17 @@ public class OrderController {
 
         return R.ok();
     }
+
+    /**
+     * 退货 退钱
+     * @param id
+     * @return
+     */
+    @RequestMapping("/refund")
+    @RequiresPermissions("order:refund")
+    public R refund(@RequestBody Integer id) {
+        orderService.refund(id);
+
+        return R.ok();
+    }
 }

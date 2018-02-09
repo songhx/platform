@@ -40,6 +40,8 @@
         <result property="callbackStatus" column="callback_status"/>
         <result property="orderType" column="order_type"/>
         <result property="userName" column="username"/>
+        <result property="userCouponId" column="user_coupon_id"/>
+        <result property="payWays" column="pay_ways"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.platform.entity.OrderEntity">

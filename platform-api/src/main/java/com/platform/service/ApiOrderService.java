@@ -29,6 +29,8 @@ public class ApiOrderService {
     private ApiOrderGoodsMapper apiOrderGoodsMapper;
     @Autowired
     private ApiUserCouponMapper apiUserCouponMapper;
+    @Autowired
+    private ApiCouponCodesService apiCouponCodesService;
 
 
     public OrderVo queryObject(Integer id) {
@@ -211,6 +213,10 @@ public class ApiOrderService {
                 userCouponVo.setOrder_id(orderInfo.getId());
                 userCouponVo.setIsUsed(1); // 标记为已使用
                 apiUserCouponMapper.update(userCouponVo);
+                CouponCodesVo cce = new CouponCodesVo();
+                cce.setId(userCouponVo.getCoupon_code_id());
+                cce.setStatus(1);//已使用
+                apiCouponCodesService.update(cce);
             }
         }
         return resultObj;

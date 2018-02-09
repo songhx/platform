@@ -35,4 +35,11 @@ public interface OrderService {
     int confirm(Integer id);
 
     int sendGoods(OrderEntity order);
+
+    /**
+     * 退款
+     * @param id
+     * @return
+     */
+    int refund(Integer id);
 }

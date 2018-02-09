@@ -17,19 +17,19 @@
 
     <select id="queryObject" resultType="com.platform.entity.UserCouponEntity">
 		select
-			`id`,
-			`coupon_id`,
-			 nideshop_user_coupon.coupon_code_id,
+			c.`id`,
+			c.`coupon_id`,
+			 c.coupon_code_id,
              nideshop_coupon_codes.coupon_number,
-			`user_id`,
-			`used_time`,
-			`add_time`,
-			`order_id`,
-			is_used,
-			is_transmit
-		from nideshop_user_coupon
-		LEFT JOIN nideshop_coupon_codes ON nideshop_coupon_codes.id = nideshop_user_coupon.coupon_code_id
-		where id = #{id}
+			c.`user_id`,
+			c.`used_time`,
+			c.`add_time`,
+			c.`order_id`,
+			c.is_used,
+			c.is_transmit
+		from nideshop_user_coupon AS c
+		LEFT JOIN nideshop_coupon_codes ON nideshop_coupon_codes.id = c.coupon_code_id
+		where c.id = #{value}
 	</select>
 
     <select id="queryList" resultType="com.platform.entity.UserCouponEntity">
@@ -117,6 +117,8 @@
             <if test="addTime != null">`add_time` = #{addTime},</if>
             <if test="orderId != null">`order_id` = #{orderId},</if>
             <if test="isUsed != null">`is_used` = #{isUsed},</if>
+            <if test="clearUseTime != null and clearUseTime=1">`used_time` = NULL ,</if>
+            <if test="clearOrderId != null and clearOrderId=1">`order_id` = NULL ,</if>
             <if test="isTransmit != null">`is_transmit` = #{isTransmit}</if>
         </set>
         where id = #{id}

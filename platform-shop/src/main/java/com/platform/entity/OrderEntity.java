@@ -91,6 +91,12 @@ public class OrderEntity implements Serializable {
     //
     private String userName;
 
+    //支付方式  多种用逗号隔开 1 余额  2 微信 3卡券
+    private  String payWays;
+
+    //使用的优惠券id
+    private Integer userCouponId;
+
     public String getOrderType() {
         return orderType;
     }
@@ -561,5 +567,21 @@ public class OrderEntity implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPayWays() {
+        return payWays;
+    }
+
+    public void setPayWays(String payWays) {
+        this.payWays = payWays;
+    }
+
+    public Integer getUserCouponId() {
+        return userCouponId;
+    }
+
+    public void setUserCouponId(Integer userCouponId) {
+        this.userCouponId = userCouponId;
     }
 }
