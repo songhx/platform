@@ -141,10 +141,11 @@ public class ApiOrderController extends ApiBaseAction {
     /**
      * 取消订单
      */
-    @RequestMapping("cancelOrder")
+    @RequestMapping("cancel")
     public Object cancelOrder(@LoginUser UserVo loginUser, Integer orderId) {
         try {
-            OrderVo orderVo = orderService.queryObject(orderId);
+
+            OrderVo orderVo = orderService.queryObject(getJsonRequest().getInteger("orderId"));
             if (orderVo.getOrder_status() == 300) {
                 return toResponsFail("已发货，不能取消");
             } else if (orderVo.getOrder_status() == 301) {

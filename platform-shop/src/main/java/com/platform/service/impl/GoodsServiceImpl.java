@@ -76,6 +76,7 @@ public class GoodsServiceImpl implements GoodsService {
         productEntity.setGoodsSn(goods.getGoodsSn());
         productEntity.setGoodsNumber(goods.getGoodsNumber());
         productEntity.setRetailPrice(goods.getRetailPrice());
+        productEntity.setMarketPrice(goods.getMarketPrice());
         productDao.save(productEntity);
 
         goods.setAddTime(new Date());
@@ -98,7 +99,7 @@ public class GoodsServiceImpl implements GoodsService {
                 goodsGalleryDao.save(galleryEntity);
             }
         }
-
+        goods.setIsDelete(0);
         goods.setCreateUserId(user.getUserId());
         goods.setUpdateUserId(user.getUserId());
         goods.setUpdateTime(new Date());
