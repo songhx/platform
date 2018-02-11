@@ -7,6 +7,7 @@ import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +58,9 @@ public class CouponCodesController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody CouponCodesEntity code) {
+        if (checkCodeExist(code.getId(),code.getCouponNumber())){
+            return R.error("编码存在，请更换录入");
+        }
         couponCodesService.save(code);
         Map<String, Object> map = new HashedMap();
         map.put("id", code.getCouponId());
@@ -72,9 +76,26 @@ public class CouponCodesController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody CouponCodesEntity code) {
+        if (checkCodeExist(code.getId(),code.getCouponNumber())){
+            return R.error("编码存在，请更换录入");
+        }
         couponCodesService.update(code);
 
         return R.ok();
+    }
+
+    private boolean checkCodeExist(Integer id , String  couponNumber){
+        if (StringUtils.isBlank(couponNumber)) return true;
+        Map<String, Object> params = new HashedMap();
+        params.put("couponNumber", couponNumber );
+
+        List<CouponCodesEntity> couponList = couponCodesService.queryList(params);
+        if (id != null){ // 修改
+            return (null!=couponList&&couponList.size()>0&&id.intValue() != couponList.get(0).getId().intValue());
+        }else{
+            return  (null!=couponList&&couponList.size()>0) ;
+        }
+
     }
 
     /**

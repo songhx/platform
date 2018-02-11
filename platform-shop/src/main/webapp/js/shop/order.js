@@ -122,13 +122,13 @@ $(function () {
             // {label: '', name: 'integral', index: 'integral', width: 80 },
             // {label: '', name: 'integralMoney', index: 'integral_money', width: 80 },
             {label: '订单总价', name: 'orderPrice', index: 'order_price', width: 60},
-            {label: '商品总价', name: 'goodsPrice', index: 'goods_price', width: 60},
-            {
-                label: '下单时间', name: 'addTime', index: 'add_time', width: 100,
-                formatter: function (value) {
-                    return transDate(value);
-                }
-            },
+            // {label: '商品总价', name: 'goodsPrice', index: 'goods_price', width: 60},
+            // {
+            //     label: '下单时间', name: 'addTime', index: 'add_time', width: 100,
+            //     formatter: function (value) {
+            //         return transDate(value);
+            //     }
+            // },
             {
                 label: '操作', width: 140, align: 'center', sortable: false, formatter: function (value, col, row) {
                 return '<button class="btn btn-outline btn-info" onclick="vm.lookDetail(' + row.id + ')"><i class="fa fa-info-circle"></i>&nbsp;详情</button>' +
