@@ -113,6 +113,8 @@ public class ApiAuthController extends ApiBaseAction {
             userVo.setNickname(userInfo.getNickName());
             userService.save(userVo);
         } else {
+            userInfo.setMobile(org.apache.commons.lang.StringUtils.isNotBlank(userVo.getMobile()) ? userVo.getMobile() : "绑定手机号码");
+            userInfo.setUserId(userVo.getUserId());
             userVo.setLast_login_ip(this.getClientIp());
             userVo.setLast_login_time(nowTime);
             userService.update(userVo);

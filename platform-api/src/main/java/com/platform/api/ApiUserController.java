@@ -9,6 +9,7 @@ import com.platform.service.ApiUserService;
 import com.platform.util.ApiBaseAction;
 import com.platform.utils.CharUtil;
 import com.platform.utils.sms.SmsAlidayu;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,33 @@ public class ApiUserController extends ApiBaseAction {
         UserVo user = userService.queryByMobile(mobile);
         user.setPassword("");
         return user;
+    }
+
+    /**
+     * 绑定手机号码
+     * @param loginUser
+     * @return
+     */
+    @RequestMapping("bindMobile")
+    public Object bindUserMobile(@LoginUser UserVo loginUser) {
+        if(loginUser.getUserId() == null){
+            return  toResponsFail("用户不存在");
+        }
+        JSONObject jsonParams = getJsonRequest();
+        if (jsonParams != null ){
+            String mobile = jsonParams.getString("mobile");
+            if (StringUtils.isBlank(mobile)){
+                return  toResponsFail("手机号码不能为空");
+            }else{
+                UserVo userVo = new UserVo();
+                userVo.setMobile(mobile);
+                userVo.setUserId(loginUser.getUserId());
+                userService.update(userVo);
+                return toResponsMsgSuccess("绑定手机号成功");
+            }
+
+        }
+        return null;
     }
 
     /**
