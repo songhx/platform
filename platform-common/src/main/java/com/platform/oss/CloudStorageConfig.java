@@ -12,10 +12,6 @@ import java.io.Serializable;
 
 /**
  * 云存储配置信息
- *
- * @author lipengjun
- * @email 939961241@qq.com
- * @date 2017-03-25 16:12
  */
 public class CloudStorageConfig implements Serializable {
     private static final long serialVersionUID = 1L;
