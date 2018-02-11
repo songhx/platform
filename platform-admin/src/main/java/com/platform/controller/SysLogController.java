@@ -19,8 +19,7 @@ import java.util.Map;
 /**
  * 系统日志
  *
- * @author lipengjun
- * @email 939961241@qq.com
+ * @author songhongxu
  * @date 2017-03-08 10:40:56
  */
 @Controller

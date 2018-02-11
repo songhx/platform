@@ -21,7 +21,7 @@ import java.util.Map;
  * 名称：ApiSmsController <br>
  * 描述：Api<br>
  *
- * @author 李鹏军
+ * @author bjsonghongxu
  * @version 1.0
  * @since 1.0.0
  */
