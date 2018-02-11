@@ -78,7 +78,7 @@ $(function () {
                 if (row.sendType == 3 || row.sendType == 5) {
                     returnStr += '<button class="ivu-btn ivu-btn-primary ivu-btn-circle ivu-btn-small" onclick="vm.codeInput(' + row.id + ',\'' + row.name + '\')"><i class="ivu-icon ivu-icon-android-folder-open"></i>录入</button>';
                 }
-                return 'returnStr';
+                return returnStr;
             }
 
             }],
