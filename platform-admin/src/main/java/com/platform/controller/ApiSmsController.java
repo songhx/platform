@@ -1,6 +1,6 @@
 package com.platform.controller;
 
-import com.platform.annotation.IgnoreAuth;
+
 import com.platform.entity.SysSmsLogEntity;
 import com.platform.service.SysSmsLogService;
 import com.platform.utils.DateUtils;
@@ -37,7 +37,7 @@ public class ApiSmsController {
      * content：内容字符串
      * stime：追加发送时间，可为空，为空为及时发送
      */
-    @IgnoreAuth
+   // @IgnoreAuth
     @RequestMapping("/sendSms")
     public R sendSms(HttpServletRequest request, @RequestParam Map<String, String> params) {
         SysSmsLogEntity smsLog = new SysSmsLogEntity();
