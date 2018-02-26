@@ -99,7 +99,7 @@ public class CarpoolPublish implements Serializable {
     }
 
     public Double getStartPointLongitude() {
-        return startPointLongitude;
+        return startPointLongitude != null && startPointLongitude.intValue() !=  0 ? startPointLongitude : null;
     }
 
     public void setStartPointLongitude(Double startPointLongitude) {
@@ -107,7 +107,7 @@ public class CarpoolPublish implements Serializable {
     }
 
     public Double getStartPointLatitude() {
-        return startPointLatitude;
+        return startPointLatitude != null && startPointLatitude.intValue() !=  0 ? startPointLatitude : null;
     }
 
     public void setStartPointLatitude(Double startPointLatitude) {
@@ -131,7 +131,7 @@ public class CarpoolPublish implements Serializable {
     }
 
     public Double getDestinationLongitude() {
-        return destinationLongitude;
+        return destinationLongitude != null && destinationLongitude.intValue() !=  0 ? destinationLongitude : null;
     }
 
     public void setDestinationLongitude(Double destinationLongitude) {
@@ -139,7 +139,7 @@ public class CarpoolPublish implements Serializable {
     }
 
     public Double getDestinationLatitude() {
-        return destinationLatitude;
+        return destinationLatitude != null && destinationLatitude.intValue() !=  0 ? destinationLatitude : null;
     }
 
     public void setDestinationLatitude(Double destinationLatitude) {

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
 import com.platform.dto.CarpoolCarVo;
+import com.platform.dto.CarpoolPublishVo;
 import com.platform.entity.CarpoolCar;
 import com.platform.entity.CarpoolPublish;
 import com.platform.service.ApiCarpoolUserService;
@@ -44,19 +45,17 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
 
     /**
      * 车找人 人找车查询
-     * @param requestPageParameter
      * @param carpoolPublish
      * @return
      */
     @RequestMapping("list")
-    public Object list(RequestPageParameter requestPageParameter , CarpoolPublish carpoolPublish) {
-
+    public Object list(@RequestBody CarpoolPublishVo carpoolPublish) {
 
         //数据可用
         carpoolPublish.setStatus(CarpoolConstant.PUBLISHING_STATUS); // 发布中
         carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS); // 可用
 
-        PageHelper.startPage(requestPageParameter.getStart(), requestPageParameter.getLimit(), true, false); //设置分页
+       PageHelper.startPage(carpoolPublish.getStart(), carpoolPublish.getLimit(), true, false); //设置分页
 
         List<CarpoolPublish> list = carpoolPublishService.select(carpoolPublish);
 
