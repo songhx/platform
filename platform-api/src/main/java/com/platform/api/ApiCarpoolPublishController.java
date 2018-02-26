@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,8 +82,11 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
         if (null == carpoolPublish.getPublishUserId()){
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
+        Date time = new Date();
         carpoolPublish.setStatPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
         carpoolPublish.setDestinationGeo(GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));
+        carpoolPublish.setCreateTime(time);
+        carpoolPublish.setUpdateTime(time);
         fillCarInfo(carpoolPublish); // 填充车辆信息
 
         carpoolPublishService.insertSelective(carpoolPublish);
