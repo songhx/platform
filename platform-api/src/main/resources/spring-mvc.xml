@@ -6,7 +6,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans 
-        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd        
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-4.2.xsd
      	http://www.springframework.org/schema/aop 
@@ -39,6 +39,25 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver">-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--&lt;!&ndash; 把ByteArray加在Json前面  &ndash;&gt;-->
+                <!--<ref bean="mappingJacksonHttpMessageConverter" />	&lt;!&ndash; JSON转换器 &ndash;&gt;-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <!-- 为了加载拦截器 需要 日志拦截器 （登录拦截和权限拦截已在shiro实现，看实现 情况处理） -->
     <!--<mvc:interceptors>-->

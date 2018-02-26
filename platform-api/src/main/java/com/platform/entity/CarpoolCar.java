@@ -2,6 +2,7 @@ package com.platform.entity;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -25,6 +26,11 @@ public class CarpoolCar implements Serializable {
     private String otherColor; //其他颜色
     private BigDecimal carPrice;//车辆价格
     private Date expirationTime;//驾照到期时间
+
+    @Transient
+    private Integer  isCarowner;
+    @Transient
+    private String  expirationTimeStr;
 
     public Integer getId() {
         return id;
@@ -104,5 +110,21 @@ public class CarpoolCar implements Serializable {
 
     public void setExpirationTime(Date expirationTime) {
         this.expirationTime = expirationTime;
+    }
+
+    public Integer getIsCarowner() {
+        return isCarowner;
+    }
+
+    public void setIsCarowner(Integer isCarowner) {
+        this.isCarowner = isCarowner;
+    }
+
+    public String getExpirationTimeStr() {
+        return expirationTimeStr;
+    }
+
+    public void setExpirationTimeStr(String expirationTimeStr) {
+        this.expirationTimeStr = expirationTimeStr;
     }
 }

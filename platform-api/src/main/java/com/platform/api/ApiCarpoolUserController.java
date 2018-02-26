@@ -13,8 +13,11 @@ import com.platform.service.ApiCartService;
 import com.platform.service.CarpoolCarService;
 import com.platform.util.ApiBaseAction;
 import com.platform.utils.Constant;
+import com.platform.utils.DateUtils;
 import net.sf.jsqlparser.expression.StringValue;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,7 +59,7 @@ public class ApiCarpoolUserController  extends ApiBaseAction {
         Map<String, Object> resultObj = new HashMap();
         resultObj.put("userInfo",carpoolUser);
         resultObj.put("carpoolCar",(carpoolCarList != null && carpoolCarList.size() > 0) ? carpoolCarList.get(0) : null);
-        return toResponsSuccess(carpoolUser);
+        return toResponsSuccess(resultObj);
     }
 
 
@@ -66,7 +69,7 @@ public class ApiCarpoolUserController  extends ApiBaseAction {
      * @return
      */
     @RequestMapping("completUser")
-    public Object completUser(CarpoolUser carpoolUser) {
+    public Object completUser(@RequestBody CarpoolUser carpoolUser) {
 
         if (null == carpoolUser.getId()){
             return  toResponsFail("用户在系统中不存在，请先登录！");
@@ -77,12 +80,16 @@ public class ApiCarpoolUserController  extends ApiBaseAction {
     }
 
     @RequestMapping("completUserCar")
-    public Object completUserCar(CarpoolCar carpoolCar ) {
-        Integer isCarowner = getJsonRequest().getInteger("isCarowner");
+    public Object completUserCar(@RequestBody CarpoolCar carpoolCar) {
+
+        if(StringUtils.isNotBlank(carpoolCar.getExpirationTimeStr())){
+            Date  expirationTime = DateUtils.strToDate(carpoolCar.getExpirationTimeStr());
+            carpoolCar.setExpirationTime(expirationTime);
+        }
         if (null == carpoolCar.getId()){
             carpoolCarService.insertSelective(carpoolCar);
         }else {
-            if (isCarowner != null && isCarowner.intValue() == 1){ //是车主
+            if (carpoolCar.getIsCarowner() != null && carpoolCar.getIsCarowner().intValue() == 1){ //是车主
                 carpoolCarService.updateByPrimaryKeySelective(carpoolCar);
             }else {//不是删除以前的信息
                 carpoolCarService.delete(carpoolCar);
