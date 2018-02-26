@@ -1,6 +1,9 @@
 package com.platform.api;
 
 import com.alibaba.fastjson.JSONObject;
+import com.platform.constants.CommonConstant;
+import com.platform.entity.CarpoolUser;
+import com.platform.service.ApiCarpoolUserService;
 import com.qiniu.util.StringUtils;
 import com.platform.annotation.IgnoreAuth;
 import com.platform.entity.FullUserInfo;
@@ -37,6 +40,8 @@ public class ApiAuthController extends ApiBaseAction {
     private Logger logger = Logger.getLogger(getClass());
     @Autowired
     private ApiUserService userService;
+    @Autowired
+    private ApiCarpoolUserService apiCarpoolUserService;
     @Autowired
     private TokenService tokenService;
 
@@ -114,7 +119,7 @@ public class ApiAuthController extends ApiBaseAction {
             userService.save(userVo);
         } else {
             userInfo.setMobile(org.apache.commons.lang.StringUtils.isNotBlank(userVo.getMobile()) ? userVo.getMobile() : "绑定手机号码");
-            userInfo.setUserId(userVo.getUserId());
+            userInfo.setUserId(Long.valueOf(String.valueOf(userVo.getUserId())));
             userVo.setLast_login_ip(this.getClientIp());
             userVo.setLast_login_time(nowTime);
             userService.update(userVo);
@@ -130,6 +135,70 @@ public class ApiAuthController extends ApiBaseAction {
         resultObj.put("token", token);
         resultObj.put("userInfo", userInfo);
         resultObj.put("userId", userVo.getUserId());
+        return toResponsSuccess(resultObj);
+    }
+
+
+    /**
+     * 登录
+     */
+    @IgnoreAuth
+    @RequestMapping("carpoolLogin")
+    public Object carpoolLogin() {
+        JSONObject jsonParam = this.getJsonRequest();
+        FullUserInfo fullUserInfo = null;
+        String code = "";
+        if (!StringUtils.isNullOrEmpty(jsonParam.getString("code"))) {
+            code = jsonParam.getString("code");
+        }
+        if (null != jsonParam.get("userInfo")) {
+            fullUserInfo = jsonParam.getObject("userInfo", FullUserInfo.class);
+        }
+
+
+
+        Map<String, Object> resultObj = new HashMap();
+        UserInfo userInfo = fullUserInfo.getUserInfo();
+        if (null == userInfo){
+            return  toResponsFail("登录无效参数");
+        }
+
+
+        String openid = "oacP90FDeUdnFMZkwZ274fEWnWqE";
+//        if(!code.equals("the code is a mock one")){
+//           // openid = sessionData.getString("openid");
+//        }
+        Date time = new Date();
+        CarpoolUser cu = new CarpoolUser();
+        cu.setDataStatus(CommonConstant.USEABLE_STATUS);
+        cu.setWxOpenid(openid);
+        CarpoolUser carpoolUser = apiCarpoolUserService.selectOne(cu);
+        if (null == carpoolUser) {
+            carpoolUser = new CarpoolUser();
+            carpoolUser.setWxOpenid(openid);
+            carpoolUser.setDataStatus(CommonConstant.USEABLE_STATUS);
+            carpoolUser.setAvatar(userInfo.getAvatarUrl());
+            carpoolUser.setCreateTime(time);
+            carpoolUser.setNickName(userInfo.getNickName());
+            carpoolUser.setUpdateTime(time);
+            apiCarpoolUserService.insert(carpoolUser);
+        }else {
+            userInfo.setUserId(Long.parseLong(String.valueOf(carpoolUser.getId())));
+            userInfo.setAvatarUrl(carpoolUser.getAvatar());
+            userInfo.setNickName(carpoolUser.getNickName());
+        }
+
+        Map<String, Object> tokenMap = tokenService.createToken(carpoolUser.getId());
+        String token = MapUtils.getString(tokenMap, "token");
+
+        if (StringUtils.isNullOrEmpty(token)) {
+            return toResponsFail("登录失败");
+        }
+
+        resultObj.put("wxOpendId",code);
+        resultObj.put("token", token);
+        resultObj.put("userInfo", userInfo);
+        resultObj.put("userId", carpoolUser.getId());
         return toResponsSuccess(resultObj);
     }
 }

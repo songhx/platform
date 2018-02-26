@@ -4,11 +4,11 @@
 <mapper namespace="com.platform.dao.TokenDao">
 
 	<select id="queryByUserId" resultType="com.platform.entity.TokenEntity">
-		select * from tb_token where user_id = #{value}
+		selectuser_id AS userId, token, expire_time AS expireTime, update_time AS updateTime from tb_token where user_id = #{value}
 	</select>
 
 	<select id="queryByToken" resultType="com.platform.entity.TokenEntity">
-		select * from tb_token where token = #{value}
+		select user_id AS userId, token, expire_time AS expireTime, update_time AS updateTime from tb_token where token = #{value}
 	</select>
 	 
 	<insert id="save" parameterType="com.platform.entity.TokenEntity">

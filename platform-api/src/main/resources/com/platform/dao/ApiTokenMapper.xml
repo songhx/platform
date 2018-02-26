@@ -12,20 +12,14 @@
 
     <select id="queryObject" resultType="com.platform.entity.TokenEntity">
 		select
-			user_id,
-			token,
-			expire_time,
-			update_time
+			user_id AS userId, token, expire_time AS expireTime, update_time
 		from tb_token
 		where user_id = #{id}
 	</select>
 
     <select id="queryByToken" resultType="com.platform.entity.TokenEntity">
         select
-        user_id,
-        token,
-        expire_time,
-        update_time
+        user_id AS userId, token, expire_time AS expireTime, update_time
         from tb_token
         where token = #{token}
     </select>
@@ -42,10 +36,7 @@
 
     <select id="queryList" resultType="com.platform.entity.TokenEntity">
         select
-        user_id,
-        token,
-        expire_time,
-        update_time
+        user_id AS userId, token, expire_time AS expireTime, update_time
         from tb_token
         WHERE 1=1
         <choose>

@@ -1,0 +1,107 @@
+package com.platform.api;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.platform.constants.CarpoolConstant;
+import com.platform.constants.CommonConstant;
+import com.platform.dto.CarpoolCarVo;
+import com.platform.entity.CarpoolCar;
+import com.platform.entity.CarpoolPublish;
+import com.platform.service.ApiCarpoolUserService;
+import com.platform.service.CarpoolCarService;
+import com.platform.service.CarpoolPublishService;
+import com.platform.util.ApiBaseAction;
+import com.platform.util.CarPoolUtil;
+import com.platform.vo.RequestPageParameter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by zuimeideshiguang on 18/2/13.
+ */
+@RestController
+@RequestMapping("/api/car/publish")
+public class ApiCarpoolPublishController extends ApiBaseAction {
+
+
+    @Autowired
+    private ApiCarpoolUserService apiCarpoolUserService;
+
+    @Autowired
+    private CarpoolCarService carpoolCarService;
+
+    @Autowired
+    private CarpoolPublishService carpoolPublishService;
+
+
+    /**
+     * 车找人 人找车查询
+     * @param requestPageParameter
+     * @param carpoolPublish
+     * @return
+     */
+    @RequestMapping("list")
+    public Object list(RequestPageParameter requestPageParameter , CarpoolPublish carpoolPublish) {
+
+
+        //数据可用
+        carpoolPublish.setStatus(CarpoolConstant.PUBLISHING_STATUS); // 发布中
+        carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS); // 可用
+
+        PageHelper.startPage(requestPageParameter.getStart(), requestPageParameter.getLimit(), true, false); //设置分页
+
+        List<CarpoolPublish> list = carpoolPublishService.select(carpoolPublish);
+
+        PageInfo<CarpoolPublish> pageInfo = new PageInfo<CarpoolPublish>(list);
+
+        Map<String, Object> returnMap = new HashMap<>();
+        //设置返回参数
+        returnMap.put("total",pageInfo.getTotal());
+        returnMap.put("list", list);
+
+        return toResponsSuccess(returnMap);
+    }
+
+
+    /**
+     * 发布行程
+     * @param carpoolPublish
+     * @return
+     */
+    @RequestMapping("publish")
+    public Object publish(CarpoolPublish carpoolPublish) {
+
+        if (null == carpoolPublish.getPublishUserId()){
+            return  toResponsFail("用户在系统中不存在，请先登录！");
+        }
+        fillCarInfo(carpoolPublish); // 填充车辆信息
+
+        carpoolPublishService.insertSelective(carpoolPublish);
+
+        return toResponsSuccess("发不成功！");
+    }
+
+    //填充车辆信息
+    private void fillCarInfo(CarpoolPublish carpoolPublish){
+        CarpoolCarVo carpoolCarVo = null;
+        CarpoolCar cc =  new CarpoolCar();
+        cc.setUserId(carpoolPublish.getPublishUserId());
+        if (carpoolPublish.getCarId() != null) {cc.setId(carpoolPublish.getCarId());}
+        List<CarpoolCar> carpoolCarList = carpoolCarService.select(cc);
+        if (carpoolCarList != null && carpoolCarList.size() > 0){
+            carpoolCarVo = CarPoolUtil.getCarInfo(carpoolCarList.get(0));
+        }
+
+        if (null != carpoolCarVo){
+            carpoolPublish.setCarBrand(carpoolCarVo.getCarBrand());
+            carpoolPublish.setCarColor(carpoolCarVo.getCarColor());
+            carpoolPublish.setCarNo(carpoolCarVo.getCarNo());
+            carpoolPublish.setCarType(carpoolCarVo.getCarType());
+        }
+    }
+}

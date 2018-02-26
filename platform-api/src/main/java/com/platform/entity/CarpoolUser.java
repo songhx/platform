@@ -1,5 +1,6 @@
 package com.platform.entity;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Table(name = "carpool_user")
 public class CarpoolUser implements Serializable {
 
+    @Id
     private Integer id; // '自增id',
     private String wxOpenid;
     private String userName; // '用户姓名',
@@ -26,6 +28,7 @@ public class CarpoolUser implements Serializable {
     private Date createTime; // '创建时间',
     private Date updateTime; // '更新时间',
     private Integer dataStatus; // '数据状态 0  正常  1 删除',
+    private Integer isCarowner; //是否是车主  0 否 1 是
 
 
     public Integer getId() {
@@ -130,5 +133,13 @@ public class CarpoolUser implements Serializable {
 
     public void setDataStatus(Integer dataStatus) {
         this.dataStatus = dataStatus;
+    }
+
+    public Integer getIsCarowner() {
+        return isCarowner;
+    }
+
+    public void setIsCarowner(Integer isCarowner) {
+        this.isCarowner = isCarowner;
     }
 }

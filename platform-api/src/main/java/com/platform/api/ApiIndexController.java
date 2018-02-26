@@ -148,4 +148,22 @@ public class ApiIndexController extends ApiBaseAction {
 //        resultObj.put("categoryList", newCategoryList);
         return toResponsSuccess(resultObj);
     }
+
+
+    /**
+     * app首页轮播图
+     */
+    @IgnoreAuth
+    @RequestMapping("banner")
+    public Object banner() {
+        Map<String, Object> resultObj = new HashMap();
+        //
+        Map param = new HashMap();
+        param.put("ad_position_id", 2);
+        param.put("enabled", 1);
+
+        List<AdVo> banner = adService.queryList(param);
+        resultObj.put("banner", banner);
+        return toResponsSuccess(resultObj);
+    }
 }
