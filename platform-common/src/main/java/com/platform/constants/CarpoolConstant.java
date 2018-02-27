@@ -18,6 +18,18 @@ public class CarpoolConstant {
     //过期
     public static final  int  EXPIRE_STATUS = 3;
 
+    // 拼车单 '状态  0 预约中  1  预约成功  2 拒绝   3 取消  4 失效',
+
+    // 预约中
+    public static final  int  ORDERING_STATUS = 0;
+    //预约成功
+    public static final  int  ORDER_SUCCESS_STATUS = 1;
+    //拒绝
+    public static final  int  ORDER_REFUSE_STATUS = 2;
+    //取消
+    public static final  int  ORDER_CANCEL_STATUS = 4;
+    //失效
+    public static final  int  ORDER_EXPIRE_STATUS = 4;
 
 
 
