@@ -1,5 +1,7 @@
 package com.platform.entity;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -24,7 +26,7 @@ public class CarpoolPublish implements Serializable {
     private String startPoint; // '具体的出发地点',
     private Double startPointLongitude;
     private Double startPointLatitude;
-    private String statPointGeo; // '起点GEO编码',
+    private String startPointGeo; // '起点GEO编码',
     private String destination; // '终点',
     private Double destinationLongitude; // '终点经度',
     private Double destinationLatitude; // '终点维度',
@@ -47,8 +49,12 @@ public class CarpoolPublish implements Serializable {
     private String formId; //表单提交标识
     private Integer dataStatus; // '数据状态 0  正常  1 删除',
 
+
     @Transient
     private Integer carId;
+
+    @Transient
+    private Double distance; //距离
 
     public Integer getId() {
         return id;
@@ -95,7 +101,7 @@ public class CarpoolPublish implements Serializable {
     }
 
     public void setStartPoint(String startPoint) {
-        this.startPoint = startPoint;
+        this.startPoint = StringUtils.trimToNull(startPoint);
     }
 
     public Double getStartPointLongitude() {
@@ -114,12 +120,12 @@ public class CarpoolPublish implements Serializable {
         this.startPointLatitude = startPointLatitude;
     }
 
-    public String getStatPointGeo() {
-        return statPointGeo;
+    public String getStartPointGeo() {
+        return startPointGeo;
     }
 
-    public void setStatPointGeo(String statPointGeo) {
-        this.statPointGeo = statPointGeo;
+    public void setStartPointGeo(String startPointGeo) {
+        this.startPointGeo = startPointGeo;
     }
 
     public String getDestination() {
@@ -127,7 +133,7 @@ public class CarpoolPublish implements Serializable {
     }
 
     public void setDestination(String destination) {
-        this.destination = destination;
+        this.destination = StringUtils.trimToNull(destination);
     }
 
     public Double getDestinationLongitude() {
@@ -296,5 +302,13 @@ public class CarpoolPublish implements Serializable {
 
     public void setFormId(String formId) {
         this.formId = formId;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 }

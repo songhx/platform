@@ -34,9 +34,6 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
 
 
     @Autowired
-    private ApiCarpoolUserService apiCarpoolUserService;
-
-    @Autowired
     private CarpoolCarService carpoolCarService;
 
     @Autowired
@@ -50,23 +47,14 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
      */
     @RequestMapping("list")
     public Object list(@RequestBody CarpoolPublishVo carpoolPublish) {
-
         //数据可用
         carpoolPublish.setStatus(CarpoolConstant.PUBLISHING_STATUS); // 发布中
         carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS); // 可用
 
-       PageHelper.startPage(carpoolPublish.getStart(), carpoolPublish.getLimit(), true, false); //设置分页
-
-        List<CarpoolPublish> list = carpoolPublishService.select(carpoolPublish);
-
-        PageInfo<CarpoolPublish> pageInfo = new PageInfo<CarpoolPublish>(list);
-
-        Map<String, Object> returnMap = new HashMap<>();
-        //设置返回参数
-        returnMap.put("total",pageInfo.getTotal());
-        returnMap.put("list", list);
-
-        return toResponsSuccess(returnMap);
+        if (null == carpoolPublish.getUserType()){
+            return toResponsFail("未知查询");
+        }
+        return toResponsSuccess(carpoolPublishService.queryPublishListByPage(carpoolPublish));
     }
 
 
@@ -82,7 +70,7 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
         Date time = new Date();
-        carpoolPublish.setStatPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
+        carpoolPublish.setStartPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
         carpoolPublish.setDestinationGeo(GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));
         carpoolPublish.setCreateTime(time);
         carpoolPublish.setUpdateTime(time);
@@ -90,7 +78,7 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
 
         carpoolPublishService.insertSelective(carpoolPublish);
 
-        return toResponsSuccess("发不成功！");
+        return toResponsSuccess("发布成功！");
     }
 
     //填充车辆信息

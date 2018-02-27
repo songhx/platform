@@ -3,6 +3,7 @@ package com.platform.dto;
 import com.platform.entity.CarpoolPublish;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by zuimeideshiguang on 18/2/26.
@@ -12,6 +13,9 @@ public class CarpoolPublishVo extends CarpoolPublish implements Serializable {
     private Double custLatitude;
     private Integer start; // 当前页
     private Integer limit; // 每页条数
+
+    private List<Object> geos;
+    private List<Object> destinationGeos;
 
     public Double getCustLongitude() {
         return custLongitude;
@@ -43,5 +47,21 @@ public class CarpoolPublishVo extends CarpoolPublish implements Serializable {
 
     public void setLimit(Integer limit) {
         this.limit = limit;
+    }
+
+    public List<Object> getGeos() {
+        return geos;
+    }
+
+    public void setGeos(List<Object> geos) {
+        this.geos = geos;
+    }
+
+    public List<Object> getDestinationGeos() {
+        return destinationGeos;
+    }
+
+    public void setDestinationGeos(List<Object> destinationGeos) {
+        this.destinationGeos = destinationGeos;
     }
 }
