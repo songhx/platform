@@ -97,18 +97,17 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
 
     /**
      * 拼车记录
-     * @param requestPageParameter
      * @param carpoolOrder
      * @return
      */
     @RequestMapping("list")
-    public Object list(RequestPageParameter requestPageParameter , CarpoolOrder carpoolOrder) {
+    public Object list(@RequestBody  CarpoolOrderVo carpoolOrder) {
 
 
         if (null == carpoolOrder.getOrderUserId()){
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
-        PageHelper.startPage(requestPageParameter.getStart(), requestPageParameter.getLimit(), true, false); //设置分页
+        PageHelper.startPage(carpoolOrder.getStart(), carpoolOrder.getLimit(), true, false); //设置分页
 
         carpoolOrder.setDataStatus(CommonConstant.USEABLE_STATUS); //可用
         List<CarpoolOrder> list = apiCarpoolOrderService.select(carpoolOrder);
@@ -117,7 +116,7 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
 
         Map<String, Object> returnMap = new HashMap<>();
         //设置返回参数
-        returnMap.put("total",pageInfo.getTotal());
+        returnMap.put("totalPage",pageInfo.getPages());
         returnMap.put("list", list);
 
         return toResponsSuccess(returnMap);

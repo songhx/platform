@@ -10,7 +10,17 @@ import java.io.Serializable;
  **/
 public class CarpoolOrderVo extends CarpoolOrder implements Serializable {
     private String  departureTimeStr;
+    private Integer userType; // '用户类型  0 乘客 1司机',
+    private Integer start; // 当前页
+    private Integer limit; // 每页条数
 
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
 
     public String getDepartureTimeStr() {
         return departureTimeStr;
@@ -18,5 +28,21 @@ public class CarpoolOrderVo extends CarpoolOrder implements Serializable {
 
     public void setDepartureTimeStr(String departureTimeStr) {
         this.departureTimeStr = departureTimeStr;
+    }
+
+    public Integer getStart() {
+        return start;
+    }
+
+    public void setStart(Integer start) {
+        this.start = start;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 }

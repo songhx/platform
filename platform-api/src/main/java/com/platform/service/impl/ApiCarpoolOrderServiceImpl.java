@@ -38,7 +38,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         carpoolOrder.setOperatorId(carpoolOrder.getOrderUserId());
         carpoolOrder.setOperatorName(carpoolOrder.getOrderUserName());
         int rs = carpoolOrderMapper.insertSelective(carpoolOrder);
-        if (rs > 0){ // 修改发布信息
+        if (rs > 0 && null != carpoolOrder.getUserType() && carpoolOrder.getUserType().intValue() == 1){ // 修改发布信息
             CarpoolPublish carpoolPublish = new CarpoolPublish();
             carpoolPublish.setId(carpoolOrder.getPublishId());
             carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS);
