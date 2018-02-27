@@ -56,6 +56,12 @@ public class CarpoolPublish implements Serializable {
     @Transient
     private Double distance; //距离
 
+    @Transient
+    private String userName;
+
+    @Transient
+    private String avatar; // '头像地址',
+
     public Integer getId() {
         return id;
     }
@@ -310,5 +316,21 @@ public class CarpoolPublish implements Serializable {
 
     public void setDistance(Double distance) {
         this.distance = distance;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

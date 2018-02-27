@@ -1,5 +1,6 @@
 package com.platform.service;
 
+import com.platform.dto.CarpoolOrderVo;
 import com.platform.entity.CarpoolOrder;
 
 /**
@@ -8,4 +9,6 @@ import com.platform.entity.CarpoolOrder;
  * 拼车预约单业务接口
  */
 public interface ApiCarpoolOrderService extends IBasicSetMapper<CarpoolOrder>  {
+
+    void order(CarpoolOrderVo carpoolOrder);
 }

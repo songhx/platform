@@ -8,6 +8,7 @@ import com.platform.dto.CarpoolCarVo;
 import com.platform.dto.CarpoolPublishVo;
 import com.platform.entity.CarpoolCar;
 import com.platform.entity.CarpoolPublish;
+import com.platform.entity.CarpoolUser;
 import com.platform.service.ApiCarpoolUserService;
 import com.platform.service.CarpoolCarService;
 import com.platform.service.CarpoolPublishService;
@@ -39,6 +40,9 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
     @Autowired
     private CarpoolPublishService carpoolPublishService;
 
+    @Autowired
+    private ApiCarpoolUserService apiCarpoolUserService;
+
 
     /**
      * 车找人 人找车查询
@@ -55,6 +59,57 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
             return toResponsFail("未知查询");
         }
         return toResponsSuccess(carpoolPublishService.queryPublishListByPage(carpoolPublish));
+    }
+
+    /**
+     * 查询拼车发布历史
+     * @param carpoolPublish
+     * @return
+     */
+    @RequestMapping("history")
+    public Object history(@RequestBody CarpoolPublishVo carpoolPublish) {
+        //数据可用
+        carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS); // 可用
+
+        PageHelper.startPage(carpoolPublish.getStart(), carpoolPublish.getLimit(), true, false); //设置分页
+
+        List<CarpoolPublish> list = carpoolPublishService.select(carpoolPublish);
+
+        PageInfo<CarpoolPublish> pageInfo = new PageInfo<CarpoolPublish>(list);
+
+        Map<String, Object> returnMap = new HashMap<>();
+        //设置返回参数
+        returnMap.put("totalPage",pageInfo.getPages());
+        returnMap.put("list", list);
+
+        return toResponsSuccess(returnMap);
+    }
+
+    /**
+     * 查询单条行程信息
+     * @param carpoolPublish
+     * @return
+     */
+    @RequestMapping("queryTrip")
+    public Object queryTrip(@RequestBody CarpoolPublish carpoolPublish) {
+        if (null == carpoolPublish.getId()){
+            return toResponsFail("参数错误");
+        }
+        CarpoolPublish publish = new CarpoolPublish();
+        publish.setId(carpoolPublish.getId());
+        publish.setDataStatus(CommonConstant.USEABLE_STATUS); // 可用
+        CarpoolPublish  p =carpoolPublishService.selectOne(publish);
+        if (p != null){
+            CarpoolUser u = new CarpoolUser();
+            u.setId(p.getPublishUserId());
+            CarpoolUser user = apiCarpoolUserService.selectOne(u);
+            if (user != null){
+                p.setUserName(user.getNickName());
+                p.setAvatar(user.getAvatar());
+            }
+
+        }
+        return toResponsSuccess(p);
     }
 
 

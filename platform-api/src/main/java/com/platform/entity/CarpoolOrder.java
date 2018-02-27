@@ -21,7 +21,7 @@ public class CarpoolOrder implements Serializable {
     private String startPoint; // '具体的出发地点',
     private Double startPointLongitude;
     private Double startPointLatitude;
-    private String statPointGeo; // '起点GEO编码',
+    private String startPointGeo; // '起点GEO编码',
     private String destination; // '终点',
     private Double destinationLongitude; // '终点经度',
     private Double destinationLatitude; // '终点维度',
@@ -103,12 +103,12 @@ public class CarpoolOrder implements Serializable {
         this.startPointLatitude = startPointLatitude;
     }
 
-    public String getStatPointGeo() {
-        return statPointGeo;
+    public String getStartPointGeo() {
+        return startPointGeo;
     }
 
-    public void setStatPointGeo(String statPointGeo) {
-        this.statPointGeo = statPointGeo;
+    public void setStartPointGeo(String startPointGeo) {
+        this.startPointGeo = startPointGeo;
     }
 
     public String getDestination() {

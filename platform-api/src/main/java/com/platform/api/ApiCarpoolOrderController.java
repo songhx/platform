@@ -2,16 +2,22 @@ package com.platform.api;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.StringUtil;
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
+import com.platform.dto.CarpoolOrderVo;
 import com.platform.entity.CarpoolOrder;
 import com.platform.entity.CarpoolOrderLog;
 import com.platform.entity.UserVo;
 import com.platform.service.ApiCarpoolOrderService;
 import com.platform.service.CarpoolOrderLogService;
 import com.platform.util.ApiBaseAction;
+import com.platform.utils.DateUtils;
+import com.platform.utils.GEOUtils;
 import com.platform.vo.RequestPageParameter;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,7 +47,7 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
      * @return
      */
     @RequestMapping("order")
-    public Object order(CarpoolOrder carpoolOrder) {
+    public Object order(@RequestBody  CarpoolOrderVo carpoolOrder) {
 
         ///校验
         if (null == carpoolOrder.getPublishId()){
@@ -50,12 +56,10 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
         if (null == carpoolOrder.getOrderUserId()){
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
-
+        //字符串转时间
+        if (StringUtils.isNotBlank(carpoolOrder.getDepartureTimeStr())){carpoolOrder.setDepartureTime(DateUtils.strToDate(carpoolOrder.getDepartureTimeStr()));}
         try {
-            Date time = new Date();
-            carpoolOrder.setCreateTime(time);
-            carpoolOrder.setUpdateTime(time);
-            apiCarpoolOrderService.insertSelective(carpoolOrder);
+            apiCarpoolOrderService.order(carpoolOrder);
             saveLogs(carpoolOrder,carpoolOrder.getOrderUserName() + "预订成功！");
             return toResponsSuccess("预订成功！");
         }catch (Exception e){
