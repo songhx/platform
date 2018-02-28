@@ -67,7 +67,7 @@ public class GEOUtils {
      */
     public static String cateGeoCode(Double custLongitude , Double custLatitude){
         if(null == custLongitude || null == custLatitude)return  null;
-        return  GeoHash.withCharacterPrecision(custLatitude, custLongitude, RANGE + 1).toBase32();
+        return  GeoHash.withCharacterPrecision(custLatitude, custLongitude, RANGE ).toBase32();
     }
 
     /**
