@@ -182,10 +182,12 @@ public class ApiAuthController extends ApiBaseAction {
             carpoolUser.setNickName(userInfo.getNickName());
             carpoolUser.setUpdateTime(time);
             apiCarpoolUserService.insert(carpoolUser);
+            userInfo.setWxOpenid(openid);
         }else {
             userInfo.setUserId(Long.parseLong(String.valueOf(carpoolUser.getId())));
             userInfo.setAvatarUrl(carpoolUser.getAvatar());
             userInfo.setNickName(carpoolUser.getNickName());
+            userInfo.setWxOpenid(carpoolUser.getWxOpenid());
         }
 
         Map<String, Object> tokenMap = tokenService.createToken(carpoolUser.getId());

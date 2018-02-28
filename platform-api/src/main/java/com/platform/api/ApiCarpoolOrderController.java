@@ -116,7 +116,7 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
     public Object list(@RequestBody  CarpoolOrderVo carpoolOrder) {
 
 
-        if (null == carpoolOrder.getOrderUserId()){
+         if (null == carpoolOrder.getOrderUserId()){
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
         PageHelper.startPage(carpoolOrder.getStart(), carpoolOrder.getLimit(), true, false); //设置分页

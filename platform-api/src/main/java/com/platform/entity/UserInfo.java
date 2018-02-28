@@ -27,6 +27,8 @@ public class UserInfo implements Serializable {
     //手机号码
     private String mobile;
 
+    private String wxOpenid;
+
     public Long getUserId() {
         return userId;
     }
@@ -81,5 +83,13 @@ public class UserInfo implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getWxOpenid() {
+        return wxOpenid;
+    }
+
+    public void setWxOpenid(String wxOpenid) {
+        this.wxOpenid = wxOpenid;
     }
 }
