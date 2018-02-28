@@ -23,6 +23,7 @@
         FROM carpool_publish AS p
         WHERE
            data_status = 0
+        AND p.passenger_num > 0
         <if test="status != null">
             AND p.`status` =  #{status}
         </if>
