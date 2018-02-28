@@ -216,8 +216,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         carpoolOrderLogService.insertSelective(log);
     }
 
-    ///发送模板消息
-    private void sendTemplateMsg(Integer userId , String tmplId , String page,  TreeMap<String,TreeMap<String,String>> params){
+    public void sendTemplateMsg(Integer userId , String tmplId , String page,  TreeMap<String,TreeMap<String,String>> params){
         CarpoolUserFormid formid = new CarpoolUserFormid();
         formid.setUserId(userId); //发布人
         List<CarpoolUserFormid> formidList = carpoolUserFormidService.select(formid);

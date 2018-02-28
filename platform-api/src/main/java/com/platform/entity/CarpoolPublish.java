@@ -43,6 +43,7 @@ public class CarpoolPublish implements Serializable {
     private String carNo; // '车牌号',
     private String carBrand; //品牌
     private Integer status; // '拼车信息状态 0 发布中  1 完成  2 取消  3 过期',
+    private String cancelReason;//取消原因
     private String bake; // '备注信息',
     private Date createTime; // '创建时间',
     private Date updateTime; // '更新时间',
@@ -324,5 +325,13 @@ public class CarpoolPublish implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getCancelReason() {
+        return cancelReason;
+    }
+
+    public void setCancelReason(String cancelReason) {
+        this.cancelReason = cancelReason;
     }
 }

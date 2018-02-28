@@ -17,4 +17,10 @@ public interface CarpoolPublishService extends IBasicSetMapper<CarpoolPublish> {
      * @return
      */
     Map<String, Object> queryPublishListByPage(CarpoolPublishVo carpoolPublish);
+
+    /**
+     * 取消发布
+     * @param carpoolPublish
+     */
+    void cnacelPublish(CarpoolPublish carpoolPublish);
 }

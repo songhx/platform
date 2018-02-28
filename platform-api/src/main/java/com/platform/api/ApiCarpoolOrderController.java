@@ -102,7 +102,6 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
             apiCarpoolOrderService.cancelOrder(carpoolOrder);
             return toResponsSuccess("操作成功！");
         }catch (Exception e){
-            //saveLogs(loginUser,carpoolOrder.getId(),carpoolOrder.getOrderUserName() + "预订失败！");
             return  toResponsFail("操作失败！");
         }
     }

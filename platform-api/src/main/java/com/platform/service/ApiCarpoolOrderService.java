@@ -4,6 +4,8 @@ import com.platform.dto.CarpoolOrderVo;
 import com.platform.entity.CarpoolOrder;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.TreeMap;
+
 /**
  * Created by zuimeideshiguang on 18/2/12.
  *
@@ -28,4 +30,13 @@ public interface ApiCarpoolOrderService extends IBasicSetMapper<CarpoolOrder>  {
      * @param carpoolOrder
      */
     void  cancelOrder(CarpoolOrderVo carpoolOrder);
+
+    /**
+     * 发送模板消息
+     * @param userId
+     * @param tmplId
+     * @param page
+     * @param params
+     */
+    void sendTemplateMsg(Integer userId , String tmplId , String page,  TreeMap<String,TreeMap<String,String>> params);
 }
