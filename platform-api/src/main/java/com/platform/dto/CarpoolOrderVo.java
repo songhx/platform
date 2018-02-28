@@ -13,6 +13,7 @@ public class CarpoolOrderVo extends CarpoolOrder implements Serializable {
     private Integer userType; // '用户类型  0 乘客 1司机',
     private Integer start; // 当前页
     private Integer limit; // 每页条数
+    private Integer publishuserId; // 发布人id
 
     public Integer getUserType() {
         return userType;
@@ -44,5 +45,13 @@ public class CarpoolOrderVo extends CarpoolOrder implements Serializable {
 
     public void setLimit(Integer limit) {
         this.limit = limit;
+    }
+
+    public Integer getPublishuserId() {
+        return publishuserId;
+    }
+
+    public void setPublishuserId(Integer publishuserId) {
+        this.publishuserId = publishuserId;
     }
 }

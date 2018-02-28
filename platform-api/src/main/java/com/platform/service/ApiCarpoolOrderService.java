@@ -2,6 +2,7 @@ package com.platform.service;
 
 import com.platform.dto.CarpoolOrderVo;
 import com.platform.entity.CarpoolOrder;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Created by zuimeideshiguang on 18/2/12.
@@ -10,5 +11,21 @@ import com.platform.entity.CarpoolOrder;
  */
 public interface ApiCarpoolOrderService extends IBasicSetMapper<CarpoolOrder>  {
 
+    /**
+     * 预定
+     * @param carpoolOrder
+     */
     void order(CarpoolOrderVo carpoolOrder);
+
+    /**
+     * 确认或拒绝
+     * @param carpoolOrder
+     */
+    void confirmOrRefuseOrder(CarpoolOrderVo carpoolOrder);
+
+    /**
+     *  取消
+     * @param carpoolOrder
+     */
+    void  cancelOrder(CarpoolOrderVo carpoolOrder);
 }

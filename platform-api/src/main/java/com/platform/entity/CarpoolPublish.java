@@ -46,7 +46,6 @@ public class CarpoolPublish implements Serializable {
     private String bake; // '备注信息',
     private Date createTime; // '创建时间',
     private Date updateTime; // '更新时间',
-    private String formId; //表单提交标识
     private Integer dataStatus; // '数据状态 0  正常  1 删除',
 
 
@@ -302,13 +301,6 @@ public class CarpoolPublish implements Serializable {
         this.carId = carId;
     }
 
-    public String getFormId() {
-        return formId;
-    }
-
-    public void setFormId(String formId) {
-        this.formId = formId;
-    }
 
     public Double getDistance() {
         return distance;

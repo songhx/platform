@@ -153,4 +153,24 @@ public class StringUtils {
         }
         return Integer.parseInt(s);
     }
+
+    /**
+     * 格式化
+     * @param value
+     * @param dot
+     * @return
+     */
+    public static String NullToString(String value,String dot){
+        return  org.apache.commons.lang.StringUtils.isBlank(value) ? dot : value;
+    }
+
+    /**
+     *
+     * @param value
+     * @param dot
+     * @return
+     */
+    public static String NullToString(Integer value,String dot){
+        return value == null ? dot : String.valueOf(value);
+    }
 }

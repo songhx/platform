@@ -5,26 +5,25 @@ import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.StringUtil;
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
+import com.platform.constants.TemplateMessageConstant;
 import com.platform.dto.CarpoolOrderVo;
-import com.platform.entity.CarpoolOrder;
-import com.platform.entity.CarpoolOrderLog;
-import com.platform.entity.UserVo;
-import com.platform.service.ApiCarpoolOrderService;
-import com.platform.service.CarpoolOrderLogService;
+import com.platform.entity.*;
+import com.platform.service.*;
+import com.platform.thread.TokenThread;
 import com.platform.util.ApiBaseAction;
 import com.platform.utils.DateUtils;
 import com.platform.utils.GEOUtils;
 import com.platform.vo.RequestPageParameter;
+import com.platform.weixin.WeixinConfig;
+import com.platform.weixin.templateMessage.WechatTemplateMsg;
+import com.platform.weixin.templateMessage.WechatTemplateMsgUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by zuimeideshiguang on 18/2/13.
@@ -36,9 +35,6 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
 
    @Autowired
    private ApiCarpoolOrderService apiCarpoolOrderService;
-
-   @Autowired
-   private CarpoolOrderLogService carpoolOrderLogService;
 
 
     /**
@@ -60,7 +56,6 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
         if (StringUtils.isNotBlank(carpoolOrder.getDepartureTimeStr())){carpoolOrder.setDepartureTime(DateUtils.strToDate(carpoolOrder.getDepartureTimeStr()));}
         try {
             apiCarpoolOrderService.order(carpoolOrder);
-            saveLogs(carpoolOrder,carpoolOrder.getOrderUserName() + "预订成功！");
             return toResponsSuccess("预订成功！");
         }catch (Exception e){
             //saveLogs(loginUser,carpoolOrder.getId(),carpoolOrder.getOrderUserName() + "预订失败！");
@@ -69,31 +64,49 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
 
     }
 
+
     /**
-     * 确认或取消
+     * 确认或拒绝
      * @param carpoolOrder
      * @return
      */
     @RequestMapping("confirmOrRefuse")
-    public Object confirmOrRefuseOrder( CarpoolOrder carpoolOrder) {
+    public Object confirmOrRefuseOrder(@RequestBody  CarpoolOrderVo carpoolOrder) {
 
         ///校验
         if (null == carpoolOrder.getId()){
             return  toResponsFail("参数错误！");
         }
         try {
-            Date time = new Date();
-            carpoolOrder.setUpdateTime(time);
-            apiCarpoolOrderService.updateByPrimaryKeySelective(carpoolOrder);
-            String msg = carpoolOrder.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ? "确认" : "拒绝";
-            saveLogs(carpoolOrder,carpoolOrder.getOrderUserName() + msg + "预订！");
+            apiCarpoolOrderService.confirmOrRefuseOrder(carpoolOrder);
             return toResponsSuccess("操作成功！");
         }catch (Exception e){
             //saveLogs(loginUser,carpoolOrder.getId(),carpoolOrder.getOrderUserName() + "预订失败！");
             return  toResponsFail("操作失败！");
         }
-
     }
+
+    /**
+     * 取消预约
+     * @param carpoolOrder
+     * @return
+     */
+    @RequestMapping("cancel")
+    public Object cancelOrder(@RequestBody  CarpoolOrderVo carpoolOrder) {
+
+        ///校验
+        if (null == carpoolOrder.getId()){
+            return  toResponsFail("参数错误！");
+        }
+        try {
+            apiCarpoolOrderService.cancelOrder(carpoolOrder);
+            return toResponsSuccess("操作成功！");
+        }catch (Exception e){
+            //saveLogs(loginUser,carpoolOrder.getId(),carpoolOrder.getOrderUserName() + "预订失败！");
+            return  toResponsFail("操作失败！");
+        }
+    }
+
 
     /**
      * 拼车记录
@@ -123,13 +136,4 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
     }
 
 
-    //记录预约记录
-    private void saveLogs(CarpoolOrder carpoolOrder , String content ){
-        CarpoolOrderLog log = new CarpoolOrderLog();
-        log.setContent(content);
-        log.setOrderId(carpoolOrder.getId());
-        log.setOperatorId(carpoolOrder.getOrderUserId());
-        log.setOperatorName(carpoolOrder.getOrderUserName());
-        carpoolOrderLogService.insertSelective(log);
-    }
 }

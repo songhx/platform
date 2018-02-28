@@ -136,6 +136,21 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
         return toResponsSuccess("发布成功！");
     }
 
+    @RequestMapping("cnacel")
+    public Object cnacelPublish(@RequestBody  CarpoolPublish carpoolPublish) {
+
+        if (null == carpoolPublish.getId()){
+            return  toResponsFail("参数不足！");
+        }
+        Date time = new Date();
+
+        carpoolPublish.setUpdateTime(time);
+
+        carpoolPublishService.updateByPrimaryKeySelective(carpoolPublish);
+
+        return toResponsSuccess("发布成功！");
+    }
+
     //填充车辆信息
     private void fillCarInfo(CarpoolPublish carpoolPublish){
         CarpoolCarVo carpoolCarVo = null;

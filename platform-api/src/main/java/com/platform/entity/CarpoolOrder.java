@@ -18,6 +18,7 @@ public class CarpoolOrder implements Serializable {
     private Integer orderUserId; // '预约人id',
     private String orderUserName; // '预约/抢单人姓名',
     private String mobile; // '联系电话',
+    private Integer passengerNum; // '乘客人数',
     private String startPoint; // '具体的出发地点',
     private Double startPointLongitude;
     private Double startPointLatitude;
@@ -29,13 +30,12 @@ public class CarpoolOrder implements Serializable {
     private Date departureTime; // '出发时间',
     private Integer status; // '状态  0 预约中  1  预约成功  2 拒绝   3 取消  4 失效',
     private String refuseReason; // '拒绝原因',
+    private String cancelReason;//取消原因
     private Integer operatorId; // '操作人id',
     private String operatorName; // '操作人姓名',
     private Date createTime; // '创建时间',
     private Date updateTime; // '更新时间',
     private String bake; // '备注信息',
-    private String orderFormId; //预约提交标识
-    private String publishFormId; //发布提交标识
     private Integer dataStatus; // '数据状态  0 正常  1 删除',
 
 
@@ -215,19 +215,19 @@ public class CarpoolOrder implements Serializable {
         this.dataStatus = dataStatus;
     }
 
-    public String getOrderFormId() {
-        return orderFormId;
+    public Integer getPassengerNum() {
+        return passengerNum;
     }
 
-    public void setOrderFormId(String orderFormId) {
-        this.orderFormId = orderFormId;
+    public void setPassengerNum(Integer passengerNum) {
+        this.passengerNum = passengerNum;
     }
 
-    public String getPublishFormId() {
-        return publishFormId;
+    public String getCancelReason() {
+        return cancelReason;
     }
 
-    public void setPublishFormId(String publishFormId) {
-        this.publishFormId = publishFormId;
+    public void setCancelReason(String cancelReason) {
+        this.cancelReason = cancelReason;
     }
 }
