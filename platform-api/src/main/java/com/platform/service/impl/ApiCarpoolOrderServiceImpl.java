@@ -230,8 +230,9 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             msg.setPage(page);
             msg.setEmphasis_keyword("");
             msg.setData(params);
-
-            WechatTemplateMsgUtil.sendTemplateMsg(TokenThread.accessToken.getAccessToken(),WechatTemplateMsgUtil.createTemplateMsgJson(msg));
+            String token = "7_FdVGenEo5lJONG0TkQM5sNZi8x6ZQHtdMLAOc6rqvGETnzsnbLeUqI5wPwJ1IEaK9nN1CrfOwojeqEHFi6Oe8xsqUA3KaJCP7-CCqrShpi_nUesV_zQnfXpyYAcODb6hFxpFxtdnvFTysDQMWTEhAJAGDO";
+            //WechatTemplateMsgUtil.sendTemplateMsg(TokenThread.accessToken.getAccessToken(),WechatTemplateMsgUtil.createTemplateMsgJson(msg));
+            WechatTemplateMsgUtil.sendTemplateMsg(token,WechatTemplateMsgUtil.createTemplateMsgJson(msg));
         }
     }
 }
