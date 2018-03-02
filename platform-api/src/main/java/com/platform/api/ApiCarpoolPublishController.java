@@ -136,6 +136,29 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
         return toResponsSuccess("发布成功！");
     }
 
+    /**
+     * 更新行程
+     * @param carpoolPublish
+     * @return
+     */
+    @RequestMapping("updateTrip")
+    public Object updateTrip(@RequestBody  CarpoolPublish carpoolPublish) {
+
+        if (null == carpoolPublish.getId()){
+            return  toResponsFail("参数错误！");
+        }
+        Date time = new Date();
+        carpoolPublish.setStartPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
+        carpoolPublish.setDestinationGeo(GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));
+        carpoolPublish.setUpdateTime(time);
+        fillCarInfo(carpoolPublish); // 填充车辆信息
+
+        carpoolPublishService.updateByPrimaryKeySelective(carpoolPublish);
+
+        return toResponsSuccess("更新成功！");
+    }
+
+
     @RequestMapping("cnacel")
     public Object cnacelPublish(@RequestBody  CarpoolPublish carpoolPublish) {
 

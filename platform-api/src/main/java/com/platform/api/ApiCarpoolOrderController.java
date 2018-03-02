@@ -132,5 +132,14 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
         return toResponsSuccess(returnMap);
     }
 
-
+    /**
+     * 查询预约单详情
+     * @param carpoolOrder
+     * @return
+     */
+    @RequestMapping("queryOrder")
+    public Object queryOrder(@RequestBody  CarpoolOrderVo carpoolOrder) {
+        carpoolOrder.setDataStatus(CommonConstant.USEABLE_STATUS); //可用
+        return toResponsSuccess(apiCarpoolOrderService.selectOne(carpoolOrder));
+    }
 }
