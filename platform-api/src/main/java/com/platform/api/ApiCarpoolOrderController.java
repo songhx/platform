@@ -133,7 +133,7 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
     }
 
     /**
-     * 查询预约单详情
+     * 查询预约单详情()
      * @param carpoolOrder
      * @return
      */
@@ -141,5 +141,16 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
     public Object queryOrder(@RequestBody  CarpoolOrderVo carpoolOrder) {
         carpoolOrder.setDataStatus(CommonConstant.USEABLE_STATUS); //可用
         return toResponsSuccess(apiCarpoolOrderService.selectOne(carpoolOrder));
+    }
+
+    /**
+     * 查询预约单详情(定制)
+     * @param carpoolOrder
+     * @return
+     */
+    @RequestMapping("queryUserOrder")
+    public Object queryUserOrder(@RequestBody  CarpoolOrderVo carpoolOrder) {
+        carpoolOrder.setDataStatus(CommonConstant.USEABLE_STATUS); //可用
+        return toResponsSuccess(apiCarpoolOrderService.queryCarpoolUserOrder(carpoolOrder.getId()));
     }
 }

@@ -1,5 +1,6 @@
 package com.platform.entity;
 
+import com.platform.util.CarPoolUtil;
 import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.Id;
@@ -61,6 +62,9 @@ public class CarpoolPublish implements Serializable {
 
     @Transient
     private String avatar; // '头像地址',
+
+    @Transient
+    private String carbaseInfo;
 
     public Integer getId() {
         return id;
@@ -334,4 +338,11 @@ public class CarpoolPublish implements Serializable {
     public void setCancelReason(String cancelReason) {
         this.cancelReason = cancelReason;
     }
+
+    public String getCarbaseInfo() {
+        return this.carNo + "-" + this.carColor + "-" + this.carBrand + "(" +this.carType+")";
+    }
+
+    public void setCarbaseInfo(String carbaseInfo) {
+        this.carbaseInfo = carbaseInfo;}
 }

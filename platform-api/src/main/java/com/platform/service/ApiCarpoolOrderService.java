@@ -1,6 +1,7 @@
 package com.platform.service;
 
 import com.platform.dto.CarpoolOrderVo;
+import com.platform.dto.CarpoolUserOrderVo;
 import com.platform.entity.CarpoolOrder;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -39,4 +40,11 @@ public interface ApiCarpoolOrderService extends IBasicSetMapper<CarpoolOrder>  {
      * @param params
      */
     void sendTemplateMsg(Integer userId , String tmplId , String page,  TreeMap<String,TreeMap<String,String>> params);
+
+    /**
+     * 查询用户预约单
+     * @param id
+     * @return
+     */
+    CarpoolUserOrderVo queryCarpoolUserOrder(Integer id);
 }

@@ -7,21 +7,19 @@ import com.platform.dao.CarpoolOrderMapper;
 import com.platform.dao.CarpoolPublishMapper;
 import com.platform.dao.CarpoolUserMapper;
 import com.platform.dto.CarpoolOrderVo;
+import com.platform.dto.CarpoolUserOrderVo;
 import com.platform.entity.*;
 import com.platform.service.ApiCarpoolOrderService;
 import com.platform.service.CarpoolOrderLogService;
 import com.platform.service.CarpoolUserFormidService;
-import com.platform.thread.TokenThread;
 import com.platform.utils.DateUtils;
 import com.platform.utils.GEOUtils;
 import com.platform.utils.StringUtils;
-import com.platform.weixin.WeixinConfig;
 import com.platform.weixin.templateMessage.WechatTemplateMsg;
 import com.platform.weixin.templateMessage.WechatTemplateMsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -119,7 +117,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         carpoolOrder.setStatus(null);
         carpoolOrder.setRefuseReason(null);
         CarpoolOrder order = carpoolOrderMapper.selectOne(carpoolOrder);
-        String tmplId = (carpoolOrder.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ? TemplateMessageConstant.CARPOOL_SUCCESS_TMPL_ID : TemplateMessageConstant.CARPOOL_FAIL_TMPL_ID);
+        String tmplId = (order.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ? TemplateMessageConstant.CARPOOL_SUCCESS_TMPL_ID : TemplateMessageConstant.CARPOOL_FAIL_TMPL_ID);
         sendTemplateMsg(carpoolOrder.getPublishuserId() ,tmplId,"", confirmOrRefuseMsgData(order));
     }
 
@@ -234,5 +232,70 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             //WechatTemplateMsgUtil.sendTemplateMsg(TokenThread.accessToken.getAccessToken(),WechatTemplateMsgUtil.createTemplateMsgJson(msg));
             WechatTemplateMsgUtil.sendTemplateMsg(token,WechatTemplateMsgUtil.createTemplateMsgJson(msg));
         }
+    }
+
+    @Override
+    public CarpoolUserOrderVo queryCarpoolUserOrder(Integer id) {
+        CarpoolOrder co = new CarpoolOrder();
+        co.setDataStatus(CommonConstant.USEABLE_STATUS);
+        co.setId(id);
+        CarpoolOrder carpoolOrder = carpoolOrderMapper.selectOne(co);
+        CarpoolUserOrderVo cuv = null;
+        if (carpoolOrder != null){
+            cuv = new CarpoolUserOrderVo();
+            cuv.setId(carpoolOrder.getId());
+            cuv.setOrderBake(carpoolOrder.getBake());
+            cuv.setByWays(carpoolOrder.getCancelReason());
+            cuv.setCancelReason(carpoolOrder.getCancelReason());
+            cuv.setRefuseReason(carpoolOrder.getRefuseReason());
+            cuv.setDepartureTime(carpoolOrder.getDepartureTime());
+            cuv.setStartPoint(carpoolOrder.getStartPoint());
+            cuv.setDestination(carpoolOrder.getDestination());
+            cuv.setStatus(carpoolOrder.getStatus());
+            cuv.setPassengerNum(carpoolOrder.getPassengerNum());
+            setUserInfo(carpoolOrder.getOrderUserId() , null,cuv); //设置预订者信息
+            if (carpoolOrder.getPublishId() != null){
+                cuv.setPublishId(carpoolOrder.getPublishId());
+                CarpoolPublish cp = new CarpoolPublish();
+                cp.setId(carpoolOrder.getPublishId());
+                cp.setDataStatus(CommonConstant.USEABLE_STATUS);
+                CarpoolPublish carpoolPublish = carpoolPublishMapper.selectOne(cp);
+                if (carpoolPublish != null){
+                    setUserInfo(null , carpoolPublish.getPublishUserId(),cuv); //设置发布者信息
+                    cuv.setUserType(carpoolPublish.getUserType());
+                    cuv.setPrice(carpoolPublish.getPrice());
+                    cuv.setByWays(carpoolPublish.getByWays());
+                    cuv.setCarBrand(carpoolPublish.getCarBrand());
+                    cuv.setCarColor(carpoolPublish.getCarColor());
+                    cuv.setCarNo(carpoolPublish.getCarNo());
+                    cuv.setCarbaseInfo(carpoolPublish.getCarbaseInfo());
+                    cuv.setCarType(carpoolPublish.getCarType());
+                    cuv.setPublishBake(carpoolPublish.getBake());
+                }
+            }
+
+        }
+        return cuv;
+    }
+
+    private void setUserInfo(Integer orderUserId, Integer publishUserId , CarpoolUserOrderVo cuv){
+        CarpoolUser user = new CarpoolUser();
+        if (orderUserId != null) user.setId(orderUserId);
+        if (publishUserId != null)user.setId(publishUserId);
+        CarpoolUser carpoolUser = carpoolUserMapper.selectOne(user);
+        if (carpoolUser != null){
+            if (orderUserId != null){
+                cuv.setOrderUserId(orderUserId);
+                cuv.setOrderUserAvatar(carpoolUser.getAvatar());
+                cuv.setOrderUsermobile(carpoolUser.getMobile());
+                cuv.setOrderUserName(carpoolUser.getNickName());
+            }else {
+                cuv.setPublishUserId(publishUserId);
+                cuv.setPublishUserAvatar(carpoolUser.getAvatar());
+                cuv.setPublishUsermobile(carpoolUser.getMobile());
+                cuv.setPublishUserName(carpoolUser.getNickName());
+            }
+        }
+
     }
 }

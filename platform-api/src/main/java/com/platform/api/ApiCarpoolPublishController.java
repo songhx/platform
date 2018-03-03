@@ -159,8 +159,8 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
     }
 
 
-    @RequestMapping("cnacel")
-    public Object cnacelPublish(@RequestBody  CarpoolPublish carpoolPublish) {
+    @RequestMapping("cancel")
+    public Object cancelPublish(@RequestBody  CarpoolPublish carpoolPublish) {
 
         if (null == carpoolPublish.getId()){
             return  toResponsFail("参数不足！");
@@ -169,7 +169,7 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
 
         carpoolPublish.setUpdateTime(time);
 
-        carpoolPublishService.updateByPrimaryKeySelective(carpoolPublish);
+        carpoolPublishService.cnacelPublish(carpoolPublish);
 
         return toResponsSuccess("发布成功！");
     }
