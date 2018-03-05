@@ -117,6 +117,7 @@ public class ApiAuthController extends ApiBaseAction {
             userVo.setGender(userInfo.getGender()); // //性别 0：未知、1：男、2：女
             userVo.setNickname(userInfo.getNickName());
             userService.save(userVo);
+
         } else {
             userInfo.setMobile(org.apache.commons.lang.StringUtils.isNotBlank(userVo.getMobile()) ? userVo.getMobile() : "绑定手机号码");
             userInfo.setUserId(Long.valueOf(String.valueOf(userVo.getUserId())));
@@ -183,6 +184,7 @@ public class ApiAuthController extends ApiBaseAction {
             carpoolUser.setUpdateTime(time);
             apiCarpoolUserService.insert(carpoolUser);
             userInfo.setWxOpenid(openid);
+            userInfo.setUserId(Long.valueOf(String.valueOf(carpoolUser.getId())));
         }else {
             userInfo.setUserId(Long.parseLong(String.valueOf(carpoolUser.getId())));
             userInfo.setAvatarUrl(carpoolUser.getAvatar());

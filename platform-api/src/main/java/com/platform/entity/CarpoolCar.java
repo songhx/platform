@@ -1,8 +1,6 @@
 package com.platform.entity;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,7 +12,7 @@ import java.util.Date;
 @Table(name = "carpool_car")
 public class CarpoolCar implements Serializable {
 
-    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // '自增id',
 
     private Integer userId; // '发布人id',
