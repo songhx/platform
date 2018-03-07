@@ -1,5 +1,6 @@
 package com.platform.service.impl;
 
+import com.github.abel533.entity.Example;
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
 import com.platform.constants.TemplateMessageConstant;
@@ -86,10 +87,13 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
 
     @Override
     public void dealPublishAndOrderStatus() {
-        CarpoolPublish cp = new CarpoolPublish();
-        cp.setDataStatus(CommonConstant.USEABLE_STATUS);
-        cp.setStatus(CarpoolConstant.PUBLISHING_STATUS);
-        List<CarpoolPublish> carpoolPublishList = carpoolPublishMapper.select(cp);
+        Example example = new Example(CarpoolPublish.class);
+        Example.Criteria criteria = example.createCriteria();
+        List<Object> list = new ArrayList<>();
+        list.add(CarpoolConstant.PUBLISHING_STATUS);
+        list.add(CarpoolConstant.CONFIRMING_STATUS);
+        criteria.andIn("status",list);
+        List<CarpoolPublish> carpoolPublishList = carpoolPublishMapper.selectByExample(example);
         Date time = new Date();
         if (null != carpoolPublishList && carpoolPublishList.size() > 0 ){
             List<Integer> expireList = new ArrayList<>();
