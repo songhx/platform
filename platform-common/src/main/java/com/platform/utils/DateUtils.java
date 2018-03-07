@@ -135,6 +135,36 @@ public class DateUtils {
         return resultDate;
     }
 
+    /**
+     * 获取过去的天数
+     * @param date
+     * @return
+     */
+    public static long pastDays(Date date) {
+        long t = System.currentTimeMillis()-date.getTime();
+        return t/(24*60*60*1000);
+    }
+
+    /**
+     * 获取过去的小时
+     * @param date
+     * @return
+     */
+    public static long pastHour(Date date) {
+        long t = System.currentTimeMillis()-date.getTime();
+        return t/(60*60*1000);
+    }
+
+    /**
+     * 获取过去的分钟
+     * @param date
+     * @return
+     */
+    public static long pastMinutes(Date date) {
+        long t = System.currentTimeMillis()-date.getTime();
+        return t/(60*1000);
+    }
+
 
     public static void main(String[] args) {
         Date date = new Date();
