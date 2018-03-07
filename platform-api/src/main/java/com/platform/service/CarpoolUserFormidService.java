@@ -9,4 +9,5 @@ import com.platform.entity.CarpoolUserFormid;
  * @create 2018-02-28 11:12
  **/
 public interface CarpoolUserFormidService extends IBasicSetMapper<CarpoolUserFormid> {
+    int removeExpireFormId();
 }

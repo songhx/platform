@@ -2,6 +2,7 @@ package com.platform.listener;
 
 
 import com.platform.service.CarpoolPublishService;
+import com.platform.service.CarpoolUserFormidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class CarpoolListener implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private CarpoolPublishService carpoolPublishService;
 
+    @Autowired
+    private CarpoolUserFormidService carpoolUserFormidService;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
@@ -34,7 +38,8 @@ public class CarpoolListener implements ApplicationListener<ContextRefreshedEven
                 public void run() {
                     while(true){
                         try {
-                            carpoolPublishService.dealPublishAndOrderStatus();
+                            carpoolPublishService.dealPublishAndOrderStatus(); // 监控状态
+                            carpoolUserFormidService.removeExpireFormId();//移除过期formid
                             Thread.sleep(60 * 1000);
                         } catch (Exception e) {
                             logger.error("", e);
