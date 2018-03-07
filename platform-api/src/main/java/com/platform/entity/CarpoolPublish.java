@@ -33,8 +33,7 @@ public class CarpoolPublish implements Serializable {
     private String destinationGeo; // '终点GEO编码',
     private String byWays; // '途经地方',
     private Integer schedule; // '车程安排  0 单程 1 往返',
-    private Integer departureDate; // '出发日期',
-    private String departureTime; // '时/分（精确到分钟）',
+    private Date departureTime; // '出发时间',
     private Integer backDate; // '返程日期',
     private String backTime; // '返程时分（精确到分钟）',
     private Integer passengerNum; // '乘客人数',
@@ -185,19 +184,11 @@ public class CarpoolPublish implements Serializable {
         this.schedule = schedule;
     }
 
-    public Integer getDepartureDate() {
-        return departureDate;
-    }
-
-    public void setDepartureDate(Integer departureDate) {
-        this.departureDate = departureDate;
-    }
-
-    public String getDepartureTime() {
+    public Date getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(String departureTime) {
+    public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
     }
 

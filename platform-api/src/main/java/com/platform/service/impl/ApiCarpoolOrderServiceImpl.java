@@ -167,6 +167,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         if (order != null){
             Date time = new Date();
             carpoolOrder.setUpdateTime(time);
+            carpoolOrder.setStatus(CarpoolConstant.ORDER_CANCEL_STATUS);
             int rs = carpoolOrderMapper.updateByPrimaryKeySelective(carpoolOrder);
 
             ///预约成功的单子需要给对方发消息
@@ -276,6 +277,11 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
 
         }
         return cuv;
+    }
+
+    @Override
+    public int setOrderExpired(Integer publishId) {
+        return carpoolOrderMapper.setOrderExpired(publishId);
     }
 
     private void setUserInfo(Integer orderUserId, Integer publishUserId , CarpoolUserOrderVo cuv){

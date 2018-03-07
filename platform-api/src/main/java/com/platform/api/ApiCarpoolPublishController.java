@@ -14,8 +14,10 @@ import com.platform.service.CarpoolCarService;
 import com.platform.service.CarpoolPublishService;
 import com.platform.util.ApiBaseAction;
 import com.platform.util.CarPoolUtil;
+import com.platform.utils.DateUtils;
 import com.platform.utils.GEOUtils;
 import com.platform.vo.RequestPageParameter;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +60,7 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
         if (null == carpoolPublish.getUserType()){
             return toResponsFail("未知查询");
         }
+        if (StringUtils.isNotBlank(carpoolPublish.getDepartureTimeStr())){carpoolPublish.setDepartureTime(DateUtils.strToDate(carpoolPublish.getDepartureTimeStr()));}
         return toResponsSuccess(carpoolPublishService.queryPublishListByPage(carpoolPublish));
     }
 
@@ -119,11 +122,13 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
      * @return
      */
     @RequestMapping("publish")
-    public Object publish(@RequestBody  CarpoolPublish carpoolPublish) {
+    public Object publish(@RequestBody  CarpoolPublishVo carpoolPublish) {
 
         if (null == carpoolPublish.getPublishUserId()){
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
+        //字符串转时间
+        if (StringUtils.isNotBlank(carpoolPublish.getDepartureTimeStr())){carpoolPublish.setDepartureTime(DateUtils.strToDate(carpoolPublish.getDepartureTimeStr()));}
         Date time = new Date();
         carpoolPublish.setStartPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
         carpoolPublish.setDestinationGeo(GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));

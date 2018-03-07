@@ -47,4 +47,11 @@ public interface ApiCarpoolOrderService extends IBasicSetMapper<CarpoolOrder>  {
      * @return
      */
     CarpoolUserOrderVo queryCarpoolUserOrder(Integer id);
+
+    /**
+     * 设置行程下预约过期
+     * @param publishId
+     * @return
+     */
+    int setOrderExpired(Integer publishId);
 }

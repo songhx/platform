@@ -15,7 +15,6 @@
             p.start_point_latitude AS  startPointLatitude,
             p.destination AS destination,
             p.by_ways AS byWays,
-            p.departure_date AS departureDate ,
             p.departure_time AS departureTime,
             p.passenger_num AS passengerNum,
             p.create_time AS createTime,
@@ -30,8 +29,8 @@
         <if test="userType != null">
             AND p.user_type =  #{userType}
         </if>
-        <if test="departureDate != null">
-            <![CDATA[ AND p.departure_date >=  #{departureDate} ]]>
+        <if test="departureTime != null">
+            <![CDATA[ AND p.departure_time >=  #{departureTime} ]]>
         </if>
         <if test="startPoint != null ">
             AND p.start_point = #{startPoint}

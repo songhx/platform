@@ -23,4 +23,9 @@ public interface CarpoolPublishService extends IBasicSetMapper<CarpoolPublish> {
      * @param carpoolPublish
      */
     void cnacelPublish(CarpoolPublish carpoolPublish);
+
+    /**
+     * 处理行程和预约单状态
+     */
+    void dealPublishAndOrderStatus();
 }

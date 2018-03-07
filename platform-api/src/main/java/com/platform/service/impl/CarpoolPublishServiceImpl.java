@@ -72,7 +72,7 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
     public void cnacelPublish(CarpoolPublish carpoolPublish) {
         CarpoolOrder order = new CarpoolOrder();
         order.setPublishId(carpoolPublish.getId());
-        order.setStatus(CarpoolConstant.ORDER_SUCCESS_STATUS);
+        order.setStatus(CarpoolConstant.CANCEL_STATUS);
         order.setDataStatus(CommonConstant.USEABLE_STATUS);
         List<CarpoolOrder> carpoolOrders = carpoolOrderMapper.select(order); // 预约成功的订单
         int rs = carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
@@ -83,6 +83,48 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
 
         }
     }
+
+    @Override
+    public void dealPublishAndOrderStatus() {
+        CarpoolPublish cp = new CarpoolPublish();
+        cp.setDataStatus(CommonConstant.USEABLE_STATUS);
+        cp.setStatus(CarpoolConstant.PUBLISHING_STATUS);
+        List<CarpoolPublish> carpoolPublishList = carpoolPublishMapper.select(cp);
+        Date time = new Date();
+        if (null != carpoolPublishList && carpoolPublishList.size() > 0 ){
+            List<Integer> expireList = new ArrayList<>();
+            List<Integer> doneList = new ArrayList<>();
+          for (CarpoolPublish p : carpoolPublishList){
+              if (null != p.getUserType() && p.getUserType().intValue() == 1
+                      && p.getPassengerNum() != null && p.getPassengerNum().intValue() == 0
+                      && p.getDepartureTime() != null && DateUtils.pastMinutes(p.getDepartureTime()) >= 0 ){
+                  CarpoolOrder co = new CarpoolOrder();
+                  co.setDataStatus(0);
+                  co.setStatus(CarpoolConstant.ORDERING_STATUS);
+                 int rs =  apiCarpoolOrderService.selectCount(co);
+                  if(rs > 0){
+                      expireList.add(p.getId());
+                  }else {
+                      doneList.add(p.getId());
+                  }
+              }
+          }
+          ///处理过期
+          if (expireList.size() > 0){
+              for (Integer id : expireList){
+                  CarpoolPublish cpe = new CarpoolPublish();
+                  cpe.setId(id);
+                  cpe.setStatus(CarpoolConstant.EXPIRE_STATUS);
+                  carpoolPublishMapper.updateByPrimaryKeySelective(cpe);
+
+                  ////预约中的单子置为过期
+                  apiCarpoolOrderService.setOrderExpired(id);
+              }
+
+          }
+        }
+    }
+
 
     ///预约取消通知封装
     private TreeMap<String,TreeMap<String,String>> cancelMsgData(CarpoolPublish carpoolPublish,CarpoolOrder carpoolOrder){

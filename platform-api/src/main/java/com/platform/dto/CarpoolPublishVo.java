@@ -16,6 +16,7 @@ public class CarpoolPublishVo extends CarpoolPublish implements Serializable {
 
     private List<Object> geos;
     private List<Object> destinationGeos;
+    private String  departureTimeStr;
 
     public Double getCustLongitude() {
         return custLongitude;
@@ -63,5 +64,13 @@ public class CarpoolPublishVo extends CarpoolPublish implements Serializable {
 
     public void setDestinationGeos(List<Object> destinationGeos) {
         this.destinationGeos = destinationGeos;
+    }
+
+    public String getDepartureTimeStr() {
+        return departureTimeStr;
+    }
+
+    public void setDepartureTimeStr(String departureTimeStr) {
+        this.departureTimeStr = departureTimeStr;
     }
 }
