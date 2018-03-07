@@ -1,5 +1,7 @@
 package com.platform.entity;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,6 +15,7 @@ import java.util.Date;
 public class CarpoolCar implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Integer id; // '自增id',
 
     private Integer userId; // '发布人id',
@@ -67,7 +70,7 @@ public class CarpoolCar implements Serializable {
     }
 
     public void setCarNo(String carNo) {
-        this.carNo = carNo;
+        this.carNo = StringUtils.trimToNull(carNo);
     }
 
     public String getCarBrand() {
@@ -75,7 +78,7 @@ public class CarpoolCar implements Serializable {
     }
 
     public void setCarBrand(String carBrand) {
-        this.carBrand = carBrand;
+        this.carBrand = StringUtils.trimToNull(carBrand);
     }
 
     public String getOtherType() {
@@ -123,6 +126,6 @@ public class CarpoolCar implements Serializable {
     }
 
     public void setExpirationTimeStr(String expirationTimeStr) {
-        this.expirationTimeStr = expirationTimeStr;
+        this.expirationTimeStr = StringUtils.trimToNull(expirationTimeStr);
     }
 }

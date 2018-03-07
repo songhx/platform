@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 @Table(name = "carpool_order_log")
 public class CarpoolOrderLog implements Serializable {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // '自增id',
 

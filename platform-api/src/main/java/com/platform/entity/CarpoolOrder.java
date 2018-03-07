@@ -1,5 +1,7 @@
 package com.platform.entity;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import java.util.Date;
 public class CarpoolOrder implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Integer id; // '自增id',
 
     private Integer publishId; // '行程id',
@@ -78,7 +81,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setMobile(String mobile) {
-        this.mobile = mobile;
+        this.mobile = StringUtils.trimToNull(mobile);
     }
 
     public String getStartPoint() {
@@ -86,7 +89,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setStartPoint(String startPoint) {
-        this.startPoint = startPoint;
+        this.startPoint = StringUtils.trimToNull(startPoint);
     }
 
     public Double getStartPointLongitude() {
@@ -110,7 +113,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setStartPointGeo(String startPointGeo) {
-        this.startPointGeo = startPointGeo;
+        this.startPointGeo = StringUtils.trimToNull(startPointGeo);
     }
 
     public String getDestination() {
@@ -118,7 +121,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setDestination(String destination) {
-        this.destination = destination;
+        this.destination = StringUtils.trimToNull(destination);
     }
 
     public Double getDestinationLongitude() {
@@ -142,7 +145,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setDestinationGeo(String destinationGeo) {
-        this.destinationGeo = destinationGeo;
+        this.destinationGeo = StringUtils.trimToNull(destinationGeo);
     }
 
     public Date getDepartureTime() {
@@ -166,7 +169,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setRefuseReason(String refuseReason) {
-        this.refuseReason = refuseReason;
+        this.refuseReason = StringUtils.trimToNull(refuseReason);
     }
 
     public Integer getOperatorId() {
@@ -182,7 +185,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
+        this.operatorName = StringUtils.trimToNull(operatorName);
     }
 
     public Date getCreateTime() {
@@ -206,7 +209,7 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setBake(String bake) {
-        this.bake = bake;
+        this.bake = StringUtils.trimToNull(bake);
     }
 
     public Integer getDataStatus() {
@@ -230,6 +233,6 @@ public class CarpoolOrder implements Serializable {
     }
 
     public void setCancelReason(String cancelReason) {
-        this.cancelReason = cancelReason;
+        this.cancelReason = StringUtils.trimToNull(cancelReason);
     }
 }

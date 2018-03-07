@@ -1,5 +1,7 @@
 package com.platform.entity;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +49,7 @@ public class CarpoolUser implements Serializable {
     }
 
     public void setWxOpenid(String wxOpenid) {
-        this.wxOpenid = wxOpenid;
+        this.wxOpenid = StringUtils.trimToNull(wxOpenid);
     }
 
     public String getUserName() {
@@ -55,7 +57,7 @@ public class CarpoolUser implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = StringUtils.trimToNull(userName);
     }
 
     public String getNickName() {
@@ -63,7 +65,7 @@ public class CarpoolUser implements Serializable {
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName;
+        this.nickName = StringUtils.trimToNull(nickName);
     }
 
     public String getMobile() {
@@ -71,7 +73,7 @@ public class CarpoolUser implements Serializable {
     }
 
     public void setMobile(String mobile) {
-        this.mobile = mobile;
+        this.mobile = StringUtils.trimToNull(mobile);
     }
 
     public Integer getSex() {
@@ -95,7 +97,7 @@ public class CarpoolUser implements Serializable {
     }
 
     public void setProvince(String province) {
-        this.province = province;
+        this.province = StringUtils.trimToNull(province);
     }
 
     public String getCity() {
@@ -103,7 +105,7 @@ public class CarpoolUser implements Serializable {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.city = StringUtils.trimToNull(city);
     }
 
     public String getCounty() {
@@ -111,7 +113,7 @@ public class CarpoolUser implements Serializable {
     }
 
     public void setCounty(String county) {
-        this.county = county;
+        this.county = StringUtils.trimToNull(county);
     }
 
     public Date getCreateTime() {
