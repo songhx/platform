@@ -4,7 +4,7 @@
 <mapper namespace="com.platform.dao.CarpoolUserFormidMapper">
 
     <!-- 移除过期的formid -->
-    <delete id="setOrderExpired" >
+    <delete id="removeExpireFormId" >
         <![CDATA[  DELETE FROM carpool_user_formid WHERE  HOUR( timediff( now(), create_time) ) >  24 * 7 ]]>
     </delete>
 
