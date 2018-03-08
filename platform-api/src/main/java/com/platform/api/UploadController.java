@@ -64,6 +64,7 @@ public class UploadController extends ApiBaseAction {
         try {
             //Map<String, Object> attributes = getRequestAttributes(request);
             String platformCode = multipartRequest.getParameter("platformCode");
+            platformCode = "";
             String dirFolderName = multipartRequest.getParameter("dirFolderName"); //(String)attributes.get("dirFolderName");
             logger.info("upLoad 参数 -- platformCode : " + platformCode + "--dirFolderName : " + dirFolderName);
             Map<String, String>  properties = PropertiesUtil.getInstance("/upload.properties");
