@@ -20,6 +20,7 @@ public class CarpoolOrder implements Serializable {
     private Integer id; // '自增id',
 
     private Integer publishId; // '行程id',
+    private Integer userType; // '用户类型  0 乘客 1司机',
     private Integer orderUserId; // '预约人id',
     private String orderUserName; // '预约/抢单人姓名',
     private String mobile; // '联系电话',
@@ -58,6 +59,14 @@ public class CarpoolOrder implements Serializable {
 
     public void setPublishId(Integer publishId) {
         this.publishId = publishId;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     public Integer getOrderUserId() {
