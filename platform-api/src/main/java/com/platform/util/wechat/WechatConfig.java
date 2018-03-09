@@ -4,6 +4,7 @@ import com.platform.utils.ResourceUtil;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
 
+
 import javax.net.ssl.SSLContext;
 import java.io.InputStream;
 import java.security.KeyStore;
