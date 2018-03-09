@@ -16,7 +16,6 @@
         <module>platform-framework</module>
         <module>platform-admin</module>
         <module>platform-shop</module>
-        <module>platform-carpool</module>
         <module>platform-ecarpool-api</module>
     </modules>
 
