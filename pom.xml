@@ -17,6 +17,7 @@
         <module>platform-admin</module>
         <module>platform-shop</module>
         <module>platform-carpool</module>
+        <module>platform-ecarpool-api</module>
     </modules>
 
     <properties>
@@ -315,6 +316,8 @@
             <artifactId>jsch</artifactId>
             <version>0.1.52</version>
         </dependency>
+
+
 
     </dependencies>
     <build>
