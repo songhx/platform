@@ -78,8 +78,9 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
         List<CarpoolOrder> carpoolOrders = carpoolOrderMapper.select(order); // 预约成功的订单
         int rs = carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
         if (rs > 0 && carpoolOrders != null && carpoolOrders.size() > 0){ // 发送模板消息
+            String page =   "/pages/user/orders/orders";
             for (CarpoolOrder carpoolOrder : carpoolOrders){
-                apiCarpoolOrderService.sendTemplateMsg(carpoolOrder.getOrderUserId(), TemplateMessageConstant.CARPOOL_PUBLISH_CANCEL_TMPL_ID,"",cancelMsgData(carpoolPublish,carpoolOrder));
+                apiCarpoolOrderService.sendTemplateMsg(carpoolOrder.getOrderUserId(), TemplateMessageConstant.CARPOOL_PUBLISH_CANCEL_TMPL_ID,page,cancelMsgData(carpoolPublish,carpoolOrder));
             }
 
         }

@@ -39,7 +39,7 @@ public interface ApiCarpoolOrderService extends IBasicSetMapper<CarpoolOrder>  {
      * @param page
      * @param params
      */
-    void sendTemplateMsg(Integer userId , String tmplId , String page,  TreeMap<String,TreeMap<String,String>> params);
+    void sendTemplateMsg(Integer userId, String tmplId, String page, TreeMap<String, TreeMap<String, String>> params);
 
     /**
      * 查询用户预约单

@@ -86,7 +86,8 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
          */
         String tmplId = TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID;
        // String tmplId = carpoolOrder.getUserType().intValue() == 1 ? TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID : ""; // 模板消息id
-        sendTemplateMsg(carpoolOrder.getPublishuserId() , tmplId,"", createMsgData(carpoolOrder));
+        String page =   "/pages/user/records/carpoolRecord";
+        sendTemplateMsg(carpoolOrder.getPublishuserId() , tmplId,page, createMsgData(carpoolOrder));
     }
 
     ///预约消息封装
@@ -143,7 +144,8 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             }
         }
         String tmplId = (order.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ? TemplateMessageConstant.CARPOOL_SUCCESS_TMPL_ID : TemplateMessageConstant.CARPOOL_FAIL_TMPL_ID);
-        sendTemplateMsg(carpoolOrder.getPublishuserId() ,tmplId,"", confirmOrRefuseMsgData(order));
+        String page =   "/pages/user/orders/orders";
+        sendTemplateMsg(carpoolOrder.getPublishuserId() ,tmplId,page, confirmOrRefuseMsgData(order));
     }
 
 
@@ -210,7 +212,8 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
 
             ///预约成功的单子需要给对方发消息
             if (rs > 0 && status.intValue() == CarpoolConstant.ORDER_SUCCESS_STATUS ){
-                sendTemplateMsg(carpoolOrder.getPublishuserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,"", confirmOrRefuseMsgData(order));
+                String page =   "/pages/user/records/carpoolRecord";
+                sendTemplateMsg(carpoolOrder.getPublishuserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,page, confirmOrRefuseMsgData(order));
             }
         }
 
