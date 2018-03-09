@@ -14,7 +14,6 @@
             </bean>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
-    <bean class="com.platform.listener.CarpoolListener"></bean>
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/api/**"/>-->
