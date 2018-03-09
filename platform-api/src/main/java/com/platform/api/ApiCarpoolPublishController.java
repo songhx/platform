@@ -1,5 +1,6 @@
 package com.platform.api;
 
+import com.github.abel533.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.platform.constants.CarpoolConstant;
@@ -71,12 +72,24 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
      */
     @RequestMapping("history")
     public Object history(@RequestBody CarpoolPublishVo carpoolPublish) {
-        //数据可用
-        carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS); // 可用
+
 
         PageHelper.startPage(carpoolPublish.getStart(), carpoolPublish.getLimit(), true, false); //设置分页
 
-        List<CarpoolPublish> list = carpoolPublishService.select(carpoolPublish);
+        Example example = new Example(CarpoolPublish.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("dataStatus",CommonConstant.USEABLE_STATUS);
+        if (carpoolPublish.getId() != null){
+            criteria.andEqualTo("id",carpoolPublish.getId());
+        }
+        if (carpoolPublish.getPublishUserId() != null){
+            criteria.andEqualTo("publishUserId",carpoolPublish.getPublishUserId());
+        }
+        if (carpoolPublish.getUserType() != null){
+            criteria.andEqualTo("userType",carpoolPublish.getUserType());
+        }
+        example.setOrderByClause(" updateTime DESC");
+        List<CarpoolPublish> list = carpoolPublishService.selectByExample(example);
 
         PageInfo<CarpoolPublish> pageInfo = new PageInfo<CarpoolPublish>(list);
 

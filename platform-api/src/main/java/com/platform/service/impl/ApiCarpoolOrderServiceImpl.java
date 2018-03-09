@@ -269,7 +269,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             msg.setPage(page);
             msg.setEmphasis_keyword("");
             msg.setData(params);
-            String token = TokenThread.accessToken.getAccessToken();
+            String token = (TokenThread.accessToken != null) ? TokenThread.accessToken.getAccessToken() : "";
             logger.info("$$$$$send template message token ----- " + token);
             TemplateMsgResult tmr = WechatTemplateMsgUtil.sendTemplateMsg(token,WechatTemplateMsgUtil.createTemplateMsgJson(msg));
             if (tmr != null){

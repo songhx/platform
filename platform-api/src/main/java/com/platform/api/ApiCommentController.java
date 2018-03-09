@@ -2,7 +2,6 @@ package com.platform.api;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiniu.util.StringUtils;
 import com.platform.annotation.IgnoreAuth;
 import com.platform.annotation.LoginUser;
 import com.platform.entity.*;
@@ -12,6 +11,7 @@ import com.platform.util.ApiPageUtils;
 import com.platform.utils.Base64;
 import com.platform.utils.CharUtil;
 import com.platform.utils.Query;
+import com.platform.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -52,7 +52,7 @@
                 #{item}
             </foreach>
         </if>
-
+        ORDER BY p.departure_time ASC
     </select>
 
 

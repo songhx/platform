@@ -1,5 +1,6 @@
 package com.platform.api;
 
+import com.github.abel533.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.StringUtil;
@@ -119,8 +120,23 @@ public class ApiCarpoolOrderController extends ApiBaseAction {
 
         PageHelper.startPage(carpoolOrder.getStart(), carpoolOrder.getLimit(), true, false); //设置分页
 
-        carpoolOrder.setDataStatus(CommonConstant.USEABLE_STATUS); //可用
-        List<CarpoolOrder> list = apiCarpoolOrderService.select(carpoolOrder);
+        Example example = new Example(CarpoolOrder.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("dataStatus",CommonConstant.USEABLE_STATUS);
+        if (carpoolOrder.getId() != null){
+            criteria.andEqualTo("id",carpoolOrder.getId());
+        }
+        if (carpoolOrder.getPublishId() != null){
+            criteria.andEqualTo("publishId",carpoolOrder.getPublishId());
+        }
+        if (carpoolOrder.getOrderUserId() != null){
+            criteria.andEqualTo("orderUserId",carpoolOrder.getOrderUserId());
+        }
+        if (carpoolOrder.getUserType() != null){
+            criteria.andEqualTo("userType",carpoolOrder.getUserType());
+        }
+        example.setOrderByClause(" createTime DESC"); ///创建时间倒叙输出
+        List<CarpoolOrder> list = apiCarpoolOrderService.selectByExample(example);
 
         PageInfo<CarpoolOrder> pageInfo = new PageInfo<CarpoolOrder>(list);
 
