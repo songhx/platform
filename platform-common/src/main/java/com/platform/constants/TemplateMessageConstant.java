@@ -9,6 +9,7 @@ package com.platform.constants;
 public class TemplateMessageConstant {
 
     public static final  String  CARPOOL_REQUEST_TMPL_ID = "zOL8LOELHDp1JhqPsT0nrjTNfxqO-GRLOiSrpLZ0jOM"; //拼车请求
+    public static final  String  CARPOOL_DRIVER_REQUEST_TMPL_ID = "zOL8LOELHDp1JhqPsT0nrialbow-sI6qUjKETaIE5qQ"; //司机请求
     public static final  String  CARPOOL_SUCCESS_TMPL_ID = "bCVLajfQstI1uLFfy3lzTjajNLi46OsodPi0MF6m-Ys"; //拼车成功
     public static final  String  CARPOOL_FAIL_TMPL_ID = "c2sUmmMCgfG5eo72sZQxfSeggsJcKirNHXbxIksinsg"; //拼车失败通知
     public static final  String  CARPOOL_ORDER_CANCEL_TMPL_ID = "zOL8LOELHDp1JhqPsT0nrjTNfxqO-GRLOiSrpLZ0jOM"; //预约取消通知

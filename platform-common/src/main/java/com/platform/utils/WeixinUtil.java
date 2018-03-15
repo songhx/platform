@@ -49,7 +49,7 @@ public class WeixinUtil {
 		JSONObject jsonObject = null;
 		StringBuffer buffer = new StringBuffer();
 		try {
-			byte[] b = outputStr.getBytes("UTF-8");
+
 			URL url = new URL(requestUrl);
 			HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
 			// 设置连接输出流为true,默认false (post 请求是以流的方式隐式的传递参数)
@@ -63,17 +63,18 @@ public class WeixinUtil {
 			// 设置该HttpURLConnection实例是否自动执行重定向
 			httpUrlConn.setInstanceFollowRedirects(true);
 			httpUrlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-			httpUrlConn.setRequestProperty("Content-Length", String.valueOf(b.length));
-			httpUrlConn.connect();
 			// 当有数据需要提交时
 			if (!org.apache.commons.lang.StringUtils.isEmpty(outputStr)) {
+				byte[] b = outputStr.getBytes("UTF-8");
 				OutputStream writer = httpUrlConn.getOutputStream();
 				// 发送参数
 				writer.write(b);
 				// 清理当前编辑器的左右缓冲区，并使缓冲区数据写入基础流
 				writer.flush();
 				writer.close(); // 重要且易忽略步骤 (关闭流,切记!)
+				httpUrlConn.setRequestProperty("Content-Length", String.valueOf(b.length));
 			}
+			httpUrlConn.connect();
 			// 将返回的输入流转换成字符串
 			InputStream inputStream = httpUrlConn.getInputStream();
 			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
