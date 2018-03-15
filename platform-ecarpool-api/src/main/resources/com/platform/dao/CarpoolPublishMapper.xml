@@ -18,10 +18,12 @@
             p.departure_time AS departureTime,
             p.passenger_num AS passengerNum,
             p.create_time AS createTime,
-            p.update_time AS updateTime
-        FROM carpool_publish AS p
+            p.update_time AS updateTime,
+            u.nick_name AS userName
+        FROM carpool_publish AS p , carpool_user AS u
         WHERE
-           data_status = 0
+        p.publish_user_id = u.id
+        AND p.data_status = 0
         AND p.passenger_num > 0
         <if test="status != null">
             AND p.`status` =  #{status}

@@ -39,7 +39,7 @@ public class ApiCarpoolUserController  extends ApiBaseAction {
      * @return
      */
     @RequestMapping("queryUser")
-    public Object queryUser(CarpoolUser user ) {
+    public Object queryUser(@RequestBody CarpoolUser user ) {
         user.setDataStatus(CommonConstant.USEABLE_STATUS);
         CarpoolUser carpoolUser = apiCarpoolUserService.selectOne(user);
         List<CarpoolCar> carpoolCarList = null;

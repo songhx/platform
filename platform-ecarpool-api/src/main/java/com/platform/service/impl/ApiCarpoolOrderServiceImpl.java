@@ -84,8 +84,8 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         /**
          * 给发布人发送拼车请求消息
          */
-        String tmplId = TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID;
-       // String tmplId = carpoolOrder.getUserType().intValue() == 1 ? TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID : ""; // 模板消息id
+        //String tmplId = TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID;
+        String tmplId = carpoolOrder.getUserType().intValue() == 1 ? TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID : TemplateMessageConstant.CARPOOL_DRIVER_REQUEST_TMPL_ID; // 模板消息id
         String page =   "/pages/user/records/carpoolRecord";
         sendTemplateMsg(carpoolOrder.getPublishuserId() , tmplId,page, createMsgData(carpoolOrder));
     }
@@ -134,12 +134,20 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         CarpoolOrder co1 = new CarpoolOrder();
         co1.setId(carpoolOrder.getId());
         CarpoolOrder order = carpoolOrderMapper.selectOne(co1);
+        CarpoolPublish cp = new CarpoolPublish();
+        cp.setId(order.getPublishId());
+        CarpoolPublish cpr =  carpoolPublishMapper.selectOne(cp);
         if (CarpoolConstant.ORDER_REFUSE_STATUS == status ){
             ///将拼车信息回执成发布中
             if (carpoolOrder.getUserType() != null && carpoolOrder.getUserType().intValue() == 0 ){
                 CarpoolPublish carpoolPublish = new CarpoolPublish();
                 carpoolPublish.setId(order.getPublishId());
                 carpoolPublish.setStatus(CarpoolConstant.PUBLISHING_STATUS);
+                carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
+            }else if(cpr != null && carpoolOrder.getUserType() != null && carpoolOrder.getUserType().intValue() == 1 && cpr.getStatus() == CarpoolConstant.PUBLISHING_STATUS   ){
+                CarpoolPublish carpoolPublish = new CarpoolPublish();
+                carpoolPublish.setId(order.getPublishId());
+                carpoolPublish.setPassengerNum((cpr.getPassengerNum() != null) ? cpr.getPassengerNum().intValue() + order.getPassengerNum().intValue() : order.getPassengerNum().intValue() );
                 carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
             }
         }
@@ -207,6 +215,11 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
                 CarpoolPublish carpoolPublish = new CarpoolPublish();
                 carpoolPublish.setStatus(CarpoolConstant.PUBLISHING_STATUS);
                 carpoolPublish.setId(order.getPublishId());
+                carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
+            }else if(carpoolOrder.getUserType() != null && carpoolOrder.getUserType().intValue() == 1 && cpr != null && cpr.getStatus() == CarpoolConstant.PUBLISHING_STATUS){
+                CarpoolPublish carpoolPublish = new CarpoolPublish();
+                carpoolPublish.setId(order.getPublishId());
+                carpoolPublish.setPassengerNum((cpr.getPassengerNum() != null) ? cpr.getPassengerNum().intValue() + order.getPassengerNum().intValue() : order.getPassengerNum().intValue() );
                 carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
             }
 

@@ -9,7 +9,10 @@ import com.platform.entity.UserInfo;
 import com.platform.service.ApiCarpoolUserService;
 import com.platform.service.TokenService;
 import com.platform.util.ApiBaseAction;
+import com.platform.util.ApiUserUtils;
+import com.platform.util.CommonUtil;
 import com.platform.utils.StringUtils;
+import com.platform.utils.WeixinUtil;
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,10 +65,26 @@ public class ApiAuthController extends ApiBaseAction {
         }
 
 
-        String openid = "oacP90FDeUdnFMZkwZ274fEWnWqE";
-//        if(!code.equals("the code is a mock one")){
-//           // openid = sessionData.getString("openid");
-//        }
+        //获取openid
+        String requestUrl = ApiUserUtils.getWebAccess(code);//通过自定义工具类组合出小程序需要的登录凭证 code
+        logger.info("》》》组合token为：" + requestUrl);
+        net.sf.json.JSONObject sessionData = WeixinUtil.httpRequest(requestUrl, "GET", null);
+
+        if (null == sessionData || StringUtils.isNullOrEmpty(sessionData.getString("openid"))) {
+            return toResponsFail("登录失败");
+        }
+        //验证用户信息完整性
+        String sha1 = CommonUtil.getSha1(fullUserInfo.getRawData() + sessionData.getString("session_key"));
+        if (!fullUserInfo.getSignature().equals(sha1)) {
+            return toResponsFail("登录失败");
+        }
+
+        String openid = "";
+        if(!code.equals("the code is a mock one")){
+            openid = sessionData.getString("openid");
+        }else{
+            openid = "oacP90FDeUdnFMZkwZ274fEWnWqE";
+        }
         Date time = new Date();
         CarpoolUser cu = new CarpoolUser();
         cu.setDataStatus(CommonConstant.USEABLE_STATUS);

@@ -100,18 +100,23 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
             List<Integer> expireList = new ArrayList<>();
             List<Integer> doneList = new ArrayList<>();
           for (CarpoolPublish p : carpoolPublishList){
-              if (null != p.getUserType() && p.getUserType().intValue() == 1
-                      && p.getPassengerNum() != null && p.getPassengerNum().intValue() == 0
-                      && p.getDepartureTime() != null && DateUtils.pastMinutes(p.getDepartureTime()) >= 0 ){
-                  CarpoolOrder co = new CarpoolOrder();
-                  co.setDataStatus(0);
-                  co.setStatus(CarpoolConstant.ORDERING_STATUS);
-                 int rs =  apiCarpoolOrderService.selectCount(co);
-                  if(rs > 0){
-                      expireList.add(p.getId());
-                  }else {
-                      doneList.add(p.getId());
+              if ( p.getDepartureTime() != null && DateUtils.pastMinutes(p.getDepartureTime()) >= 0 ){
+                 if(null != p.getUserType() && p.getUserType().intValue() == 1
+                         && p.getPassengerNum() != null && p.getPassengerNum().intValue() == 0
+                         ){
+                     doneList.add(p.getId());
+                 }else{
+                     CarpoolOrder co = new CarpoolOrder();
+                     co.setDataStatus(0);
+                     co.setStatus(CarpoolConstant.ORDERING_STATUS);
+                     int rs =  apiCarpoolOrderService.selectCount(co);
+                     if(rs > 0){
+                         expireList.add(p.getId());
+                     }else {
+                         doneList.add(p.getId());
+                     }
                   }
+
               }
           }
           ///处理过期
@@ -124,6 +129,17 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
 
                   ////预约中的单子置为过期
                   apiCarpoolOrderService.setOrderExpired(id);
+              }
+
+          }
+
+          if (doneList.size() > 0){
+              for (Integer id : doneList){
+                  CarpoolPublish cpe = new CarpoolPublish();
+                  cpe.setStatus(CarpoolConstant.FINISHED_STATUS);
+                  cpe.setId(id);
+                  carpoolPublishMapper.updateByPrimaryKeySelective(cpe);
+
               }
 
           }
