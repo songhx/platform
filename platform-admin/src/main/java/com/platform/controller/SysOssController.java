@@ -7,6 +7,7 @@ import com.platform.oss.OSSFactory;
 import com.platform.service.SysConfigService;
 import com.platform.service.SysOssService;
 import com.platform.utils.*;
+import com.platform.utils.upload.UploadVo;
 import com.platform.validator.ValidatorUtils;
 import com.platform.validator.group.AliyunGroup;
 import com.platform.validator.group.QcloudGroup;
@@ -18,11 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 
 /**
@@ -116,6 +116,42 @@ public class SysOssController {
         sysOssService.save(ossEntity);
 
         R r = new R();
+        r.put("url", url);
+        r.put("link", url);
+        return r;
+    }
+
+    /**
+     * 上传文件
+     */
+    @RequestMapping("/uploadFtp")
+    @RequiresPermissions("sys:oss:all")
+    public R uploadFtp(HttpServletRequest request) throws Exception {
+        R r = new R();
+        //设置字符编码防止乱码
+        request.setCharacterEncoding("UTF-8");
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        List<MultipartFile> fileList = multipartRequest.getFiles("file");
+        String platformCode = multipartRequest.getParameter("platformCode");
+        String dirFolderName = multipartRequest.getParameter("dirFolderName");
+        List<UploadVo> uploadFileInfos  = null;
+        String url = "";
+        if (fileList.isEmpty()) {
+            throw new RRException("上传文件不能为空");
+        }
+        try {
+            uploadFileInfos  = FtpUpload.upload(fileList,platformCode,dirFolderName,PropertiesUtil.getInstance("/upload.properties"));
+            if (uploadFileInfos != null && uploadFileInfos.size() > 0){
+                url = uploadFileInfos.get(0).getFileServerPath();
+            }
+            //保存文件信息
+            SysOssEntity ossEntity = new SysOssEntity();
+            ossEntity.setUrl(url);
+            ossEntity.setCreateDate(new Date());
+            sysOssService.save(ossEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         r.put("url", url);
         r.put("link", url);
         return r;
