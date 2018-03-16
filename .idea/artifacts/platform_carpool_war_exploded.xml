@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="platform-shop:war exploded">
-    <output-path>$PROJECT_DIR$/platform-shop/target/platform-shop-1.0.0</output-path>
+  <artifact type="exploded-war" name="platform-carpool:war exploded">
+    <output-path>$PROJECT_DIR$/platform-carpool/target/platform-carpool</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="platform-shop" />
+          <element id="module-output" name="platform-carpool" />
         </element>
         <element id="directory" name="lib">
           <element id="archive" name="platform-common-1.0.0.jar">
@@ -94,9 +94,9 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/platform-shop/target/platform-shop-1.0.0/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/platform-carpool/target/platform-carpool/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="platform-shop/web/Web" />
+      <element id="javaee-facet-resources" facet="platform-carpool/web/Web" />
     </root>
   </artifact>
 </component>

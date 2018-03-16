@@ -40,6 +40,9 @@
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/platform-admin" />
+    <file type="web" url="file://$PROJECT_DIR$/platform-api" />
+    <file type="web" url="file://$PROJECT_DIR$/platform-carpool" />
+    <file type="web" url="file://$PROJECT_DIR$/platform-ecarpool-api" />
     <file type="web" url="file://$PROJECT_DIR$/platform-framework" />
     <file type="web" url="file://$PROJECT_DIR$/platform-shop" />
   </component>
@@ -48,6 +51,11 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/platform-carpool/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
