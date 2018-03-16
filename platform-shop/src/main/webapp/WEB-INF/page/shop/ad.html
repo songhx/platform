@@ -64,7 +64,7 @@
                 </i-col>
                 <i-col span="3">
                     <Form-item :label-width="1">
-                        <Upload style="width: 300px;" action="../sys/oss/upload" :format="['jpg','jpeg','png']"
+                        <Upload style="width: 300px;" action="../sys/oss/uploadFtp?dirFolderName=banner" :format="['jpg','jpeg','png']"
                                 max-size="2048"
                                 :on-success="handleSuccess" :on-format-error="handleFormatError"
                                 :show-upload-list="false"

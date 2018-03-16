@@ -63,7 +63,7 @@ $(function () {
         enableScript: false,
         imageButtons: ["floatImageLeft", "floatImageNone", "floatImageRight", "linkImage", "replaceImage", "removeImage"],
         allowedImageTypes: ["jpeg", "jpg", "png", "gif"],
-        imageUploadURL: '../sys/oss/upload',
+        imageUploadURL: '../sys/oss/uploadFtp?platformCode=mall&dirFolderName=goods',
         imageUploadParams: {id: "edit"},
         imagesLoadURL: '../sys/oss/queryAll'
     })

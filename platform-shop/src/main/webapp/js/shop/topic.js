@@ -62,7 +62,7 @@ $(function () {
         enableScript: false,
         imageButtons: ["floatImageLeft", "floatImageNone", "floatImageRight", "linkImage", "replaceImage", "removeImage"],
         allowedImageTypes: ["jpeg", "jpg", "png", "gif"],
-        imageUploadURL: '../sys/oss/upload',//上传到本地服务器
+        imageUploadURL: '../sys/oss/uploadFtp?platformCode=mall&dirFolderName=topic',//上传到本地服务器
         imageUploadParams: {id: "edit"},
         // imageManagerDeleteURL: '../sys/oss/delete',//删除图片(有问题)
         imagesLoadURL: '../sys/oss/queryAll'//管理图片
