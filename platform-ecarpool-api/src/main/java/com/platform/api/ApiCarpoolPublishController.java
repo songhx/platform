@@ -159,11 +159,14 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
      * @return
      */
     @RequestMapping("updateTrip")
-    public Object updateTrip(@RequestBody  CarpoolPublish carpoolPublish) {
+    public Object updateTrip(@RequestBody  CarpoolPublishVo carpoolPublish) {
 
         if (null == carpoolPublish.getId()){
             return  toResponsFail("参数错误！");
         }
+        //字符串转时间
+        if (StringUtils.isNotBlank(carpoolPublish.getDepartureTimeStr())){carpoolPublish.setDepartureTime(DateUtils.strToDate(carpoolPublish.getDepartureTimeStr()));}
+
         Date time = new Date();
         carpoolPublish.setStartPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
         carpoolPublish.setDestinationGeo(GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));
