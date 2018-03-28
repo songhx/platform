@@ -71,17 +71,31 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
 
     @Override
     public void cnacelPublish(CarpoolPublish carpoolPublish) {
-        CarpoolOrder order = new CarpoolOrder();
-        order.setPublishId(carpoolPublish.getId());
-        order.setStatus(CarpoolConstant.CANCEL_STATUS);
-        order.setDataStatus(CommonConstant.USEABLE_STATUS);
-        List<CarpoolOrder> carpoolOrders = carpoolOrderMapper.select(order); // 预约成功的订单
+
+        carpoolPublish.setStatus(CarpoolConstant.CANCEL_STATUS);
         int rs = carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
-        if (rs > 0 && carpoolOrders != null && carpoolOrders.size() > 0){ // 发送模板消息
-            String page =   "/pages/user/orders/orders";
-            for (CarpoolOrder carpoolOrder : carpoolOrders){
-                apiCarpoolOrderService.sendTemplateMsg(carpoolOrder.getOrderUserId(), TemplateMessageConstant.CARPOOL_PUBLISH_CANCEL_TMPL_ID,page,cancelMsgData(carpoolPublish,carpoolOrder));
+
+        if (rs > 0  ){ // 发送模板消息
+            Example example = new Example(CarpoolOrder.class);
+            Example.Criteria criteria = example.createCriteria();
+            criteria.andEqualTo("dataStatus",CommonConstant.USEABLE_STATUS);
+            List<Object> list = new ArrayList<>();
+            list.add(CarpoolConstant.ORDERING_STATUS); //预约中
+            list.add(CarpoolConstant.ORDER_SUCCESS_STATUS); //预约中
+            criteria.andIn("status",list);
+            List<CarpoolOrder> carpoolOrders = carpoolOrderMapper.selectByExample(example); // 预约成功和预约中的订单
+            if(carpoolOrders != null && carpoolOrders.size() > 0){
+                for (CarpoolOrder carpoolOrder : carpoolOrders){
+                    CarpoolOrder order = new CarpoolOrder();
+                    order.setId(carpoolOrder.getId());
+                    order.setStatus(CarpoolConstant.ORDER_CANCEL_STATUS);
+                    order.setCancelReason("很抱歉因行程取消,预约被取消");
+                    carpoolOrderMapper.updateByPrimaryKeySelective(order);
+                    String page =  "pages/user/orders/orderDetail?id="+carpoolOrder.getId() + "&formType=1";
+                    apiCarpoolOrderService.sendTemplateMsg(carpoolOrder.getOrderUserId(), TemplateMessageConstant.CARPOOL_PUBLISH_CANCEL_TMPL_ID,page,cancelMsgData(carpoolPublish,carpoolOrder));
+                }
             }
+
 
         }
     }

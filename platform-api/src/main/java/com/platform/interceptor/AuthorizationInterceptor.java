@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @email 939961241@qq.com
  * @date 2017-03-23 15:38
  */
-//@Component
+@Component
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private TokenService tokenService;

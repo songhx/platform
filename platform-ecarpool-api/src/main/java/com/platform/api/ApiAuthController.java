@@ -102,6 +102,7 @@ public class ApiAuthController extends ApiBaseAction {
             userInfo.setWxOpenid(openid);
             userInfo.setUserId(Long.valueOf(String.valueOf(carpoolUser.getId())));
         }else {
+            userInfo.setMobile(carpoolUser.getMobile());
             userInfo.setUserId(Long.parseLong(String.valueOf(carpoolUser.getId())));
             userInfo.setAvatarUrl(carpoolUser.getAvatar());
             userInfo.setNickName(carpoolUser.getNickName());

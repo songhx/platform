@@ -59,11 +59,14 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         carpoolOrder.setOperatorId(carpoolOrder.getOrderUserId());
         carpoolOrder.setOperatorName(carpoolOrder.getOrderUserName());
         int rs = carpoolOrderMapper.insertSelective(carpoolOrder);
+
+        CarpoolPublish carpoolPublish = new CarpoolPublish();
+        carpoolPublish.setId(carpoolOrder.getPublishId());
+        carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS);
+        CarpoolPublish publish = carpoolPublishMapper.selectOne(carpoolPublish);
+
         if (rs > 0 && null != carpoolOrder.getUserType() && carpoolOrder.getUserType().intValue() == 1){ // 修改发布信息
-            CarpoolPublish carpoolPublish = new CarpoolPublish();
-            carpoolPublish.setId(carpoolOrder.getPublishId());
-            carpoolPublish.setDataStatus(CommonConstant.USEABLE_STATUS);
-            CarpoolPublish publish = carpoolPublishMapper.selectOne(carpoolPublish);
+
             if (publish != null){
                 if (publish.getPassengerNum() - 1 < 0){
                     throw new RuntimeException("位置已被预订完了");
@@ -75,19 +78,21 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
 
             }
         } else if (rs > 0 && null != carpoolOrder.getUserType() && carpoolOrder.getUserType().intValue() == 0) { // 找车
-            CarpoolPublish carpoolPublish = new CarpoolPublish();
-            carpoolPublish.setId(carpoolOrder.getPublishId());
-            carpoolPublish.setStatus(CarpoolConstant.CONFIRMING_STATUS);
-            carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
+            CarpoolPublish cp = new CarpoolPublish();
+            cp.setId(carpoolOrder.getPublishId());
+            cp.setStatus(CarpoolConstant.CONFIRMING_STATUS);
+            carpoolPublishMapper.updateByPrimaryKeySelective(cp);
             saveLogs(carpoolOrder,carpoolOrder.getOrderUserName() + "预订成功！");
         }
         /**
          * 给发布人发送拼车请求消息
          */
         //String tmplId = TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID;
-        String tmplId = carpoolOrder.getUserType().intValue() == 1 ? TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID : TemplateMessageConstant.CARPOOL_DRIVER_REQUEST_TMPL_ID; // 模板消息id
-        String page =   "/pages/user/records/carpoolRecord";
-        sendTemplateMsg(carpoolOrder.getPublishuserId() , tmplId,page, createMsgData(carpoolOrder));
+        String tmplId = publish.getUserType().intValue() == 1 ? TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID : TemplateMessageConstant.CARPOOL_DRIVER_REQUEST_TMPL_ID; // 模板消息id
+        String page =  "pages/user/orders/orderDetail?id="+carpoolOrder.getId() + "&formType=0";
+
+
+        sendTemplateMsg(publish.getPublishUserId() , tmplId,page, createMsgData(carpoolOrder));
     }
 
     ///预约消息封装
@@ -126,7 +131,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         carpoolOrderMapper.updateByPrimaryKeySelective(co);
 
         String msg = status == CarpoolConstant.FINISHED_STATUS ? "确认" : "拒绝";
-        saveLogs(carpoolOrder,carpoolOrder.getOrderUserName() + msg + "预订！");
+
         /**
          * 给发布人发送拼车请求消息
          */
@@ -134,9 +139,13 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
         CarpoolOrder co1 = new CarpoolOrder();
         co1.setId(carpoolOrder.getId());
         CarpoolOrder order = carpoolOrderMapper.selectOne(co1);
+
+        saveLogs(order,order.getOrderUserName() + msg + "预订！");
+
         CarpoolPublish cp = new CarpoolPublish();
         cp.setId(order.getPublishId());
         CarpoolPublish cpr =  carpoolPublishMapper.selectOne(cp);
+
         if (CarpoolConstant.ORDER_REFUSE_STATUS == status ){
             ///将拼车信息回执成发布中
             if (carpoolOrder.getUserType() != null && carpoolOrder.getUserType().intValue() == 0 ){
@@ -152,8 +161,9 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             }
         }
         String tmplId = (order.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ? TemplateMessageConstant.CARPOOL_SUCCESS_TMPL_ID : TemplateMessageConstant.CARPOOL_FAIL_TMPL_ID);
-        String page =   "/pages/user/orders/orders";
-        sendTemplateMsg(carpoolOrder.getPublishuserId() ,tmplId,page, confirmOrRefuseMsgData(order));
+        String page =   "pages/user/orders/orderDetail?id="+order.getId() + "&formType=1"; //"pages/user/orders/orders";
+
+        sendTemplateMsg(order.getOrderUserId() ,tmplId,page, confirmOrRefuseMsgData(order));
     }
 
 
@@ -207,9 +217,11 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             co1.setUpdateTime(time);
             co1.setStatus(CarpoolConstant.ORDER_CANCEL_STATUS);
             int rs = carpoolOrderMapper.updateByPrimaryKeySelective(carpoolOrder);
+
             CarpoolPublish cp = new CarpoolPublish();
             cp.setId(order.getPublishId());
             CarpoolPublish cpr =  carpoolPublishMapper.selectOne(cp);
+
             ///将拼车信息回执成发布中
             if (carpoolOrder.getUserType() != null && carpoolOrder.getUserType().intValue() == 0){
                 CarpoolPublish carpoolPublish = new CarpoolPublish();
@@ -225,8 +237,9 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
 
             ///预约成功的单子需要给对方发消息
             if (rs > 0 && status.intValue() == CarpoolConstant.ORDER_SUCCESS_STATUS ){
-                String page =   "/pages/user/records/carpoolRecord";
-                sendTemplateMsg(carpoolOrder.getPublishuserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,page, confirmOrRefuseMsgData(order));
+                //String page =   "pages/user/records/carpoolRecord";
+                String page =  "pages/user/orders/orderDetail?id="+order.getId() + "&formType=0";
+                sendTemplateMsg(cpr.getPublishUserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,page, confirmOrRefuseMsgData(order));
             }
         }
 
@@ -272,11 +285,15 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
     }
 
     public void sendTemplateMsg(Integer userId , String tmplId , String page,  TreeMap<String,TreeMap<String,String>> params){
+        logger.info("$$$$$send template message userId ----- " + userId);
+        logger.info("$$$$$send template message tmplId ----- " + tmplId);
         CarpoolUserFormid formid = new CarpoolUserFormid();
         formid.setUserId(userId); //发布人
         List<CarpoolUserFormid> formidList = carpoolUserFormidService.select(formid);
         if (null != formidList && formidList.size() > 0){
             CarpoolUserFormid userFormid = formidList.get(0);
+            logger.info("$$$$$send template message openid ----- " + userFormid.getWxOpenid());
+            logger.info("$$$$$send template message formid ----- " + userFormid.getFormId());
             WechatTemplateMsg msg = new WechatTemplateMsg();
             msg.setTouser(userFormid.getWxOpenid());
             msg.setColor("");
@@ -287,9 +304,14 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             msg.setData(params);
             String token = (TokenThread.accessToken != null) ? TokenThread.accessToken.getAccessToken() : "";
             logger.info("$$$$$send template message token ----- " + token);
-            TemplateMsgResult tmr = WechatTemplateMsgUtil.sendTemplateMsg(token,WechatTemplateMsgUtil.createTemplateMsgJson(msg));
+            String data = WechatTemplateMsgUtil.createTemplateMsgJson(msg);
+            logger.info("$$$$$send template message data ----- " + data);
+            TemplateMsgResult tmr = WechatTemplateMsgUtil.sendTemplateMsg(token,data);
             if (tmr != null){
                 logger.info("$$send template message rs -" + tmr.getErrmsg()); //输出发送模板消息结果
+                CarpoolUserFormid fid = new CarpoolUserFormid();
+                fid.setId(userFormid.getId());
+                carpoolUserFormidService.delete(fid);
             }
         }
     }

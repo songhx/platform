@@ -14,12 +14,12 @@
             </bean>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/api/**"/>-->
-            <!--<ref bean="authorizationInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <ref bean="authorizationInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
 </beans>

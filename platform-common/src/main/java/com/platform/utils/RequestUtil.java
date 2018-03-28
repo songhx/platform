@@ -230,48 +230,57 @@ public class RequestUtil {
         return jsonObject;
     }
 
+
     public static String  wxHttpsRequest(String requestUrl, String requestMethod, String outputStr) {
-        String rs = null;
+        StringBuffer buffer = new StringBuffer();
         try {
+            byte[] b = outputStr.getBytes("UTF-8");
             URL url = new URL(requestUrl);
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setUseCaches(false);
-            // 设置请求方式（GET/POST）
-            conn.setRequestMethod(requestMethod);
-
-            // 当outputStr不为null时向输出流写数据
-            if (null != outputStr) {
-                OutputStream outputStream = conn.getOutputStream();
-                // 注意编码格式
-                outputStream.write(outputStr.getBytes("UTF-8"));
-                outputStream.close();
+            HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
+            // 设置连接输出流为true,默认false (post 请求是以流的方式隐式的传递参数)
+            httpUrlConn.setDoOutput(true);
+            // 设置连接输入流为true
+            httpUrlConn.setDoInput(true);
+            // 设置请求方式为post
+            httpUrlConn.setRequestMethod(requestMethod);
+            // post请求缓存设为false
+            httpUrlConn.setUseCaches(false);
+            // 设置该HttpURLConnection实例是否自动执行重定向
+            httpUrlConn.setInstanceFollowRedirects(true);
+            httpUrlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+            httpUrlConn.setRequestProperty("Content-Length", String.valueOf(b.length));
+            httpUrlConn.connect();
+            // 当有数据需要提交时
+            if (StringUtils.isNotEmpty(outputStr)) {
+                OutputStream writer = httpUrlConn.getOutputStream();
+                // 发送参数
+                writer.write(b);
+                // 清理当前编辑器的左右缓冲区，并使缓冲区数据写入基础流
+                writer.flush();
+                writer.close(); // 重要且易忽略步骤 (关闭流,切记!)
             }
-
-            // 从输入流读取返回内容
-            InputStream inputStream = conn.getInputStream();
+            // 将返回的输入流转换成字符串
+            InputStream inputStream = httpUrlConn.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String str = null;
-            StringBuffer buffer = new StringBuffer();
             while ((str = bufferedReader.readLine()) != null) {
                 buffer.append(str);
             }
-
-            // 释放资源
             bufferedReader.close();
             inputStreamReader.close();
+            // 释放资源
             inputStream.close();
             inputStream = null;
-            conn.disconnect();
-            rs =buffer.toString();
+            httpUrlConn.disconnect();
+
         } catch (ConnectException ce) {
-            LOGGER.info("连接超时：{}"+ ce);
+            LOGGER.info("Weixin server connection timed out.");
         } catch (Exception e) {
-            LOGGER.info("https请求异常：{}"+e);
+            e.printStackTrace();
+            LOGGER.info("https request error:{}" + e);
         }
-        return rs;
+        return buffer.toString();
     }
 
 }

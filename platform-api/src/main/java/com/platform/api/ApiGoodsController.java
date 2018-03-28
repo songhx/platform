@@ -286,6 +286,7 @@ public class ApiGoodsController extends ApiBaseAction {
         params.put("keyword", keyword);
         params.put("is_new", isNew);
         params.put("is_hot", isHot);
+        params.put("is_delete", 0);
         params.put("page", page);
         params.put("limit", size);
         params.put("order", sort);

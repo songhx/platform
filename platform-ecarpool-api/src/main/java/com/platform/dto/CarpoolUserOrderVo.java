@@ -25,7 +25,7 @@ public class CarpoolUserOrderVo implements Serializable {
     private String byWays; // '途经地方',
     private Date departureTime; // '出发时间',
     private BigDecimal price;
-    private Integer status; // '状态  0 预约中  1  预约成功  2 拒绝   3 取消  4 失效',
+    private Integer status; // '状态  0 预约中  1  预约成功  2 拒绝   3 取消  4 失效 ',
     private String refuseReason; // '拒绝原因',
     private String cancelReason;//取消原因
     private String orderBake; // '备注信息',
