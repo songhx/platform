@@ -17,6 +17,7 @@
         <module>platform-admin</module>
         <module>platform-shop</module>
         <module>platform-ecarpool-api</module>
+        <module>platform-ymm-api</module>
     </modules>
 
     <properties>
