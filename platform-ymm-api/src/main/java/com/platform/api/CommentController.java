@@ -94,4 +94,29 @@ public class CommentController extends ApiBaseAction {
         return toResponsSuccess("评论成功");
     }
 
+    /**
+     * 点赞
+     * @param scComment
+     * @return
+     */
+    @RequestMapping("agree")
+    public Object agree(@RequestBody ScComment scComment) {
+        logger.debug("进入agree消息 ： 参数为 ： " + scComment.toString());
+        if (null == scComment.getId()) {return toResponsFail("点赞失败，参数错误！");}
+        try {
+            ScComment sc = new ScComment(scComment.getId(), CommonConstant.USEABLE_STATUS);
+            ScComment comment = iCommentService.selectOne(sc);
+
+            if (null != comment){
+                scComment.setAgreeNum((null != comment.getAgreeNum()) ? comment.getAgreeNum().longValue() + 1L : 1L);
+                iCommentService.updateByPrimaryKeySelective(scComment);
+            }
+
+        }catch (Exception e){
+            logger.error("publish消息 error ",e);
+            return toResponsFail("网络原因,点赞失败");
+        }
+        return toResponsSuccess("点赞成功");
+    }
+
 }

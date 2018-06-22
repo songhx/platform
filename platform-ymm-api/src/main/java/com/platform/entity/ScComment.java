@@ -29,6 +29,14 @@ public class ScComment implements Serializable {
     private Integer dataStatus; // '数据状态 0 正常 1 删除',
 
 
+    public ScComment() {
+    }
+
+    public ScComment(Long id,Integer dataStatus) {
+        this.id = id;
+        this.dataStatus = dataStatus;
+    }
+
     public Long getId() {
         return id;
     }
