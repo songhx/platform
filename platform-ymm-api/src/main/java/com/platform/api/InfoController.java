@@ -49,6 +49,9 @@ public class InfoController extends ApiBaseAction {
         Example example = new Example(ScInfo.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dataStatus",CommonConstant.USEABLE_STATUS);
+        if (null != infoVo.getType()){
+            criteria.andEqualTo("type", infoVo.getType());
+        }
         example.setOrderByClause(" createTime DESC"); ///创建时间倒叙输出
         List<ScInfo> list = iInfoService.selectByExample(example);
         PageInfo<ScInfo> pageInfo = new PageInfo<>(list);
@@ -57,6 +60,25 @@ public class InfoController extends ApiBaseAction {
         returnMap.put("total",pageInfo.getPages());
         returnMap.put("list", list);
         return toResponsSuccess(returnMap);
+    }
+
+    /**
+     * 查询具体信息
+     * @param infoVo
+     * @return
+     */
+    @RequestMapping("item")
+    public Object item(@RequestBody InfoVo infoVo) {
+        logger.debug("item ： 参数为 ： " + infoVo.toString());
+        Example example = new Example(ScInfo.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("dataStatus",CommonConstant.USEABLE_STATUS);
+        if (null != infoVo.getId()){
+            criteria.andEqualTo("id", infoVo.getId());
+        }
+        List<ScInfo> list = iInfoService.selectByExample(example);
+        if (list == null || (list != null && list.size() <=0 )){return toResponsFail("查询失败"); }
+        return toResponsSuccess(list.get(0));
     }
 
     /**
@@ -147,6 +169,7 @@ public class InfoController extends ApiBaseAction {
                 iInfoService.updateByPrimaryKeySelective(info1);
 
                 ///转发数据
+                info.setId(null);
                 info.setAvatar(scInfo.getAvatar());
                 info.setName(scInfo.getName());
                 info.setRepostNum(0L);

@@ -51,8 +51,12 @@ public class CommentController extends ApiBaseAction {
         PageHelper.startPage(commentVo.getStart(), commentVo.getLimit(), true, false); //设置分页
         Example example = new Example(ScComment.class);
         Example.Criteria criteria = example.createCriteria();
+
         criteria.andEqualTo("dataStatus",CommonConstant.USEABLE_STATUS);
-        example.setOrderByClause(" createTime DESC"); ///创建时间倒叙输出
+        if (null != commentVo.getInfoId()){
+            criteria.andEqualTo("infoId",commentVo.getInfoId());
+        }
+        example.setOrderByClause(" agreeNum DESC, createTime DESC"); ///创建时间倒叙输出
         List<ScComment> list = iCommentService.selectByExample(example);
         PageInfo<ScComment> pageInfo = new PageInfo<>(list);
         Map<String, Object> returnMap = new HashMap<>();
