@@ -105,7 +105,6 @@
       </element>
       <element id="javaee-facet-resources" facet="platform-framework/web/Web" />
       <element id="artifact" artifact-name="platform-admin:war exploded" />
-      <element id="artifact" artifact-name="platform-shop:war exploded" />
     </root>
   </artifact>
 </component>

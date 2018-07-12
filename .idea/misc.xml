@@ -39,6 +39,7 @@
     </properties>
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file url="file://$PROJECT_DIR$/platform-framework/overlays" />
     <file type="web" url="file://$PROJECT_DIR$/platform-admin" />
     <file type="web" url="file://$PROJECT_DIR$/platform-api" />
     <file type="web" url="file://$PROJECT_DIR$/platform-carpool" />
@@ -58,6 +59,8 @@
         <option value="$PROJECT_DIR$/platform-api/pom.xml" />
         <option value="$PROJECT_DIR$/platform-carpool/pom.xml" />
         <option value="$PROJECT_DIR$/platform-ecarpool-api/pom.xml" />
+        <option value="$PROJECT_DIR$/platform-shop/pom.xml" />
+        <option value="$PROJECT_DIR$/platform-ymm-api/pom.xml" />
       </set>
     </option>
   </component>
