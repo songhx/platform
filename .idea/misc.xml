@@ -45,6 +45,7 @@
     <file type="web" url="file://$PROJECT_DIR$/platform-ecarpool-api" />
     <file type="web" url="file://$PROJECT_DIR$/platform-framework" />
     <file type="web" url="file://$PROJECT_DIR$/platform-shop" />
+    <file type="web" url="file://$PROJECT_DIR$/platform-ymm-api" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -54,7 +55,9 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/platform-api/pom.xml" />
         <option value="$PROJECT_DIR$/platform-carpool/pom.xml" />
+        <option value="$PROJECT_DIR$/platform-ecarpool-api/pom.xml" />
       </set>
     </option>
   </component>

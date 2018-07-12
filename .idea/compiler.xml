@@ -7,15 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="platform-admin" />
-        <module name="platform-api" />
         <module name="platform-carpool" />
         <module name="platform-common" />
-        <module name="platform-ecarpool-api" />
         <module name="platform-framework" />
         <module name="platform-gen" />
         <module name="platform-schedule" />
         <module name="platform-shiro" />
         <module name="platform-shop" />
+        <module name="platform-ymm-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
@@ -30,6 +29,7 @@
       <module name="platform-schedule" target="1.7" />
       <module name="platform-shiro" target="1.7" />
       <module name="platform-shop" target="1.7" />
+      <module name="platform-ymm-api" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
