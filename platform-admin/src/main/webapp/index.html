@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>智慧云店管理平台</title>
+    <title> 目优优营销佣金核算系统</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" href="statics/img/favicon.ico" type="image/x-icon">
@@ -32,9 +32,9 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element"
                          style="text-align: center;font-size: 18px;font-weight: 600;color: white;">
-                        智慧云店管理平台
+                        营销佣金核算系统
                     </div>
-                    <div class="logo-element">云平台
+                    <div class="logo-element">目优优
                     </div>
                 </li>
                 <menu-item :item="item" v-for="item in menuList"></menu-item>
@@ -48,55 +48,52 @@
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
                         class="fa fa-bars"></i> </a>
-                    <form role="search" class="navbar-form-custom" method="post" action="#">
-                        <div class="form-group">
-                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search"
-                                   id="top-search">
-                        </div>
-                    </form>
+                    <!--<form role="search" class="navbar-form-custom" method="post" action="#">-->
+                        <!--<div class="form-group">-->
+                            <!--<input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search"-->
+                                   <!--id="top-search">-->
+                        <!--</div>-->
+                    <!--</form>-->
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
 
-                    <!--<li class="dropdown">-->
-                        <!--<a href="javascript:;" @click="love"><i class="fa fa-rmb"></i> &nbsp;捐赠</a>-->
-                    <!--</li>-->
                     <li class="dropdown">
                         <a href="javascript:;" @click="toggleFullScreen"><i class="fa fa-arrows-alt"></i> &nbsp;全屏</a>
                     </li>
                     <li><a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                            <i class="fa fa-bell"></i> <span class="label label-primary">2</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a class="J_menuItem" href="mailbox.html">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> 您有1条未读消息
-                                        <span class="pull-right text-muted small">4分钟前</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="J_menuItem" href="profile.html">
-                                    <div>
-                                        <i class="fa fa-qq fa-fw"></i> 1条新回复
-                                        <span class="pull-right text-muted small">12分钟钱</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <div class="text-center link-block">
-                                    <a class="J_menuItem" href="sys/generator/view">
-                                        <strong>查看所有 </strong>
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">-->
+                            <!--<i class="fa fa-bell"></i> <span class="label label-primary">2</span>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu dropdown-alerts">-->
+                            <!--<li>-->
+                                <!--<a class="J_menuItem" href="mailbox.html">-->
+                                    <!--<div>-->
+                                        <!--<i class="fa fa-envelope fa-fw"></i> 您有1条未读消息-->
+                                        <!--<span class="pull-right text-muted small">4分钟前</span>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li>-->
+                                <!--<a class="J_menuItem" href="profile.html">-->
+                                    <!--<div>-->
+                                        <!--<i class="fa fa-qq fa-fw"></i> 1条新回复-->
+                                        <!--<span class="pull-right text-muted small">12分钟钱</span>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li>-->
+                                <!--<div class="text-center link-block">-->
+                                    <!--<a class="J_menuItem" href="sys/generator/view">-->
+                                        <!--<strong>查看所有 </strong>-->
+                                        <!--<i class="fa fa-angle-right"></i>-->
+                                    <!--</a>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <li class="dropdown hidden-xs">
                         <a class="right-sidebar-toggle" aria-expanded="false">
                             <i class="fa fa-tasks"></i> 主题
@@ -135,7 +132,7 @@
                     data-id="main" seamless></iframe>
         </div>
         <div class="footer">
-            <div class="pull-right">&copy; 2017-2050 <a href="#" target="_blank">智慧云店</a>
+            <div class="pull-right">&copy; 2017-2050 <a href="#" target="_blank">中国智站</a>
             </div>
         </div>
     </div>
@@ -151,9 +148,9 @@
                         <i class="fa fa-gear"></i> 主题
                     </a>
                 </li>
-                <li class="">
-                    <a data-toggle="tab" href="#tab-2">通知</a>
-                </li>
+                <!--<li class="">-->
+                    <!--<a data-toggle="tab" href="#tab-2">通知</a>-->
+                <!--</li>-->
             </ul>
 
             <div class="tab-content">
@@ -229,34 +226,34 @@
                         </div>
                     </div>
                 </div>
-                <div id="tab-2" class="tab-pane">
+                <!--<div id="tab-2" class="tab-pane">-->
 
-                    <div class="sidebar-title">
-                        <h3><i class="fa fa-comments-o"></i> 最新通知</h3>
-                        <small><i class="fa fa-tim"></i> 您当前有1条未读信息</small>
-                    </div>
+                    <!--<div class="sidebar-title">-->
+                        <!--<h3><i class="fa fa-comments-o"></i> 最新通知</h3>-->
+                        <!--<small><i class="fa fa-tim"></i> 您当前有1条未读信息</small>-->
+                    <!--</div>-->
 
-                    <div>
-                        <div class="sidebar-message">
-                            <a href="#">
-                                <div class="pull-left text-center">
+                    <!--<div>-->
+                        <!--<div class="sidebar-message">-->
+                            <!--<a href="#">-->
+                                <!--<div class="pull-left text-center">-->
 
-                                    <div class="m-t-xs">
-                                        <i class="fa fa-star text-warning"></i>
-                                        <i class="fa fa-star text-warning"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
+                                    <!--<div class="m-t-xs">-->
+                                        <!--<i class="fa fa-star text-warning"></i>-->
+                                        <!--<i class="fa fa-star text-warning"></i>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="media-body">-->
 
-                                    这是一条测试消息
-                                    <br>
-                                    <small class="text-muted">今天 4:21</small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                                    <!--这是一条测试消息-->
+                                    <!--<br>-->
+                                    <!--<small class="text-muted">今天 4:21</small>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                </div>
+                <!--</div>-->
             </div>
 
         </div>

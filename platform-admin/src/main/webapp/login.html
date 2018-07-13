@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>智慧云店登录页面</title>
+    <title>目优优营销佣金核算系统-登录页面</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="statics/css/bootstrap.min.css">
@@ -18,39 +18,60 @@
     <script src="statics/libs/html5shiv.min.js"></script>
     <script src="statics/libs/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .form-group {
+            margin-bottom: 23px;
+        }
+        .ivu-input {
+            display: inline-block;
+            width: 100%;
+            height: 39px;
+            line-height: 1.5;
+            padding: 4px 7px;
+            font-size: 12px;
+            border: 1px solid #dddee1;
+            border-radius: 4px;
+            color: #495060;
+            background-color: #fff;
+            background-image: none;
+            position: relative;
+            cursor: text;
+            transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+        }
+    </style>
 </head>
 <body class="signin hold-transition login-page">
 <div class="loginscreen animated fadeInDown signinpanel" id="loginBox" v-cloak>
     <div class="row">
 
-            <Card class="m-t text-center" style="background: rgba(109, 109, 109, 0.23);border: 0px solid #dddee1;">
-                <p style="padding: 0 20px 20px 20px;font-size: 23px;">登录智慧云店平台</p>
+            <Card class="m-t text-center" style="border: 0px solid #dddee1;">
                 <div class="form-group has-feedback">
-                    <i-input v-model="username" @on-enter="login" placeholder="账号" style="width: 200px;" autofocus/>
+                    <i-input v-model="username" @on-enter="login" placeholder="账号" style="width: 345px; height: 39px;" autofocus/>
                 </div>
                 <div class="form-group has-feedback">
-                    <i-input type="password" v-model="password" @on-enter="login" style="width: 200px;"
+                    <i-input type="password" v-model="password" @on-enter="login" style="width: 345px; height: 39px;"
                              placeholder="密码"/>
                 </div>
                 <div class="form-group has-feedback">
-                    <div style="display: inline-block;width: 100px;" >
+                    <div style="display: inline-block;width: 245px;" >
                         <i-input v-model="captcha" @on-enter="login"
                                  placeholder="验证码"/>
                     </div>
                     <div style="display: inline-block;width: 100px;" >
-                        <img style="height: 32px;width: 96px;border-radius: 4px;" alt="如果看不清楚，请单击图片刷新！" title="点击刷新"
+                        <img style="height: 39px;width: 96px;border-radius: 4px;" alt="如果看不清楚，请单击图片刷新！" title="点击刷新"
                              class="pointer" :src="src" @click="refreshCode">
                     </div>
                 </div>
                 <div>
-                    <i-button type="primary" @click="login" style="width: 200px;">登录</i-button>
+                    <i-button type="primary" @click="login" style="width: 345px; height: 39px;">登录</i-button>
                 </div>
             </Card>
     </div>
-    <div class="signup-footer">
-        <div class="pull-left">
-            2017~2050 &copy; 智慧云店 版权所有. All Rights Reserved.
-        </div>
+
+</div>
+<div class="signup-footer" style="margin-top: 5%; margin-left: 56%; color: white;">
+    <div class="pull-left">
+        2017~2050 &copy; 目优优 版权所有. All Rights Reserved.
     </div>
 </div>
 <!-- /.login-box -->
