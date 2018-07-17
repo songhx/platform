@@ -769,7 +769,7 @@
 
             if (reused) {
                 // run shutdown in the old plot object
-                placeholder.data("plot").shutdown();
+               // placeholder.data("plot").shutdown();
 
                 // reset reused canvases
                 plot.resize();
