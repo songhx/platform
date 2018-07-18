@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.dao.ImsEweiShopOrderDao">
+
+    <resultMap type="com.platform.entity.ImsEweiShopOrderEntity" id="imsEweiShopOrderMap">
+        <result property="id" column="id"/>
+        <result property="uniacid" column="uniacid"/>
+        <result property="openid" column="openid"/>
+        <result property="agentid" column="agentid"/>
+        <result property="ordersn" column="ordersn"/>
+        <result property="price" column="price"/>
+        <result property="goodsprice" column="goodsprice"/>
+        <result property="discountprice" column="discountprice"/>
+        <result property="status" column="status"/>
+        <result property="paytype" column="paytype"/>
+        <result property="transid" column="transid"/>
+        <result property="remark" column="remark"/>
+        <result property="addressid" column="addressid"/>
+        <result property="dispatchprice" column="dispatchprice"/>
+        <result property="dispatchid" column="dispatchid"/>
+        <result property="createtime" column="createtime"/>
+        <result property="dispatchtype" column="dispatchtype"/>
+        <result property="carrier" column="carrier"/>
+        <result property="refundid" column="refundid"/>
+        <result property="iscomment" column="iscomment"/>
+        <result property="creditadd" column="creditadd"/>
+        <result property="deleted" column="deleted"/>
+        <result property="userdeleted" column="userdeleted"/>
+        <result property="finishtime" column="finishtime"/>
+        <result property="paytime" column="paytime"/>
+        <result property="expresscom" column="expresscom"/>
+        <result property="expresssn" column="expresssn"/>
+        <result property="express" column="express"/>
+        <result property="sendtime" column="sendtime"/>
+        <result property="fetchtime" column="fetchtime"/>
+        <result property="cash" column="cash"/>
+        <result property="canceltime" column="canceltime"/>
+        <result property="cancelpaytime" column="cancelpaytime"/>
+        <result property="refundtime" column="refundtime"/>
+        <result property="isverify" column="isverify"/>
+        <result property="verified" column="verified"/>
+        <result property="verifyopenid" column="verifyopenid"/>
+        <result property="verifycode" column="verifycode"/>
+        <result property="verifytime" column="verifytime"/>
+        <result property="verifystoreid" column="verifystoreid"/>
+        <result property="deductprice" column="deductprice"/>
+        <result property="deductcredit" column="deductcredit"/>
+        <result property="deductcredit2" column="deductcredit2"/>
+        <result property="deductenough" column="deductenough"/>
+        <result property="virtual" column="virtual"/>
+        <result property="virtualInfo" column="virtual_info"/>
+        <result property="virtualStr" column="virtual_str"/>
+        <result property="address" column="address"/>
+        <result property="sysdeleted" column="sysdeleted"/>
+        <result property="ordersn2" column="ordersn2"/>
+        <result property="changeprice" column="changeprice"/>
+        <result property="changedispatchprice" column="changedispatchprice"/>
+        <result property="oldprice" column="oldprice"/>
+        <result property="olddispatchprice" column="olddispatchprice"/>
+        <result property="isvirtual" column="isvirtual"/>
+        <result property="couponid" column="couponid"/>
+        <result property="couponprice" column="couponprice"/>
+        <result property="diyformdata" column="diyformdata"/>
+        <result property="diyformfields" column="diyformfields"/>
+        <result property="diyformid" column="diyformid"/>
+        <result property="storeid" column="storeid"/>
+        <result property="printstate" column="printstate"/>
+        <result property="printstate2" column="printstate2"/>
+        <result property="addressSend" column="address_send"/>
+        <result property="refundstate" column="refundstate"/>
+        <result property="closereason" column="closereason"/>
+        <result property="remarksaler" column="remarksaler"/>
+        <result property="remarkclose" column="remarkclose"/>
+        <result property="remarksend" column="remarksend"/>
+        <result property="ismr" column="ismr"/>
+        <result property="isdiscountprice" column="isdiscountprice"/>
+        <result property="isvirtualsend" column="isvirtualsend"/>
+        <result property="virtualsendInfo" column="virtualsend_info"/>
+        <result property="verifyinfo" column="verifyinfo"/>
+        <result property="verifytype" column="verifytype"/>
+        <result property="verifycodes" column="verifycodes"/>
+        <result property="invoicename" column="invoicename"/>
+        <result property="merchid" column="merchid"/>
+        <result property="ismerch" column="ismerch"/>
+        <result property="parentid" column="parentid"/>
+        <result property="isparent" column="isparent"/>
+        <result property="grprice" column="grprice"/>
+        <result property="merchshow" column="merchshow"/>
+        <result property="merchdeductenough" column="merchdeductenough"/>
+        <result property="couponmerchid" column="couponmerchid"/>
+        <result property="isglobonus" column="isglobonus"/>
+        <result property="merchapply" column="merchapply"/>
+        <result property="isabonus" column="isabonus"/>
+        <result property="isborrow" column="isborrow"/>
+        <result property="borrowopenid" column="borrowopenid"/>
+        <result property="merchisdiscountprice" column="merchisdiscountprice"/>
+        <result property="apppay" column="apppay"/>
+        <result property="coupongoodprice" column="coupongoodprice"/>
+        <result property="buyagainprice" column="buyagainprice"/>
+        <result property="authorid" column="authorid"/>
+        <result property="isauthor" column="isauthor"/>
+        <result property="ispackage" column="ispackage"/>
+        <result property="packageid" column="packageid"/>
+        <result property="taskdiscountprice" column="taskdiscountprice"/>
+        <result property="seckilldiscountprice" column="seckilldiscountprice"/>
+        <result property="verifyendtime" column="verifyendtime"/>
+        <result property="willcancelmessage" column="willcancelmessage"/>
+        <result property="sendtype" column="sendtype"/>
+        <result property="lotterydiscountprice" column="lotterydiscountprice"/>
+        <result property="contype" column="contype"/>
+        <result property="wxid" column="wxid"/>
+        <result property="wxcardid" column="wxcardid"/>
+        <result property="wxcode" column="wxcode"/>
+        <result property="dispatchkey" column="dispatchkey"/>
+        <result property="quickid" column="quickid"/>
+        <result property="istrade" column="istrade"/>
+        <result property="isnewstore" column="isnewstore"/>
+        <result property="liveid" column="liveid"/>
+        <result property="ordersnTrade" column="ordersn_trade"/>
+        <result property="tradestatus" column="tradestatus"/>
+        <result property="tradepaytype" column="tradepaytype"/>
+        <result property="tradepaytime" column="tradepaytime"/>
+        <result property="dowpayment" column="dowpayment"/>
+        <result property="betweenprice" column="betweenprice"/>
+        <result property="isshare" column="isshare"/>
+        <result property="officcode" column="officcode"/>
+        <result property="wxappPrepayId" column="wxapp_prepay_id"/>
+        <result property="cashtime" column="cashtime"/>
+        <result property="iswxappcreate" column="iswxappcreate"/>
+        <result property="randomCode" column="random_code"/>
+        <result property="printTemplate" column="print_template"/>
+        <result property="cityExpressState" column="city_express_state"/>
+        <result property="isCashier" column="is_cashier"/>
+        <result property="commissionmoney" column="commissionmoney"/>
+        <result property="iscycelbuy" column="iscycelbuy"/>
+        <result property="cycelbuyPredictTime" column="cycelbuy_predict_time"/>
+        <result property="cycelbuyPeriodic" column="cycelbuy_periodic"/>
+        <result property="invoiceImg" column="invoice_img"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.platform.entity.ImsEweiShopOrderEntity">
+		select
+			`id`,
+			`uniacid`,
+			`openid`,
+			`agentid`,
+			`ordersn`,
+			`price`,
+			`goodsprice`,
+			`discountprice`,
+			`status`,
+			`paytype`,
+			`transid`,
+			`remark`,
+			`addressid`,
+			`dispatchprice`,
+			`dispatchid`,
+			`createtime`,
+			`dispatchtype`,
+			`carrier`,
+			`refundid`,
+			`iscomment`,
+			`creditadd`,
+			`deleted`,
+			`userdeleted`,
+			`finishtime`,
+			`paytime`,
+			`expresscom`,
+			`expresssn`,
+			`express`,
+			`sendtime`,
+			`fetchtime`,
+			`cash`,
+			`canceltime`,
+			`cancelpaytime`,
+			`refundtime`,
+			`isverify`,
+			`verified`,
+			`verifyopenid`,
+			`verifycode`,
+			`verifytime`,
+			`verifystoreid`,
+			`deductprice`,
+			`deductcredit`,
+			`deductcredit2`,
+			`deductenough`,
+			`virtual`,
+			`virtual_info`,
+			`virtual_str`,
+			`address`,
+			`sysdeleted`,
+			`ordersn2`,
+			`changeprice`,
+			`changedispatchprice`,
+			`oldprice`,
+			`olddispatchprice`,
+			`isvirtual`,
+			`couponid`,
+			`couponprice`,
+			`diyformdata`,
+			`diyformfields`,
+			`diyformid`,
+			`storeid`,
+			`printstate`,
+			`printstate2`,
+			`address_send`,
+			`refundstate`,
+			`closereason`,
+			`remarksaler`,
+			`remarkclose`,
+			`remarksend`,
+			`ismr`,
+			`isdiscountprice`,
+			`isvirtualsend`,
+			`virtualsend_info`,
+			`verifyinfo`,
+			`verifytype`,
+			`verifycodes`,
+			`invoicename`,
+			`merchid`,
+			`ismerch`,
+			`parentid`,
+			`isparent`,
+			`grprice`,
+			`merchshow`,
+			`merchdeductenough`,
+			`couponmerchid`,
+			`isglobonus`,
+			`merchapply`,
+			`isabonus`,
+			`isborrow`,
+			`borrowopenid`,
+			`merchisdiscountprice`,
+			`apppay`,
+			`coupongoodprice`,
+			`buyagainprice`,
+			`authorid`,
+			`isauthor`,
+			`ispackage`,
+			`packageid`,
+			`taskdiscountprice`,
+			`seckilldiscountprice`,
+			`verifyendtime`,
+			`willcancelmessage`,
+			`sendtype`,
+			`lotterydiscountprice`,
+			`contype`,
+			`wxid`,
+			`wxcardid`,
+			`wxcode`,
+			`dispatchkey`,
+			`quickid`,
+			`istrade`,
+			`isnewstore`,
+			`liveid`,
+			`ordersn_trade`,
+			`tradestatus`,
+			`tradepaytype`,
+			`tradepaytime`,
+			`dowpayment`,
+			`betweenprice`,
+			`isshare`,
+			`officcode`,
+			`wxapp_prepay_id`,
+			`cashtime`,
+			`iswxappcreate`,
+			`random_code`,
+			`print_template`,
+			`city_express_state`,
+			`is_cashier`,
+			`commissionmoney`,
+			`iscycelbuy`,
+			`cycelbuy_predict_time`,
+			`cycelbuy_periodic`,
+			`invoice_img`
+		from ims_ewei_shop_order
+		where id = #{id}
+	</select>
+
+	<select id="queryList" resultType="com.platform.entity.ImsEweiShopOrderEntity">
+		select
+    		`id`,
+    		`uniacid`,
+    		`openid`,
+    		`agentid`,
+    		`ordersn`,
+    		`price`,
+    		`goodsprice`,
+    		`discountprice`,
+    		`status`,
+    		`paytype`,
+    		`transid`,
+    		`remark`,
+    		`addressid`,
+    		`dispatchprice`,
+    		`dispatchid`,
+    		`createtime`,
+    		`dispatchtype`,
+    		`carrier`,
+    		`refundid`,
+    		`iscomment`,
+    		`creditadd`,
+    		`deleted`,
+    		`userdeleted`,
+    		`finishtime`,
+    		`paytime`,
+    		`expresscom`,
+    		`expresssn`,
+    		`express`,
+    		`sendtime`,
+    		`fetchtime`,
+    		`cash`,
+    		`canceltime`,
+    		`cancelpaytime`,
+    		`refundtime`,
+    		`isverify`,
+    		`verified`,
+    		`verifyopenid`,
+    		`verifycode`,
+    		`verifytime`,
+    		`verifystoreid`,
+    		`deductprice`,
+    		`deductcredit`,
+    		`deductcredit2`,
+    		`deductenough`,
+    		`virtual`,
+    		`virtual_info`,
+    		`virtual_str`,
+    		`address`,
+    		`sysdeleted`,
+    		`ordersn2`,
+    		`changeprice`,
+    		`changedispatchprice`,
+    		`oldprice`,
+    		`olddispatchprice`,
+    		`isvirtual`,
+    		`couponid`,
+    		`couponprice`,
+    		`diyformdata`,
+    		`diyformfields`,
+    		`diyformid`,
+    		`storeid`,
+    		`printstate`,
+    		`printstate2`,
+    		`address_send`,
+    		`refundstate`,
+    		`closereason`,
+    		`remarksaler`,
+    		`remarkclose`,
+    		`remarksend`,
+    		`ismr`,
+    		`isdiscountprice`,
+    		`isvirtualsend`,
+    		`virtualsend_info`,
+    		`verifyinfo`,
+    		`verifytype`,
+    		`verifycodes`,
+    		`invoicename`,
+    		`merchid`,
+    		`ismerch`,
+    		`parentid`,
+    		`isparent`,
+    		`grprice`,
+    		`merchshow`,
+    		`merchdeductenough`,
+    		`couponmerchid`,
+    		`isglobonus`,
+    		`merchapply`,
+    		`isabonus`,
+    		`isborrow`,
+    		`borrowopenid`,
+    		`merchisdiscountprice`,
+    		`apppay`,
+    		`coupongoodprice`,
+    		`buyagainprice`,
+    		`authorid`,
+    		`isauthor`,
+    		`ispackage`,
+    		`packageid`,
+    		`taskdiscountprice`,
+    		`seckilldiscountprice`,
+    		`verifyendtime`,
+    		`willcancelmessage`,
+    		`sendtype`,
+    		`lotterydiscountprice`,
+    		`contype`,
+    		`wxid`,
+    		`wxcardid`,
+    		`wxcode`,
+    		`dispatchkey`,
+    		`quickid`,
+    		`istrade`,
+    		`isnewstore`,
+    		`liveid`,
+    		`ordersn_trade`,
+    		`tradestatus`,
+    		`tradepaytype`,
+    		`tradepaytime`,
+    		`dowpayment`,
+    		`betweenprice`,
+    		`isshare`,
+    		`officcode`,
+    		`wxapp_prepay_id`,
+    		`cashtime`,
+    		`iswxappcreate`,
+    		`random_code`,
+    		`print_template`,
+    		`city_express_state`,
+    		`is_cashier`,
+    		`commissionmoney`,
+    		`iscycelbuy`,
+    		`cycelbuy_predict_time`,
+    		`cycelbuy_periodic`,
+    		`invoice_img`
+		from ims_ewei_shop_order
+		WHERE 1=1
+		<if test="name != null and name.trim() != ''">
+			AND name LIKE concat('%',#{name},'%')
+		</if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from ims_ewei_shop_order
+		WHERE 1=1
+        <if test="name != null and name.trim() != ''">
+            AND name LIKE concat('%',#{name},'%')
+        </if>
+	</select>
+	 
+	<insert id="save" parameterType="com.platform.entity.ImsEweiShopOrderEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into ims_ewei_shop_order(
+			`uniacid`,
+			`openid`,
+			`agentid`,
+			`ordersn`,
+			`price`,
+			`goodsprice`,
+			`discountprice`,
+			`status`,
+			`paytype`,
+			`transid`,
+			`remark`,
+			`addressid`,
+			`dispatchprice`,
+			`dispatchid`,
+			`createtime`,
+			`dispatchtype`,
+			`carrier`,
+			`refundid`,
+			`iscomment`,
+			`creditadd`,
+			`deleted`,
+			`userdeleted`,
+			`finishtime`,
+			`paytime`,
+			`expresscom`,
+			`expresssn`,
+			`express`,
+			`sendtime`,
+			`fetchtime`,
+			`cash`,
+			`canceltime`,
+			`cancelpaytime`,
+			`refundtime`,
+			`isverify`,
+			`verified`,
+			`verifyopenid`,
+			`verifycode`,
+			`verifytime`,
+			`verifystoreid`,
+			`deductprice`,
+			`deductcredit`,
+			`deductcredit2`,
+			`deductenough`,
+			`virtual`,
+			`virtual_info`,
+			`virtual_str`,
+			`address`,
+			`sysdeleted`,
+			`ordersn2`,
+			`changeprice`,
+			`changedispatchprice`,
+			`oldprice`,
+			`olddispatchprice`,
+			`isvirtual`,
+			`couponid`,
+			`couponprice`,
+			`diyformdata`,
+			`diyformfields`,
+			`diyformid`,
+			`storeid`,
+			`printstate`,
+			`printstate2`,
+			`address_send`,
+			`refundstate`,
+			`closereason`,
+			`remarksaler`,
+			`remarkclose`,
+			`remarksend`,
+			`ismr`,
+			`isdiscountprice`,
+			`isvirtualsend`,
+			`virtualsend_info`,
+			`verifyinfo`,
+			`verifytype`,
+			`verifycodes`,
+			`invoicename`,
+			`merchid`,
+			`ismerch`,
+			`parentid`,
+			`isparent`,
+			`grprice`,
+			`merchshow`,
+			`merchdeductenough`,
+			`couponmerchid`,
+			`isglobonus`,
+			`merchapply`,
+			`isabonus`,
+			`isborrow`,
+			`borrowopenid`,
+			`merchisdiscountprice`,
+			`apppay`,
+			`coupongoodprice`,
+			`buyagainprice`,
+			`authorid`,
+			`isauthor`,
+			`ispackage`,
+			`packageid`,
+			`taskdiscountprice`,
+			`seckilldiscountprice`,
+			`verifyendtime`,
+			`willcancelmessage`,
+			`sendtype`,
+			`lotterydiscountprice`,
+			`contype`,
+			`wxid`,
+			`wxcardid`,
+			`wxcode`,
+			`dispatchkey`,
+			`quickid`,
+			`istrade`,
+			`isnewstore`,
+			`liveid`,
+			`ordersn_trade`,
+			`tradestatus`,
+			`tradepaytype`,
+			`tradepaytime`,
+			`dowpayment`,
+			`betweenprice`,
+			`isshare`,
+			`officcode`,
+			`wxapp_prepay_id`,
+			`cashtime`,
+			`iswxappcreate`,
+			`random_code`,
+			`print_template`,
+			`city_express_state`,
+			`is_cashier`,
+			`commissionmoney`,
+			`iscycelbuy`,
+			`cycelbuy_predict_time`,
+			`cycelbuy_periodic`,
+			`invoice_img`)
+		values(
+			#{uniacid},
+			#{openid},
+			#{agentid},
+			#{ordersn},
+			#{price},
+			#{goodsprice},
+			#{discountprice},
+			#{status},
+			#{paytype},
+			#{transid},
+			#{remark},
+			#{addressid},
+			#{dispatchprice},
+			#{dispatchid},
+			#{createtime},
+			#{dispatchtype},
+			#{carrier},
+			#{refundid},
+			#{iscomment},
+			#{creditadd},
+			#{deleted},
+			#{userdeleted},
+			#{finishtime},
+			#{paytime},
+			#{expresscom},
+			#{expresssn},
+			#{express},
+			#{sendtime},
+			#{fetchtime},
+			#{cash},
+			#{canceltime},
+			#{cancelpaytime},
+			#{refundtime},
+			#{isverify},
+			#{verified},
+			#{verifyopenid},
+			#{verifycode},
+			#{verifytime},
+			#{verifystoreid},
+			#{deductprice},
+			#{deductcredit},
+			#{deductcredit2},
+			#{deductenough},
+			#{virtual},
+			#{virtualInfo},
+			#{virtualStr},
+			#{address},
+			#{sysdeleted},
+			#{ordersn2},
+			#{changeprice},
+			#{changedispatchprice},
+			#{oldprice},
+			#{olddispatchprice},
+			#{isvirtual},
+			#{couponid},
+			#{couponprice},
+			#{diyformdata},
+			#{diyformfields},
+			#{diyformid},
+			#{storeid},
+			#{printstate},
+			#{printstate2},
+			#{addressSend},
+			#{refundstate},
+			#{closereason},
+			#{remarksaler},
+			#{remarkclose},
+			#{remarksend},
+			#{ismr},
+			#{isdiscountprice},
+			#{isvirtualsend},
+			#{virtualsendInfo},
+			#{verifyinfo},
+			#{verifytype},
+			#{verifycodes},
+			#{invoicename},
+			#{merchid},
+			#{ismerch},
+			#{parentid},
+			#{isparent},
+			#{grprice},
+			#{merchshow},
+			#{merchdeductenough},
+			#{couponmerchid},
+			#{isglobonus},
+			#{merchapply},
+			#{isabonus},
+			#{isborrow},
+			#{borrowopenid},
+			#{merchisdiscountprice},
+			#{apppay},
+			#{coupongoodprice},
+			#{buyagainprice},
+			#{authorid},
+			#{isauthor},
+			#{ispackage},
+			#{packageid},
+			#{taskdiscountprice},
+			#{seckilldiscountprice},
+			#{verifyendtime},
+			#{willcancelmessage},
+			#{sendtype},
+			#{lotterydiscountprice},
+			#{contype},
+			#{wxid},
+			#{wxcardid},
+			#{wxcode},
+			#{dispatchkey},
+			#{quickid},
+			#{istrade},
+			#{isnewstore},
+			#{liveid},
+			#{ordersnTrade},
+			#{tradestatus},
+			#{tradepaytype},
+			#{tradepaytime},
+			#{dowpayment},
+			#{betweenprice},
+			#{isshare},
+			#{officcode},
+			#{wxappPrepayId},
+			#{cashtime},
+			#{iswxappcreate},
+			#{randomCode},
+			#{printTemplate},
+			#{cityExpressState},
+			#{isCashier},
+			#{commissionmoney},
+			#{iscycelbuy},
+			#{cycelbuyPredictTime},
+			#{cycelbuyPeriodic},
+			#{invoiceImg})
+	</insert>
+	 
+	<update id="update" parameterType="com.platform.entity.ImsEweiShopOrderEntity">
+		update ims_ewei_shop_order 
+		<set>
+			<if test="uniacid != null">`uniacid` = #{uniacid}, </if>
+			<if test="openid != null">`openid` = #{openid}, </if>
+			<if test="agentid != null">`agentid` = #{agentid}, </if>
+			<if test="ordersn != null">`ordersn` = #{ordersn}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="goodsprice != null">`goodsprice` = #{goodsprice}, </if>
+			<if test="discountprice != null">`discountprice` = #{discountprice}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="paytype != null">`paytype` = #{paytype}, </if>
+			<if test="transid != null">`transid` = #{transid}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="addressid != null">`addressid` = #{addressid}, </if>
+			<if test="dispatchprice != null">`dispatchprice` = #{dispatchprice}, </if>
+			<if test="dispatchid != null">`dispatchid` = #{dispatchid}, </if>
+			<if test="createtime != null">`createtime` = #{createtime}, </if>
+			<if test="dispatchtype != null">`dispatchtype` = #{dispatchtype}, </if>
+			<if test="carrier != null">`carrier` = #{carrier}, </if>
+			<if test="refundid != null">`refundid` = #{refundid}, </if>
+			<if test="iscomment != null">`iscomment` = #{iscomment}, </if>
+			<if test="creditadd != null">`creditadd` = #{creditadd}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}, </if>
+			<if test="userdeleted != null">`userdeleted` = #{userdeleted}, </if>
+			<if test="finishtime != null">`finishtime` = #{finishtime}, </if>
+			<if test="paytime != null">`paytime` = #{paytime}, </if>
+			<if test="expresscom != null">`expresscom` = #{expresscom}, </if>
+			<if test="expresssn != null">`expresssn` = #{expresssn}, </if>
+			<if test="express != null">`express` = #{express}, </if>
+			<if test="sendtime != null">`sendtime` = #{sendtime}, </if>
+			<if test="fetchtime != null">`fetchtime` = #{fetchtime}, </if>
+			<if test="cash != null">`cash` = #{cash}, </if>
+			<if test="canceltime != null">`canceltime` = #{canceltime}, </if>
+			<if test="cancelpaytime != null">`cancelpaytime` = #{cancelpaytime}, </if>
+			<if test="refundtime != null">`refundtime` = #{refundtime}, </if>
+			<if test="isverify != null">`isverify` = #{isverify}, </if>
+			<if test="verified != null">`verified` = #{verified}, </if>
+			<if test="verifyopenid != null">`verifyopenid` = #{verifyopenid}, </if>
+			<if test="verifycode != null">`verifycode` = #{verifycode}, </if>
+			<if test="verifytime != null">`verifytime` = #{verifytime}, </if>
+			<if test="verifystoreid != null">`verifystoreid` = #{verifystoreid}, </if>
+			<if test="deductprice != null">`deductprice` = #{deductprice}, </if>
+			<if test="deductcredit != null">`deductcredit` = #{deductcredit}, </if>
+			<if test="deductcredit2 != null">`deductcredit2` = #{deductcredit2}, </if>
+			<if test="deductenough != null">`deductenough` = #{deductenough}, </if>
+			<if test="virtual != null">`virtual` = #{virtual}, </if>
+			<if test="virtualInfo != null">`virtual_info` = #{virtualInfo}, </if>
+			<if test="virtualStr != null">`virtual_str` = #{virtualStr}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="sysdeleted != null">`sysdeleted` = #{sysdeleted}, </if>
+			<if test="ordersn2 != null">`ordersn2` = #{ordersn2}, </if>
+			<if test="changeprice != null">`changeprice` = #{changeprice}, </if>
+			<if test="changedispatchprice != null">`changedispatchprice` = #{changedispatchprice}, </if>
+			<if test="oldprice != null">`oldprice` = #{oldprice}, </if>
+			<if test="olddispatchprice != null">`olddispatchprice` = #{olddispatchprice}, </if>
+			<if test="isvirtual != null">`isvirtual` = #{isvirtual}, </if>
+			<if test="couponid != null">`couponid` = #{couponid}, </if>
+			<if test="couponprice != null">`couponprice` = #{couponprice}, </if>
+			<if test="diyformdata != null">`diyformdata` = #{diyformdata}, </if>
+			<if test="diyformfields != null">`diyformfields` = #{diyformfields}, </if>
+			<if test="diyformid != null">`diyformid` = #{diyformid}, </if>
+			<if test="storeid != null">`storeid` = #{storeid}, </if>
+			<if test="printstate != null">`printstate` = #{printstate}, </if>
+			<if test="printstate2 != null">`printstate2` = #{printstate2}, </if>
+			<if test="addressSend != null">`address_send` = #{addressSend}, </if>
+			<if test="refundstate != null">`refundstate` = #{refundstate}, </if>
+			<if test="closereason != null">`closereason` = #{closereason}, </if>
+			<if test="remarksaler != null">`remarksaler` = #{remarksaler}, </if>
+			<if test="remarkclose != null">`remarkclose` = #{remarkclose}, </if>
+			<if test="remarksend != null">`remarksend` = #{remarksend}, </if>
+			<if test="ismr != null">`ismr` = #{ismr}, </if>
+			<if test="isdiscountprice != null">`isdiscountprice` = #{isdiscountprice}, </if>
+			<if test="isvirtualsend != null">`isvirtualsend` = #{isvirtualsend}, </if>
+			<if test="virtualsendInfo != null">`virtualsend_info` = #{virtualsendInfo}, </if>
+			<if test="verifyinfo != null">`verifyinfo` = #{verifyinfo}, </if>
+			<if test="verifytype != null">`verifytype` = #{verifytype}, </if>
+			<if test="verifycodes != null">`verifycodes` = #{verifycodes}, </if>
+			<if test="invoicename != null">`invoicename` = #{invoicename}, </if>
+			<if test="merchid != null">`merchid` = #{merchid}, </if>
+			<if test="ismerch != null">`ismerch` = #{ismerch}, </if>
+			<if test="parentid != null">`parentid` = #{parentid}, </if>
+			<if test="isparent != null">`isparent` = #{isparent}, </if>
+			<if test="grprice != null">`grprice` = #{grprice}, </if>
+			<if test="merchshow != null">`merchshow` = #{merchshow}, </if>
+			<if test="merchdeductenough != null">`merchdeductenough` = #{merchdeductenough}, </if>
+			<if test="couponmerchid != null">`couponmerchid` = #{couponmerchid}, </if>
+			<if test="isglobonus != null">`isglobonus` = #{isglobonus}, </if>
+			<if test="merchapply != null">`merchapply` = #{merchapply}, </if>
+			<if test="isabonus != null">`isabonus` = #{isabonus}, </if>
+			<if test="isborrow != null">`isborrow` = #{isborrow}, </if>
+			<if test="borrowopenid != null">`borrowopenid` = #{borrowopenid}, </if>
+			<if test="merchisdiscountprice != null">`merchisdiscountprice` = #{merchisdiscountprice}, </if>
+			<if test="apppay != null">`apppay` = #{apppay}, </if>
+			<if test="coupongoodprice != null">`coupongoodprice` = #{coupongoodprice}, </if>
+			<if test="buyagainprice != null">`buyagainprice` = #{buyagainprice}, </if>
+			<if test="authorid != null">`authorid` = #{authorid}, </if>
+			<if test="isauthor != null">`isauthor` = #{isauthor}, </if>
+			<if test="ispackage != null">`ispackage` = #{ispackage}, </if>
+			<if test="packageid != null">`packageid` = #{packageid}, </if>
+			<if test="taskdiscountprice != null">`taskdiscountprice` = #{taskdiscountprice}, </if>
+			<if test="seckilldiscountprice != null">`seckilldiscountprice` = #{seckilldiscountprice}, </if>
+			<if test="verifyendtime != null">`verifyendtime` = #{verifyendtime}, </if>
+			<if test="willcancelmessage != null">`willcancelmessage` = #{willcancelmessage}, </if>
+			<if test="sendtype != null">`sendtype` = #{sendtype}, </if>
+			<if test="lotterydiscountprice != null">`lotterydiscountprice` = #{lotterydiscountprice}, </if>
+			<if test="contype != null">`contype` = #{contype}, </if>
+			<if test="wxid != null">`wxid` = #{wxid}, </if>
+			<if test="wxcardid != null">`wxcardid` = #{wxcardid}, </if>
+			<if test="wxcode != null">`wxcode` = #{wxcode}, </if>
+			<if test="dispatchkey != null">`dispatchkey` = #{dispatchkey}, </if>
+			<if test="quickid != null">`quickid` = #{quickid}, </if>
+			<if test="istrade != null">`istrade` = #{istrade}, </if>
+			<if test="isnewstore != null">`isnewstore` = #{isnewstore}, </if>
+			<if test="liveid != null">`liveid` = #{liveid}, </if>
+			<if test="ordersnTrade != null">`ordersn_trade` = #{ordersnTrade}, </if>
+			<if test="tradestatus != null">`tradestatus` = #{tradestatus}, </if>
+			<if test="tradepaytype != null">`tradepaytype` = #{tradepaytype}, </if>
+			<if test="tradepaytime != null">`tradepaytime` = #{tradepaytime}, </if>
+			<if test="dowpayment != null">`dowpayment` = #{dowpayment}, </if>
+			<if test="betweenprice != null">`betweenprice` = #{betweenprice}, </if>
+			<if test="isshare != null">`isshare` = #{isshare}, </if>
+			<if test="officcode != null">`officcode` = #{officcode}, </if>
+			<if test="wxappPrepayId != null">`wxapp_prepay_id` = #{wxappPrepayId}, </if>
+			<if test="cashtime != null">`cashtime` = #{cashtime}, </if>
+			<if test="iswxappcreate != null">`iswxappcreate` = #{iswxappcreate}, </if>
+			<if test="randomCode != null">`random_code` = #{randomCode}, </if>
+			<if test="printTemplate != null">`print_template` = #{printTemplate}, </if>
+			<if test="cityExpressState != null">`city_express_state` = #{cityExpressState}, </if>
+			<if test="isCashier != null">`is_cashier` = #{isCashier}, </if>
+			<if test="commissionmoney != null">`commissionmoney` = #{commissionmoney}, </if>
+			<if test="iscycelbuy != null">`iscycelbuy` = #{iscycelbuy}, </if>
+			<if test="cycelbuyPredictTime != null">`cycelbuy_predict_time` = #{cycelbuyPredictTime}, </if>
+			<if test="cycelbuyPeriodic != null">`cycelbuy_periodic` = #{cycelbuyPeriodic}, </if>
+			<if test="invoiceImg != null">`invoice_img` = #{invoiceImg}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from ims_ewei_shop_order where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from ims_ewei_shop_order where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

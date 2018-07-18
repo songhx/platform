@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+        <Row :gutter="16">
+            <i-col span="4">
+                <i-input v-model="q.name" @on-enter="query" placeholder="名称"/>
+            </i-col>
+            <i-button @click="query">查询</i-button>
+			#if($shiro.hasPermission("imseweishoporder:save"))
+            <i-button type="info" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</i-button>
+			#end
+			#if($shiro.hasPermission("imseweishoporder:update"))
+            <i-button type="warning" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</i-button>
+			#end
+			#if($shiro.hasPermission("imseweishoporder:delete"))
+            <i-button type="error" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</i-button>
+			#end
+        </Row>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+
+    <Card v-show="!showList">
+        <p slot="title">{{title}}</p>
+		<i-form ref="formValidate" :model="imsEweiShopOrder" :rules="ruleValidate" :label-width="80">
+            <Form-item label="" prop="uniacid">
+                <i-input v-model="imsEweiShopOrder.uniacid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="openid">
+                <i-input v-model="imsEweiShopOrder.openid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="agentid">
+                <i-input v-model="imsEweiShopOrder.agentid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="ordersn">
+                <i-input v-model="imsEweiShopOrder.ordersn" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="price">
+                <i-input v-model="imsEweiShopOrder.price" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="goodsprice">
+                <i-input v-model="imsEweiShopOrder.goodsprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="discountprice">
+                <i-input v-model="imsEweiShopOrder.discountprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="status">
+                <i-input v-model="imsEweiShopOrder.status" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="paytype">
+                <i-input v-model="imsEweiShopOrder.paytype" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="transid">
+                <i-input v-model="imsEweiShopOrder.transid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="remark">
+                <i-input v-model="imsEweiShopOrder.remark" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="addressid">
+                <i-input v-model="imsEweiShopOrder.addressid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="dispatchprice">
+                <i-input v-model="imsEweiShopOrder.dispatchprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="dispatchid">
+                <i-input v-model="imsEweiShopOrder.dispatchid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="createtime">
+                <i-input v-model="imsEweiShopOrder.createtime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="dispatchtype">
+                <i-input v-model="imsEweiShopOrder.dispatchtype" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="carrier">
+                <i-input v-model="imsEweiShopOrder.carrier" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="refundid">
+                <i-input v-model="imsEweiShopOrder.refundid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="iscomment">
+                <i-input v-model="imsEweiShopOrder.iscomment" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="creditadd">
+                <i-input v-model="imsEweiShopOrder.creditadd" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="deleted">
+                <i-input v-model="imsEweiShopOrder.deleted" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="userdeleted">
+                <i-input v-model="imsEweiShopOrder.userdeleted" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="finishtime">
+                <i-input v-model="imsEweiShopOrder.finishtime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="paytime">
+                <i-input v-model="imsEweiShopOrder.paytime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="expresscom">
+                <i-input v-model="imsEweiShopOrder.expresscom" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="expresssn">
+                <i-input v-model="imsEweiShopOrder.expresssn" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="express">
+                <i-input v-model="imsEweiShopOrder.express" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="sendtime">
+                <i-input v-model="imsEweiShopOrder.sendtime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="fetchtime">
+                <i-input v-model="imsEweiShopOrder.fetchtime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="cash">
+                <i-input v-model="imsEweiShopOrder.cash" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="canceltime">
+                <i-input v-model="imsEweiShopOrder.canceltime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="cancelpaytime">
+                <i-input v-model="imsEweiShopOrder.cancelpaytime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="refundtime">
+                <i-input v-model="imsEweiShopOrder.refundtime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isverify">
+                <i-input v-model="imsEweiShopOrder.isverify" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verified">
+                <i-input v-model="imsEweiShopOrder.verified" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifyopenid">
+                <i-input v-model="imsEweiShopOrder.verifyopenid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifycode">
+                <i-input v-model="imsEweiShopOrder.verifycode" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifytime">
+                <i-input v-model="imsEweiShopOrder.verifytime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifystoreid">
+                <i-input v-model="imsEweiShopOrder.verifystoreid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="deductprice">
+                <i-input v-model="imsEweiShopOrder.deductprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="deductcredit">
+                <i-input v-model="imsEweiShopOrder.deductcredit" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="deductcredit2">
+                <i-input v-model="imsEweiShopOrder.deductcredit2" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="deductenough">
+                <i-input v-model="imsEweiShopOrder.deductenough" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="virtual">
+                <i-input v-model="imsEweiShopOrder.virtual" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="virtualInfo">
+                <i-input v-model="imsEweiShopOrder.virtualInfo" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="virtualStr">
+                <i-input v-model="imsEweiShopOrder.virtualStr" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="address">
+                <i-input v-model="imsEweiShopOrder.address" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="sysdeleted">
+                <i-input v-model="imsEweiShopOrder.sysdeleted" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="ordersn2">
+                <i-input v-model="imsEweiShopOrder.ordersn2" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="changeprice">
+                <i-input v-model="imsEweiShopOrder.changeprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="changedispatchprice">
+                <i-input v-model="imsEweiShopOrder.changedispatchprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="oldprice">
+                <i-input v-model="imsEweiShopOrder.oldprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="olddispatchprice">
+                <i-input v-model="imsEweiShopOrder.olddispatchprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isvirtual">
+                <i-input v-model="imsEweiShopOrder.isvirtual" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="couponid">
+                <i-input v-model="imsEweiShopOrder.couponid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="couponprice">
+                <i-input v-model="imsEweiShopOrder.couponprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="diyformdata">
+                <i-input v-model="imsEweiShopOrder.diyformdata" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="diyformfields">
+                <i-input v-model="imsEweiShopOrder.diyformfields" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="diyformid">
+                <i-input v-model="imsEweiShopOrder.diyformid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="storeid">
+                <i-input v-model="imsEweiShopOrder.storeid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="printstate">
+                <i-input v-model="imsEweiShopOrder.printstate" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="printstate2">
+                <i-input v-model="imsEweiShopOrder.printstate2" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="addressSend">
+                <i-input v-model="imsEweiShopOrder.addressSend" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="refundstate">
+                <i-input v-model="imsEweiShopOrder.refundstate" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="closereason">
+                <i-input v-model="imsEweiShopOrder.closereason" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="remarksaler">
+                <i-input v-model="imsEweiShopOrder.remarksaler" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="remarkclose">
+                <i-input v-model="imsEweiShopOrder.remarkclose" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="remarksend">
+                <i-input v-model="imsEweiShopOrder.remarksend" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="ismr">
+                <i-input v-model="imsEweiShopOrder.ismr" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isdiscountprice">
+                <i-input v-model="imsEweiShopOrder.isdiscountprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isvirtualsend">
+                <i-input v-model="imsEweiShopOrder.isvirtualsend" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="virtualsendInfo">
+                <i-input v-model="imsEweiShopOrder.virtualsendInfo" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifyinfo">
+                <i-input v-model="imsEweiShopOrder.verifyinfo" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifytype">
+                <i-input v-model="imsEweiShopOrder.verifytype" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifycodes">
+                <i-input v-model="imsEweiShopOrder.verifycodes" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="invoicename">
+                <i-input v-model="imsEweiShopOrder.invoicename" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="merchid">
+                <i-input v-model="imsEweiShopOrder.merchid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="ismerch">
+                <i-input v-model="imsEweiShopOrder.ismerch" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="parentid">
+                <i-input v-model="imsEweiShopOrder.parentid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isparent">
+                <i-input v-model="imsEweiShopOrder.isparent" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="grprice">
+                <i-input v-model="imsEweiShopOrder.grprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="merchshow">
+                <i-input v-model="imsEweiShopOrder.merchshow" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="merchdeductenough">
+                <i-input v-model="imsEweiShopOrder.merchdeductenough" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="couponmerchid">
+                <i-input v-model="imsEweiShopOrder.couponmerchid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isglobonus">
+                <i-input v-model="imsEweiShopOrder.isglobonus" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="merchapply">
+                <i-input v-model="imsEweiShopOrder.merchapply" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isabonus">
+                <i-input v-model="imsEweiShopOrder.isabonus" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isborrow">
+                <i-input v-model="imsEweiShopOrder.isborrow" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="borrowopenid">
+                <i-input v-model="imsEweiShopOrder.borrowopenid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="merchisdiscountprice">
+                <i-input v-model="imsEweiShopOrder.merchisdiscountprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="apppay">
+                <i-input v-model="imsEweiShopOrder.apppay" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="coupongoodprice">
+                <i-input v-model="imsEweiShopOrder.coupongoodprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="buyagainprice">
+                <i-input v-model="imsEweiShopOrder.buyagainprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="authorid">
+                <i-input v-model="imsEweiShopOrder.authorid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isauthor">
+                <i-input v-model="imsEweiShopOrder.isauthor" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="ispackage">
+                <i-input v-model="imsEweiShopOrder.ispackage" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="packageid">
+                <i-input v-model="imsEweiShopOrder.packageid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="taskdiscountprice">
+                <i-input v-model="imsEweiShopOrder.taskdiscountprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="seckilldiscountprice">
+                <i-input v-model="imsEweiShopOrder.seckilldiscountprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="verifyendtime">
+                <i-input v-model="imsEweiShopOrder.verifyendtime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="willcancelmessage">
+                <i-input v-model="imsEweiShopOrder.willcancelmessage" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="sendtype">
+                <i-input v-model="imsEweiShopOrder.sendtype" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="lotterydiscountprice">
+                <i-input v-model="imsEweiShopOrder.lotterydiscountprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="contype">
+                <i-input v-model="imsEweiShopOrder.contype" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="wxid">
+                <i-input v-model="imsEweiShopOrder.wxid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="wxcardid">
+                <i-input v-model="imsEweiShopOrder.wxcardid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="wxcode">
+                <i-input v-model="imsEweiShopOrder.wxcode" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="dispatchkey">
+                <i-input v-model="imsEweiShopOrder.dispatchkey" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="quickid">
+                <i-input v-model="imsEweiShopOrder.quickid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="istrade">
+                <i-input v-model="imsEweiShopOrder.istrade" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isnewstore">
+                <i-input v-model="imsEweiShopOrder.isnewstore" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="liveid">
+                <i-input v-model="imsEweiShopOrder.liveid" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="ordersnTrade">
+                <i-input v-model="imsEweiShopOrder.ordersnTrade" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="tradestatus">
+                <i-input v-model="imsEweiShopOrder.tradestatus" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="tradepaytype">
+                <i-input v-model="imsEweiShopOrder.tradepaytype" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="tradepaytime">
+                <i-input v-model="imsEweiShopOrder.tradepaytime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="dowpayment">
+                <i-input v-model="imsEweiShopOrder.dowpayment" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="betweenprice">
+                <i-input v-model="imsEweiShopOrder.betweenprice" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isshare">
+                <i-input v-model="imsEweiShopOrder.isshare" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="officcode">
+                <i-input v-model="imsEweiShopOrder.officcode" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="wxappPrepayId">
+                <i-input v-model="imsEweiShopOrder.wxappPrepayId" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="cashtime">
+                <i-input v-model="imsEweiShopOrder.cashtime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="iswxappcreate">
+                <i-input v-model="imsEweiShopOrder.iswxappcreate" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="randomCode">
+                <i-input v-model="imsEweiShopOrder.randomCode" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="printTemplate">
+                <i-input v-model="imsEweiShopOrder.printTemplate" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="cityExpressState">
+                <i-input v-model="imsEweiShopOrder.cityExpressState" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="isCashier">
+                <i-input v-model="imsEweiShopOrder.isCashier" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="commissionmoney">
+                <i-input v-model="imsEweiShopOrder.commissionmoney" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="iscycelbuy">
+                <i-input v-model="imsEweiShopOrder.iscycelbuy" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="cycelbuyPredictTime">
+                <i-input v-model="imsEweiShopOrder.cycelbuyPredictTime" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="cycelbuyPeriodic">
+                <i-input v-model="imsEweiShopOrder.cycelbuyPeriodic" placeholder=""/>
+            </Form-item>
+            <Form-item label="" prop="invoiceImg">
+                <i-input v-model="imsEweiShopOrder.invoiceImg" placeholder=""/>
+            </Form-item>
+            <Form-item>
+                <i-button type="primary" @click="handleSubmit('formValidate')">提交</i-button>
+                <i-button type="warning" @click="reload" style="margin-left: 8px"/>返回</i-button>
+                <i-button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</i-button>
+            </Form-item>
+        </i-form>
+	</Card>
+</div>
+
+<script src="${rc.contextPath}/js/distribute/imseweishoporder.js?_${date.systemTime}"></script>
+</body>
+</html>
