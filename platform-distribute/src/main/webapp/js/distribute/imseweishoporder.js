@@ -7,7 +7,7 @@ $(function () {
 			{label: '', name: 'uniacid', index: 'uniacid', width: 80},
 			{label: '', name: 'openid', index: 'openid', width: 80},
 			{label: '', name: 'agentid', index: 'agentid', width: 80},
-			{label: '', name: 'ordersn', index: 'ordersn', width: 80},
+			{label: '', name: '订单编号', index: 'ordersn', width: 80},
 			{label: '', name: 'price', index: 'price', width: 80},
 			{label: '', name: 'goodsprice', index: 'goodsprice', width: 80},
 			{label: '', name: 'discountprice', index: 'discountprice', width: 80},

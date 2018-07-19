@@ -1,0 +1,146 @@
+$(function () {
+    $("#jqGrid").jqGrid({
+        url: '../orderStat/list',
+        datatype: "json",
+        colModel: [
+			{label: 'id', name: 'id', index: 'id', key: true, hidden: true},
+			{label: '订单编号', name: 'ordersn', index: 'ordersn', width: '140px'},
+			{label: '商户号', name: 'agentid', index: 'agentid', width: '60px'},
+			{label: '交易时间', name: 'createtime', index: 'createtime', width: '120px',formatter:formatTime},
+            {label: '成交时间', name: 'finishtime', index: 'finishtime', width: '120px',formatter:formatTime},
+			{label: '会员姓名', name: 'realname', index: 'realname', width: '65px'},
+			{label: '平台佣金', name: 'platformCommission', index: 'price', width: '70px'},
+            {label: '一级分销商', name: 'commission1', index: 'commission1', width: '70px'},
+            {label: '二级分销商', name: 'commission2', index: 'commission2', width: '70px'},
+            {label: '三级分销商', name: 'commission3', index: 'commission3', width: '70px'},
+			{label: '销售', name: 'salerCommission', index: 'commission1', width: '70px'},
+			{label: '省分销商', name: 'provinceCommission', index: 'commission2', width: '70px'},
+			{label: '市销商', name: 'cityCommission', index: 'commission3', width: '70px'},
+			{label: '分销商等级', name: 'level', index: 'level', width: '60px',formatter:formatLevel},
+			{label: '商品名称', name: 'orderGoodsVoList', index: 'price', width: '160px',formatter:formatTitle},
+			{label: '商品编码', name: 'orderGoodsVoList', index: 'price', width: '160px',formatter:formatSN},
+            {label: '商品金额', name: 'price', index: 'price', width: '80px'},
+            {label: '支付方式', name: 'paytype', index: 'paytype', width: '80px',formatter:formatPayType },
+            {label: '订单状态', name: 'status', index: 'status', width: '80px',formatter:formatOrderStatus},
+			],
+		viewrecords: true,
+        height: 385,
+        rowNum: 10,
+        rowList: [10, 30, 50],
+        rownumbers: true,
+        rownumWidth: 25,
+        autowidth: true,
+        multiselect: true,
+        pager: "#jqGridPager",
+        jsonReader: {
+            root: "page.list",
+            page: "page.currPage",
+            total: "page.totalPage",
+            records: "page.totalCount"
+        },
+        prmNames: {
+            page: "page",
+            rows: "limit",
+            order: "order"
+        },
+        gridComplete: function () {
+            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
+        }
+    });
+});
+//格式化商品标题
+function formatTitle(item) {
+    var title = "";
+    if(item != null & item.length > 0){
+        for (var  i = 0; i < item.length; i++){
+            title += item[i].title + "<br>";
+        }
+    }
+    return  title;
+}
+///商品编码
+function formatSN(item) {
+    var productsn = "";
+    if(item != null & item.length > 0){
+        for (var  i = 0; i < item.length; i++){
+            productsn += item[i].productsn + "<br>";
+        }
+    }
+    return  productsn;
+}
+///格式化时间
+function formatTime(v) {
+	if (v == 0){return "";}
+	var t = v +"000";
+	//console.log("t----" + t)
+	return DateUtils.long2String(parseInt(t),11);
+}
+const  Levels = ['消费者', '门店店长', '超市店主']
+///格式化
+function formatLevel(t) {
+    if(t == 3) {t = 1;}
+    if(t == 4) {t = 2;}
+
+    return '<span>'+Levels[t]+'</span>';
+}
+///订单状态
+/*  已关闭 -1
+	待付款  0
+	待发货 1
+	待收货 2
+	已完成  3
+	维权申请 4
+	维权完成 5*/
+const OrderStatus = ['待付款', '待发货', '待收货','已完成','维权申请','维权完成']
+
+function formatOrderStatus(t) {
+    if(t == -1) { return '<span>已关闭</span>';}
+    return '<span>'+OrderStatus[t]+'</span>';
+}
+
+///支付类型
+const PayType = ['未支付', '余额支付', '在线支付','货到付款','后台付款','微信支付','支付宝支付','银联支付']
+///格式化支付类型
+function formatPayType(t) {
+	if(t == 11) {t = 4;}
+    if(t == 21) {t = 5;}
+    if(t == 22) {t = 6;}
+    if(t == 23) {t = 7;}
+	return '<span>'+PayType[t]+'</span>';
+}
+
+var vm = new Vue({
+	el: '#rrapp',
+	data: {
+        showList: true,
+        title: null,
+		imsEweiShopOrder: {},
+		ruleValidate: {
+			name: [
+				{required: true, message: '名称不能为空', trigger: 'blur'}
+			]
+		},
+		q: {
+		    name: ''
+		}
+	},
+	methods: {
+		query: function () {
+			vm.reload();
+		},
+		getInfo: function(id){
+			$.get("../imseweishoporder/info/"+id, function (r) {
+                vm.imsEweiShopOrder = r.imsEweiShopOrder;
+            });
+		},
+		reload: function (event) {
+			vm.showList = true;
+            var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+			$("#jqGrid").jqGrid('setGridParam', {
+                postData: {'name': vm.q.name},
+                page: page
+            }).trigger("reloadGrid");
+            vm.handleReset('formValidate');
+		}
+	}
+});

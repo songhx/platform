@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.dao.stat.OrderStatDao">
+
+	<select id="queryList" resultType="com.platform.entity.stat.OrderStatVo">
+		SELECT
+			o.id AS id,
+			o.agentid AS agentid,
+			o.ordersn AS ordersn,
+			o.price AS price,
+			o.goodsprice AS goodsprice,
+			o.discountprice AS discountprice,
+			o.createtime AS createtime,
+			o.paytime AS paytime,
+			o.paytype AS paytype,
+			o.`status` AS status,
+			o.merchid AS merchid ,
+			o.finishtime AS finishtime,
+			m.realname AS realname,
+			m.mobile AS mobile,
+			m.nickname AS nickname,
+			m.avatar AS avatar,
+			m.`level` AS level,
+			u.merchname AS merchname
+		FROM
+		ims_ewei_shop_order AS o
+		LEFT JOIN ims_ewei_shop_member AS m ON o.agentid = m.id
+		LEFT JOIN ims_ewei_shop_merch_user AS u ON o.merchid = u.id
+		WHERE o.agentid != 0
+		<if test="ordersn != null and ordersn.trim() != ''">
+			AND o.ordersn LIKE concat('%',#{ordersn},'%')
+		</if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		SELECT
+		    COUNT(*)
+		FROM
+		ims_ewei_shop_order AS o
+		LEFT JOIN ims_ewei_shop_member AS m ON o.agentid = m.id
+		LEFT JOIN ims_ewei_shop_merch_user AS u ON o.merchid = u.id
+		WHERE o.agentid != 0
+		<if test="ordersn != null and ordersn.trim() != ''">
+			AND o.ordersn LIKE concat('%',#{ordersn},'%')
+		</if>
+	</select>
+
+
+	<select id="querOrderGoodsList" parameterType="java.util.Map" resultType="com.platform.entity.stat.OrderGoodsVo">
+		SELECT
+			og.orderid AS orderid,
+			og.goodsid AS goodsid,
+			og.price AS price,
+			g.marketprice AS marketprice,
+			g.costprice AS costprice,
+			g.title AS title ,
+			g.thumb AS thumb ,
+			g.type AS  type,
+			g.goodssn AS goodssn,
+			g.productsn AS productsn
+		FROM
+			ims_ewei_shop_order_goods AS og
+		 LEFT JOIN ims_ewei_shop_goods AS g ON og.goodsid = g.id
+		WHERE
+		   og.orderid = #{orderid}
+	</select>
+
+
+</mapper>
