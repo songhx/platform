@@ -14,8 +14,8 @@
         <module>platform-gen</module> <!-- 代码生成器模块 -->
         <module>platform-framework</module>
         <module>platform-admin</module>
-        <module>platform-shop</module>
         <module>platform-ymm-api</module>
+        <module>platform-distribute</module>
     </modules>
 
     <properties>
