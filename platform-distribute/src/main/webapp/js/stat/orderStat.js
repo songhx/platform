@@ -1,36 +1,40 @@
 $(function () {
+
     $("#jqGrid").jqGrid({
         url: '../orderStat/list',
         datatype: "json",
         colModel: [
 			{label: 'id', name: 'id', index: 'id', key: true, hidden: true},
-			{label: '订单编号', name: 'ordersn', index: 'ordersn', width: '140px'},
+			{label: '订单编号', name: 'ordersn', index: 'ordersn', width: '180px'},
 			{label: '商户号', name: 'agentid', index: 'agentid', width: '60px'},
-			{label: '交易时间', name: 'createtime', index: 'createtime', width: '120px',formatter:formatTime},
-            {label: '成交时间', name: 'finishtime', index: 'finishtime', width: '120px',formatter:formatTime},
+            {label: '商品名称', name: 'orderGoodsVoList', index: 'price', width: '193px',formatter:formatTitle},
+            {label: '商品编码', name: 'orderGoodsVoList', index: 'price', width: '180px',formatter:formatSN},
+            {label: '商品金额', name: 'price', index: 'price', width: '80px',formatter:formatDoubleNum},
 			{label: '会员姓名', name: 'realname', index: 'realname', width: '65px'},
-			{label: '平台佣金', name: 'platformCommission', index: 'price', width: '70px'},
-            {label: '一级分销商', name: 'commission1', index: 'commission1', width: '70px'},
-            {label: '二级分销商', name: 'commission2', index: 'commission2', width: '70px'},
-            {label: '三级分销商', name: 'commission3', index: 'commission3', width: '70px'},
-			{label: '销售', name: 'salerCommission', index: 'commission1', width: '70px'},
-			{label: '省分销商', name: 'provinceCommission', index: 'commission2', width: '70px'},
-			{label: '市销商', name: 'cityCommission', index: 'commission3', width: '70px'},
-			{label: '分销商等级', name: 'level', index: 'level', width: '60px',formatter:formatLevel},
-			{label: '商品名称', name: 'orderGoodsVoList', index: 'price', width: '160px',formatter:formatTitle},
-			{label: '商品编码', name: 'orderGoodsVoList', index: 'price', width: '160px',formatter:formatSN},
-            {label: '商品金额', name: 'price', index: 'price', width: '80px'},
+			{label: '平台佣金', name: 'platformCommission', index: 'price', width: '70px',formatter:formatDoubleNum},
+            {label: '一级分销商', name: 'commission1', index: 'commission1', width: '70px',formatter:formatDoubleNum},
+            {label: '二级分销商', name: 'commission2', index: 'commission2', width: '70px',formatter:formatDoubleNum},
+            {label: '三级分销商', name: 'commission3', index: 'commission3', width: '70px',formatter:formatDoubleNum},
+			{label: '销售', name: 'salerCommission', index: 'commission1', width: '70px',formatter:formatDoubleNum},
+			{label: '省分销商', name: 'provinceCommission', index: 'commission2', width: '70px',formatter:formatDoubleNum},
+			{label: '市分销商', name: 'cityCommission', index: 'commission3', width: '70px',formatter:formatDoubleNum},
+			{label: '分销商等级', name: 'level', index: 'level', width: '65px',formatter:formatLevel},
+            {label: '交易时间', name: 'createtime', index: 'createtime', width: '139px',formatter:formatTime},
+            {label: '成交时间', name: 'finishtime', index: 'finishtime', width: '139px',formatter:formatTime},
             {label: '支付方式', name: 'paytype', index: 'paytype', width: '80px',formatter:formatPayType },
             {label: '订单状态', name: 'status', index: 'status', width: '80px',formatter:formatOrderStatus},
 			],
 		viewrecords: true,
-        height: 385,
+        height: 566,
         rowNum: 10,
         rowList: [10, 30, 50],
         rownumbers: true,
         rownumWidth: 25,
         autowidth: true,
         multiselect: true,
+        shrinkToFit: false,
+        autoScroll: true,          //shrinkToFit: false,autoScroll: true,这两个属性产生水平滚动条
+        autowidth: true,          //必须要,否则没有水平滚动条
         pager: "#jqGridPager",
         jsonReader: {
             root: "page.list",
@@ -44,18 +48,23 @@ $(function () {
             order: "order"
         },
         gridComplete: function () {
-            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
+            // $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "scroll"});
         }
     });
 });
+///格式化double数字
+function formatDoubleNum(t) {
+    return t.toFixed(2);
+}
 //格式化商品标题
 function formatTitle(item) {
-    var title = "";
+    var title = "<div style='width: 188px;display:block;word-break: break-all;word-wrap: break-word;'>";
     if(item != null & item.length > 0){
         for (var  i = 0; i < item.length; i++){
             title += item[i].title + "<br>";
         }
     }
+    title += "</div>";
     return  title;
 }
 ///商品编码
@@ -117,7 +126,7 @@ var vm = new Vue({
 		imsEweiShopOrder: {},
 		ruleValidate: {
 			name: [
-				{required: true, message: '名称不能为空', trigger: 'blur'}
+				{required: true, message: '订单编号不能为空', trigger: 'blur'}
 			]
 		},
 		q: {
@@ -137,7 +146,7 @@ var vm = new Vue({
 			vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
 			$("#jqGrid").jqGrid('setGridParam', {
-                postData: {'name': vm.q.name},
+                postData: {'ordersn': vm.q.name},
                 page: page
             }).trigger("reloadGrid");
             vm.handleReset('formValidate');

@@ -40,7 +40,7 @@ public class CommissionCalUtil {
         if (!marketprice.equals(BigDecimal.ZERO)){
             profit = marketprice.subtract(costprice) .subtract(marketprice.multiply(STANDARD_RATE));
         }
-        return profit;
+        return profit.setScale(2,BigDecimal.ROUND_HALF_UP);
     }
 
     /**
@@ -55,7 +55,7 @@ public class CommissionCalUtil {
         if (!pureProfit.equals(BigDecimal.ZERO)){
             profit = pureProfit.multiply(rate);
         }
-        return profit;
+        return profit.setScale(2,BigDecimal.ROUND_HALF_UP);
     }
 
 }
