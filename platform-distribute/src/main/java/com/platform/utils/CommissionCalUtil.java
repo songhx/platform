@@ -38,7 +38,10 @@ public class CommissionCalUtil {
         BigDecimal profit = new BigDecimal(0.00);
        //纯利润=零售价-成本价-零售价*0.06
         if (!marketprice.equals(BigDecimal.ZERO)){
-            profit = marketprice.subtract(costprice) .subtract(marketprice.multiply(STANDARD_RATE));
+            profit = marketprice.subtract(costprice).subtract(marketprice.multiply(STANDARD_RATE));
+        }
+        if (profit.compareTo(BigDecimal.ZERO) < 0){
+            return BigDecimal.ZERO;
         }
         return profit.setScale(2,BigDecimal.ROUND_HALF_UP);
     }
@@ -56,6 +59,10 @@ public class CommissionCalUtil {
             profit = pureProfit.multiply(rate);
         }
         return profit.setScale(2,BigDecimal.ROUND_HALF_UP);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(calPureProfit(BigDecimal.valueOf(10.00),BigDecimal.valueOf(10.00)));
     }
 
 }
