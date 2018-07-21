@@ -28,17 +28,7 @@
             <artifactId>platform-gen</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-schedule</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-distribute</artifactId>
-            <version>1.0.0</version>
-            <type>war</type>
-        </dependency>
+
 
         <!--验证码生成工具-->
         <dependency>
