@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.dao.member.ImsEweiShopMemberDao">
+
+    <resultMap type="com.platform.entity.member.ImsEweiShopMemberEntity" id="imsEweiShopMemberMap">
+        <result property="id" column="id"/>
+        <result property="uniacid" column="uniacid"/>
+        <result property="uid" column="uid"/>
+        <result property="groupid" column="groupid"/>
+        <result property="level" column="level"/>
+        <result property="agentid" column="agentid"/>
+        <result property="openid" column="openid"/>
+        <result property="realname" column="realname"/>
+        <result property="mobile" column="mobile"/>
+        <result property="pwd" column="pwd"/>
+        <result property="weixin" column="weixin"/>
+        <result property="content" column="content"/>
+        <result property="createtime" column="createtime"/>
+        <result property="agenttime" column="agenttime"/>
+        <result property="status" column="status"/>
+        <result property="isagent" column="isagent"/>
+        <result property="clickcount" column="clickcount"/>
+        <result property="agentlevel" column="agentlevel"/>
+        <result property="noticeset" column="noticeset"/>
+        <result property="nickname" column="nickname"/>
+        <result property="credit1" column="credit1"/>
+        <result property="credit2" column="credit2"/>
+        <result property="birthyear" column="birthyear"/>
+        <result property="birthmonth" column="birthmonth"/>
+        <result property="birthday" column="birthday"/>
+        <result property="gender" column="gender"/>
+        <result property="avatar" column="avatar"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="area" column="area"/>
+        <result property="childtime" column="childtime"/>
+        <result property="inviter" column="inviter"/>
+        <result property="agentnotupgrade" column="agentnotupgrade"/>
+        <result property="agentselectgoods" column="agentselectgoods"/>
+        <result property="agentblack" column="agentblack"/>
+        <result property="fixagentid" column="fixagentid"/>
+        <result property="diymemberid" column="diymemberid"/>
+        <result property="diymemberfields" column="diymemberfields"/>
+        <result property="diymemberdata" column="diymemberdata"/>
+        <result property="diymemberdataid" column="diymemberdataid"/>
+        <result property="diycommissionid" column="diycommissionid"/>
+        <result property="diycommissionfields" column="diycommissionfields"/>
+        <result property="diycommissiondata" column="diycommissiondata"/>
+        <result property="diycommissiondataid" column="diycommissiondataid"/>
+        <result property="isblack" column="isblack"/>
+        <result property="username" column="username"/>
+        <result property="commissionTotal" column="commission_total"/>
+        <result property="endtime2" column="endtime2"/>
+        <result property="ispartner" column="ispartner"/>
+        <result property="partnertime" column="partnertime"/>
+        <result property="partnerstatus" column="partnerstatus"/>
+        <result property="partnerblack" column="partnerblack"/>
+        <result property="partnerlevel" column="partnerlevel"/>
+        <result property="partnernotupgrade" column="partnernotupgrade"/>
+        <result property="diyglobonusid" column="diyglobonusid"/>
+        <result property="diyglobonusdata" column="diyglobonusdata"/>
+        <result property="diyglobonusfields" column="diyglobonusfields"/>
+        <result property="isaagent" column="isaagent"/>
+        <result property="aagentlevel" column="aagentlevel"/>
+        <result property="aagenttime" column="aagenttime"/>
+        <result property="aagentstatus" column="aagentstatus"/>
+        <result property="aagentblack" column="aagentblack"/>
+        <result property="aagentnotupgrade" column="aagentnotupgrade"/>
+        <result property="aagenttype" column="aagenttype"/>
+        <result property="aagentprovinces" column="aagentprovinces"/>
+        <result property="aagentcitys" column="aagentcitys"/>
+        <result property="aagentareas" column="aagentareas"/>
+        <result property="diyaagentid" column="diyaagentid"/>
+        <result property="diyaagentdata" column="diyaagentdata"/>
+        <result property="diyaagentfields" column="diyaagentfields"/>
+        <result property="salt" column="salt"/>
+        <result property="mobileverify" column="mobileverify"/>
+        <result property="mobileuser" column="mobileuser"/>
+        <result property="carrierMobile" column="carrier_mobile"/>
+        <result property="isauthor" column="isauthor"/>
+        <result property="authortime" column="authortime"/>
+        <result property="authorstatus" column="authorstatus"/>
+        <result property="authorblack" column="authorblack"/>
+        <result property="authorlevel" column="authorlevel"/>
+        <result property="authornotupgrade" column="authornotupgrade"/>
+        <result property="diyauthorid" column="diyauthorid"/>
+        <result property="diyauthordata" column="diyauthordata"/>
+        <result property="diyauthorfields" column="diyauthorfields"/>
+        <result property="authorid" column="authorid"/>
+        <result property="comefrom" column="comefrom"/>
+        <result property="openidQq" column="openid_qq"/>
+        <result property="openidWx" column="openid_wx"/>
+        <result property="diymaxcredit" column="diymaxcredit"/>
+        <result property="maxcredit" column="maxcredit"/>
+        <result property="datavalue" column="datavalue"/>
+        <result property="openidWa" column="openid_wa"/>
+        <result property="nicknameWechat" column="nickname_wechat"/>
+        <result property="avatarWechat" column="avatar_wechat"/>
+        <result property="updateaddress" column="updateaddress"/>
+        <result property="membercardid" column="membercardid"/>
+        <result property="membercardcode" column="membercardcode"/>
+        <result property="membershipnumber" column="membershipnumber"/>
+        <result property="membercardactive" column="membercardactive"/>
+        <result property="commission" column="commission"/>
+        <result property="commissionPay" column="commission_pay"/>
+        <result property="idnumber" column="idnumber"/>
+        <result property="wxcardupdatetime" column="wxcardupdatetime"/>
+        <result property="hasnewcoupon" column="hasnewcoupon"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.platform.entity.member.ImsEweiShopMemberEntity">
+		select
+			`id`,
+			`uniacid`,
+			`uid`,
+			`groupid`,
+			`level`,
+			`agentid`,
+			`openid`,
+			`realname`,
+			`mobile`,
+			`pwd`,
+			`weixin`,
+			`content`,
+			`createtime`,
+			`agenttime`,
+			`status`,
+			`isagent`,
+			`clickcount`,
+			`agentlevel`,
+			`noticeset`,
+			`nickname`,
+			`credit1`,
+			`credit2`,
+			`birthyear`,
+			`birthmonth`,
+			`birthday`,
+			`gender`,
+			`avatar`,
+			`province`,
+			`city`,
+			`area`,
+			`childtime`,
+			`inviter`,
+			`agentnotupgrade`,
+			`agentselectgoods`,
+			`agentblack`,
+			`fixagentid`,
+			`diymemberid`,
+			`diymemberfields`,
+			`diymemberdata`,
+			`diymemberdataid`,
+			`diycommissionid`,
+			`diycommissionfields`,
+			`diycommissiondata`,
+			`diycommissiondataid`,
+			`isblack`,
+			`username`,
+			`commission_total`,
+			`endtime2`,
+			`ispartner`,
+			`partnertime`,
+			`partnerstatus`,
+			`partnerblack`,
+			`partnerlevel`,
+			`partnernotupgrade`,
+			`diyglobonusid`,
+			`diyglobonusdata`,
+			`diyglobonusfields`,
+			`isaagent`,
+			`aagentlevel`,
+			`aagenttime`,
+			`aagentstatus`,
+			`aagentblack`,
+			`aagentnotupgrade`,
+			`aagenttype`,
+			`aagentprovinces`,
+			`aagentcitys`,
+			`aagentareas`,
+			`diyaagentid`,
+			`diyaagentdata`,
+			`diyaagentfields`,
+			`salt`,
+			`mobileverify`,
+			`mobileuser`,
+			`carrier_mobile`,
+			`isauthor`,
+			`authortime`,
+			`authorstatus`,
+			`authorblack`,
+			`authorlevel`,
+			`authornotupgrade`,
+			`diyauthorid`,
+			`diyauthordata`,
+			`diyauthorfields`,
+			`authorid`,
+			`comefrom`,
+			`openid_qq`,
+			`openid_wx`,
+			`diymaxcredit`,
+			`maxcredit`,
+			`datavalue`,
+			`openid_wa`,
+			`nickname_wechat`,
+			`avatar_wechat`,
+			`updateaddress`,
+			`membercardid`,
+			`membercardcode`,
+			`membershipnumber`,
+			`membercardactive`,
+			`commission`,
+			`commission_pay`,
+			`idnumber`,
+			`wxcardupdatetime`,
+			`hasnewcoupon`
+		from ims_ewei_shop_member
+		where id = #{id}
+	</select>
+
+	<select id="queryList" resultType="com.platform.entity.member.ImsEweiShopMemberEntity">
+		select
+    		`id`,
+    		`uniacid`,
+    		`uid`,
+    		`groupid`,
+    		`level`,
+    		`agentid`,
+    		`openid`,
+    		`realname`,
+    		`mobile`,
+    		`pwd`,
+    		`weixin`,
+    		`content`,
+    		`createtime`,
+    		`agenttime`,
+    		`status`,
+    		`isagent`,
+    		`clickcount`,
+    		`agentlevel`,
+    		`noticeset`,
+    		`nickname`,
+    		`credit1`,
+    		`credit2`,
+    		`birthyear`,
+    		`birthmonth`,
+    		`birthday`,
+    		`gender`,
+    		`avatar`,
+    		`province`,
+    		`city`,
+    		`area`,
+    		`childtime`,
+    		`inviter`,
+    		`agentnotupgrade`,
+    		`agentselectgoods`,
+    		`agentblack`,
+    		`fixagentid`,
+    		`diymemberid`,
+    		`diymemberfields`,
+    		`diymemberdata`,
+    		`diymemberdataid`,
+    		`diycommissionid`,
+    		`diycommissionfields`,
+    		`diycommissiondata`,
+    		`diycommissiondataid`,
+    		`isblack`,
+    		`username`,
+    		`commission_total`,
+    		`endtime2`,
+    		`ispartner`,
+    		`partnertime`,
+    		`partnerstatus`,
+    		`partnerblack`,
+    		`partnerlevel`,
+    		`partnernotupgrade`,
+    		`diyglobonusid`,
+    		`diyglobonusdata`,
+    		`diyglobonusfields`,
+    		`isaagent`,
+    		`aagentlevel`,
+    		`aagenttime`,
+    		`aagentstatus`,
+    		`aagentblack`,
+    		`aagentnotupgrade`,
+    		`aagenttype`,
+    		`aagentprovinces`,
+    		`aagentcitys`,
+    		`aagentareas`,
+    		`diyaagentid`,
+    		`diyaagentdata`,
+    		`diyaagentfields`,
+    		`salt`,
+    		`mobileverify`,
+    		`mobileuser`,
+    		`carrier_mobile`,
+    		`isauthor`,
+    		`authortime`,
+    		`authorstatus`,
+    		`authorblack`,
+    		`authorlevel`,
+    		`authornotupgrade`,
+    		`diyauthorid`,
+    		`diyauthordata`,
+    		`diyauthorfields`,
+    		`authorid`,
+    		`comefrom`,
+    		`openid_qq`,
+    		`openid_wx`,
+    		`diymaxcredit`,
+    		`maxcredit`,
+    		`datavalue`,
+    		`openid_wa`,
+    		`nickname_wechat`,
+    		`avatar_wechat`,
+    		`updateaddress`,
+    		`membercardid`,
+    		`membercardcode`,
+    		`membershipnumber`,
+    		`membercardactive`,
+    		`commission`,
+    		`commission_pay`,
+    		`idnumber`,
+    		`wxcardupdatetime`,
+    		`hasnewcoupon`
+		from ims_ewei_shop_member
+		WHERE 1=1
+		<if test="name != null and name.trim() != ''">
+			AND name LIKE concat('%',#{name},'%')
+		</if>
+		<if test="agentid != null">
+			AND agentid = #{name}
+		</if>
+		<if test="isagent != null">
+			AND isagent = #{isagent}
+		</if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from ims_ewei_shop_member
+		WHERE 1=1
+        <if test="name != null and name.trim() != ''">
+            AND name LIKE concat('%',#{name},'%')
+        </if>
+		<if test="agentid != null">
+			AND agentid = #{name}
+		</if>
+		<if test="isagent != null">
+			AND isagent = #{isagent}
+		</if>
+	</select>
+	 
+	<insert id="save" parameterType="com.platform.entity.member.ImsEweiShopMemberEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into ims_ewei_shop_member(
+			`uniacid`,
+			`uid`,
+			`groupid`,
+			`level`,
+			`agentid`,
+			`openid`,
+			`realname`,
+			`mobile`,
+			`pwd`,
+			`weixin`,
+			`content`,
+			`createtime`,
+			`agenttime`,
+			`status`,
+			`isagent`,
+			`clickcount`,
+			`agentlevel`,
+			`noticeset`,
+			`nickname`,
+			`credit1`,
+			`credit2`,
+			`birthyear`,
+			`birthmonth`,
+			`birthday`,
+			`gender`,
+			`avatar`,
+			`province`,
+			`city`,
+			`area`,
+			`childtime`,
+			`inviter`,
+			`agentnotupgrade`,
+			`agentselectgoods`,
+			`agentblack`,
+			`fixagentid`,
+			`diymemberid`,
+			`diymemberfields`,
+			`diymemberdata`,
+			`diymemberdataid`,
+			`diycommissionid`,
+			`diycommissionfields`,
+			`diycommissiondata`,
+			`diycommissiondataid`,
+			`isblack`,
+			`username`,
+			`commission_total`,
+			`endtime2`,
+			`ispartner`,
+			`partnertime`,
+			`partnerstatus`,
+			`partnerblack`,
+			`partnerlevel`,
+			`partnernotupgrade`,
+			`diyglobonusid`,
+			`diyglobonusdata`,
+			`diyglobonusfields`,
+			`isaagent`,
+			`aagentlevel`,
+			`aagenttime`,
+			`aagentstatus`,
+			`aagentblack`,
+			`aagentnotupgrade`,
+			`aagenttype`,
+			`aagentprovinces`,
+			`aagentcitys`,
+			`aagentareas`,
+			`diyaagentid`,
+			`diyaagentdata`,
+			`diyaagentfields`,
+			`salt`,
+			`mobileverify`,
+			`mobileuser`,
+			`carrier_mobile`,
+			`isauthor`,
+			`authortime`,
+			`authorstatus`,
+			`authorblack`,
+			`authorlevel`,
+			`authornotupgrade`,
+			`diyauthorid`,
+			`diyauthordata`,
+			`diyauthorfields`,
+			`authorid`,
+			`comefrom`,
+			`openid_qq`,
+			`openid_wx`,
+			`diymaxcredit`,
+			`maxcredit`,
+			`datavalue`,
+			`openid_wa`,
+			`nickname_wechat`,
+			`avatar_wechat`,
+			`updateaddress`,
+			`membercardid`,
+			`membercardcode`,
+			`membershipnumber`,
+			`membercardactive`,
+			`commission`,
+			`commission_pay`,
+			`idnumber`,
+			`wxcardupdatetime`,
+			`hasnewcoupon`)
+		values(
+			#{uniacid},
+			#{uid},
+			#{groupid},
+			#{level},
+			#{agentid},
+			#{openid},
+			#{realname},
+			#{mobile},
+			#{pwd},
+			#{weixin},
+			#{content},
+			#{createtime},
+			#{agenttime},
+			#{status},
+			#{isagent},
+			#{clickcount},
+			#{agentlevel},
+			#{noticeset},
+			#{nickname},
+			#{credit1},
+			#{credit2},
+			#{birthyear},
+			#{birthmonth},
+			#{birthday},
+			#{gender},
+			#{avatar},
+			#{province},
+			#{city},
+			#{area},
+			#{childtime},
+			#{inviter},
+			#{agentnotupgrade},
+			#{agentselectgoods},
+			#{agentblack},
+			#{fixagentid},
+			#{diymemberid},
+			#{diymemberfields},
+			#{diymemberdata},
+			#{diymemberdataid},
+			#{diycommissionid},
+			#{diycommissionfields},
+			#{diycommissiondata},
+			#{diycommissiondataid},
+			#{isblack},
+			#{username},
+			#{commissionTotal},
+			#{endtime2},
+			#{ispartner},
+			#{partnertime},
+			#{partnerstatus},
+			#{partnerblack},
+			#{partnerlevel},
+			#{partnernotupgrade},
+			#{diyglobonusid},
+			#{diyglobonusdata},
+			#{diyglobonusfields},
+			#{isaagent},
+			#{aagentlevel},
+			#{aagenttime},
+			#{aagentstatus},
+			#{aagentblack},
+			#{aagentnotupgrade},
+			#{aagenttype},
+			#{aagentprovinces},
+			#{aagentcitys},
+			#{aagentareas},
+			#{diyaagentid},
+			#{diyaagentdata},
+			#{diyaagentfields},
+			#{salt},
+			#{mobileverify},
+			#{mobileuser},
+			#{carrierMobile},
+			#{isauthor},
+			#{authortime},
+			#{authorstatus},
+			#{authorblack},
+			#{authorlevel},
+			#{authornotupgrade},
+			#{diyauthorid},
+			#{diyauthordata},
+			#{diyauthorfields},
+			#{authorid},
+			#{comefrom},
+			#{openidQq},
+			#{openidWx},
+			#{diymaxcredit},
+			#{maxcredit},
+			#{datavalue},
+			#{openidWa},
+			#{nicknameWechat},
+			#{avatarWechat},
+			#{updateaddress},
+			#{membercardid},
+			#{membercardcode},
+			#{membershipnumber},
+			#{membercardactive},
+			#{commission},
+			#{commissionPay},
+			#{idnumber},
+			#{wxcardupdatetime},
+			#{hasnewcoupon})
+	</insert>
+	 
+	<update id="update" parameterType="com.platform.entity.member.ImsEweiShopMemberEntity">
+		update ims_ewei_shop_member 
+		<set>
+			<if test="uniacid != null">`uniacid` = #{uniacid}, </if>
+			<if test="uid != null">`uid` = #{uid}, </if>
+			<if test="groupid != null">`groupid` = #{groupid}, </if>
+			<if test="level != null">`level` = #{level}, </if>
+			<if test="agentid != null">`agentid` = #{agentid}, </if>
+			<if test="openid != null">`openid` = #{openid}, </if>
+			<if test="realname != null">`realname` = #{realname}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="pwd != null">`pwd` = #{pwd}, </if>
+			<if test="weixin != null">`weixin` = #{weixin}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="createtime != null">`createtime` = #{createtime}, </if>
+			<if test="agenttime != null">`agenttime` = #{agenttime}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="isagent != null">`isagent` = #{isagent}, </if>
+			<if test="clickcount != null">`clickcount` = #{clickcount}, </if>
+			<if test="agentlevel != null">`agentlevel` = #{agentlevel}, </if>
+			<if test="noticeset != null">`noticeset` = #{noticeset}, </if>
+			<if test="nickname != null">`nickname` = #{nickname}, </if>
+			<if test="credit1 != null">`credit1` = #{credit1}, </if>
+			<if test="credit2 != null">`credit2` = #{credit2}, </if>
+			<if test="birthyear != null">`birthyear` = #{birthyear}, </if>
+			<if test="birthmonth != null">`birthmonth` = #{birthmonth}, </if>
+			<if test="birthday != null">`birthday` = #{birthday}, </if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="avatar != null">`avatar` = #{avatar}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="area != null">`area` = #{area}, </if>
+			<if test="childtime != null">`childtime` = #{childtime}, </if>
+			<if test="inviter != null">`inviter` = #{inviter}, </if>
+			<if test="agentnotupgrade != null">`agentnotupgrade` = #{agentnotupgrade}, </if>
+			<if test="agentselectgoods != null">`agentselectgoods` = #{agentselectgoods}, </if>
+			<if test="agentblack != null">`agentblack` = #{agentblack}, </if>
+			<if test="fixagentid != null">`fixagentid` = #{fixagentid}, </if>
+			<if test="diymemberid != null">`diymemberid` = #{diymemberid}, </if>
+			<if test="diymemberfields != null">`diymemberfields` = #{diymemberfields}, </if>
+			<if test="diymemberdata != null">`diymemberdata` = #{diymemberdata}, </if>
+			<if test="diymemberdataid != null">`diymemberdataid` = #{diymemberdataid}, </if>
+			<if test="diycommissionid != null">`diycommissionid` = #{diycommissionid}, </if>
+			<if test="diycommissionfields != null">`diycommissionfields` = #{diycommissionfields}, </if>
+			<if test="diycommissiondata != null">`diycommissiondata` = #{diycommissiondata}, </if>
+			<if test="diycommissiondataid != null">`diycommissiondataid` = #{diycommissiondataid}, </if>
+			<if test="isblack != null">`isblack` = #{isblack}, </if>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="commissionTotal != null">`commission_total` = #{commissionTotal}, </if>
+			<if test="endtime2 != null">`endtime2` = #{endtime2}, </if>
+			<if test="ispartner != null">`ispartner` = #{ispartner}, </if>
+			<if test="partnertime != null">`partnertime` = #{partnertime}, </if>
+			<if test="partnerstatus != null">`partnerstatus` = #{partnerstatus}, </if>
+			<if test="partnerblack != null">`partnerblack` = #{partnerblack}, </if>
+			<if test="partnerlevel != null">`partnerlevel` = #{partnerlevel}, </if>
+			<if test="partnernotupgrade != null">`partnernotupgrade` = #{partnernotupgrade}, </if>
+			<if test="diyglobonusid != null">`diyglobonusid` = #{diyglobonusid}, </if>
+			<if test="diyglobonusdata != null">`diyglobonusdata` = #{diyglobonusdata}, </if>
+			<if test="diyglobonusfields != null">`diyglobonusfields` = #{diyglobonusfields}, </if>
+			<if test="isaagent != null">`isaagent` = #{isaagent}, </if>
+			<if test="aagentlevel != null">`aagentlevel` = #{aagentlevel}, </if>
+			<if test="aagenttime != null">`aagenttime` = #{aagenttime}, </if>
+			<if test="aagentstatus != null">`aagentstatus` = #{aagentstatus}, </if>
+			<if test="aagentblack != null">`aagentblack` = #{aagentblack}, </if>
+			<if test="aagentnotupgrade != null">`aagentnotupgrade` = #{aagentnotupgrade}, </if>
+			<if test="aagenttype != null">`aagenttype` = #{aagenttype}, </if>
+			<if test="aagentprovinces != null">`aagentprovinces` = #{aagentprovinces}, </if>
+			<if test="aagentcitys != null">`aagentcitys` = #{aagentcitys}, </if>
+			<if test="aagentareas != null">`aagentareas` = #{aagentareas}, </if>
+			<if test="diyaagentid != null">`diyaagentid` = #{diyaagentid}, </if>
+			<if test="diyaagentdata != null">`diyaagentdata` = #{diyaagentdata}, </if>
+			<if test="diyaagentfields != null">`diyaagentfields` = #{diyaagentfields}, </if>
+			<if test="salt != null">`salt` = #{salt}, </if>
+			<if test="mobileverify != null">`mobileverify` = #{mobileverify}, </if>
+			<if test="mobileuser != null">`mobileuser` = #{mobileuser}, </if>
+			<if test="carrierMobile != null">`carrier_mobile` = #{carrierMobile}, </if>
+			<if test="isauthor != null">`isauthor` = #{isauthor}, </if>
+			<if test="authortime != null">`authortime` = #{authortime}, </if>
+			<if test="authorstatus != null">`authorstatus` = #{authorstatus}, </if>
+			<if test="authorblack != null">`authorblack` = #{authorblack}, </if>
+			<if test="authorlevel != null">`authorlevel` = #{authorlevel}, </if>
+			<if test="authornotupgrade != null">`authornotupgrade` = #{authornotupgrade}, </if>
+			<if test="diyauthorid != null">`diyauthorid` = #{diyauthorid}, </if>
+			<if test="diyauthordata != null">`diyauthordata` = #{diyauthordata}, </if>
+			<if test="diyauthorfields != null">`diyauthorfields` = #{diyauthorfields}, </if>
+			<if test="authorid != null">`authorid` = #{authorid}, </if>
+			<if test="comefrom != null">`comefrom` = #{comefrom}, </if>
+			<if test="openidQq != null">`openid_qq` = #{openidQq}, </if>
+			<if test="openidWx != null">`openid_wx` = #{openidWx}, </if>
+			<if test="diymaxcredit != null">`diymaxcredit` = #{diymaxcredit}, </if>
+			<if test="maxcredit != null">`maxcredit` = #{maxcredit}, </if>
+			<if test="datavalue != null">`datavalue` = #{datavalue}, </if>
+			<if test="openidWa != null">`openid_wa` = #{openidWa}, </if>
+			<if test="nicknameWechat != null">`nickname_wechat` = #{nicknameWechat}, </if>
+			<if test="avatarWechat != null">`avatar_wechat` = #{avatarWechat}, </if>
+			<if test="updateaddress != null">`updateaddress` = #{updateaddress}, </if>
+			<if test="membercardid != null">`membercardid` = #{membercardid}, </if>
+			<if test="membercardcode != null">`membercardcode` = #{membercardcode}, </if>
+			<if test="membershipnumber != null">`membershipnumber` = #{membershipnumber}, </if>
+			<if test="membercardactive != null">`membercardactive` = #{membercardactive}, </if>
+			<if test="commission != null">`commission` = #{commission}, </if>
+			<if test="commissionPay != null">`commission_pay` = #{commissionPay}, </if>
+			<if test="idnumber != null">`idnumber` = #{idnumber}, </if>
+			<if test="wxcardupdatetime != null">`wxcardupdatetime` = #{wxcardupdatetime}, </if>
+			<if test="hasnewcoupon != null">`hasnewcoupon` = #{hasnewcoupon}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from ims_ewei_shop_member where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from ims_ewei_shop_member where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

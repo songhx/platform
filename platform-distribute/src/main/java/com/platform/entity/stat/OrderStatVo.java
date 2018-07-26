@@ -51,14 +51,27 @@ public class OrderStatVo implements Serializable {
     private List<OrderGoodsVo>  orderGoodsVoList;
 
 
+
     ////金额分成相关
 
     //平台佣金
     private BigDecimal platformCommission;
+    //一级代理商名字
+    private String agentLv1Name;
+    //一级代理商级别
+    private Integer agentLv1;
     //一级代理商
     private BigDecimal commission1;
+    //二级代理商名字
+    private String agentLv2Name;
+    //二级代理商级别
+    private Integer agentLv2;
     //二级代理商
     private BigDecimal commission2;
+    //二级代理商名字
+    private String agentLv3Name;
+    //二级代理商级别
+    private Integer agentLv3;
     //三级代理商
     private BigDecimal commission3;
     //销售佣金
@@ -266,5 +279,53 @@ public class OrderStatVo implements Serializable {
 
     public void setCityCommission(BigDecimal cityCommission) {
         this.cityCommission = cityCommission;
+    }
+
+    public String getAgentLv1Name() {
+        return agentLv1Name;
+    }
+
+    public void setAgentLv1Name(String agentLv1Name) {
+        this.agentLv1Name = agentLv1Name;
+    }
+
+    public Integer getAgentLv1() {
+        return agentLv1;
+    }
+
+    public void setAgentLv1(Integer agentLv1) {
+        this.agentLv1 = agentLv1;
+    }
+
+    public String getAgentLv2Name() {
+        return agentLv2Name;
+    }
+
+    public void setAgentLv2Name(String agentLv2Name) {
+        this.agentLv2Name = agentLv2Name;
+    }
+
+    public Integer getAgentLv2() {
+        return agentLv2;
+    }
+
+    public void setAgentLv2(Integer agentLv2) {
+        this.agentLv2 = agentLv2;
+    }
+
+    public String getAgentLv3Name() {
+        return agentLv3Name;
+    }
+
+    public void setAgentLv3Name(String agentLv3Name) {
+        this.agentLv3Name = agentLv3Name;
+    }
+
+    public Integer getAgentLv3() {
+        return agentLv3;
+    }
+
+    public void setAgentLv3(Integer agentLv3) {
+        this.agentLv3 = agentLv3;
     }
 }

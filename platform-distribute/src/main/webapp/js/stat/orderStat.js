@@ -12,9 +12,18 @@ $(function () {
             {label: '商品金额', name: 'price', index: 'price', width: '80px',formatter:formatDoubleNum},
 			{label: '会员姓名', name: 'realname', index: 'realname', width: '65px'},
 			{label: '平台佣金', name: 'platformCommission', index: 'price', width: '70px',formatter:formatDoubleNum},
+            {label: '一级分销商姓名', name: 'agentLv1Name', index: '', width: '100px'},
             {label: '一级分销商', name: 'commission1', index: 'commission1', width: '90px',formatter:formatDoubleNum},
+            {label: '一级分销商等级', name: 'agentLv1', index: '', width: '120px',formatter:formatLevel},
+
+            {label: '二级分销商姓名', name: 'agentLv2Name', index: '', width: '100px'},
             {label: '二级分销商', name: 'commission2', index: 'commission2', width: '90px',formatter:formatDoubleNum},
+            {label: '二级分销商等级', name: 'agentLv2', index: '', width: '120px',formatter:formatLevel},
+
+            {label: '三级分销商姓名', name: 'agentLv3Name', index: '', width: '100px'},
             {label: '三级分销商', name: 'commission3', index: 'commission3', width: '90px',formatter:formatDoubleNum},
+            {label: '三级分销商等级', name: 'agentLv3', index: '', width: '120px',formatter:formatLevel},
+
 			{label: '销售', name: 'salerCommission', index: 'commission1', width: '70px',formatter:formatDoubleNum},
 			{label: '省分销商', name: 'provinceCommission', index: 'commission2', width: '70px',formatter:formatDoubleNum},
 			{label: '市分销商', name: 'cityCommission', index: 'commission3', width: '70px',formatter:formatDoubleNum},
@@ -54,6 +63,7 @@ $(function () {
 });
 ///格式化double数字
 function formatDoubleNum(t) {
+    if (null == t) {return "";}
     return t.toFixed(2);
 }
 //格式化商品标题
@@ -87,8 +97,13 @@ function formatTime(v) {
 const  Levels = ['消费者', '门店店长', '超市店主']
 ///格式化
 function formatLevel(t) {
-    if(t == 3) {t = 1;}
-    if(t == 4) {t = 2;}
+    if(t == 3) {
+        t = 1;
+    } else if(t == 4) {
+        t = 2;
+    }else{
+        t = 0;
+    }
 
     return '<span>'+Levels[t]+'</span>';
 }

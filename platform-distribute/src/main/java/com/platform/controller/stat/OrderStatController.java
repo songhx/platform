@@ -1,13 +1,17 @@
 package com.platform.controller.stat;
 
+import com.platform.entity.ImsEweiShopOrderEntity;
+import com.platform.entity.member.ImsEweiShopMemberEntity;
 import com.platform.entity.stat.OrderGoodsVo;
 import com.platform.entity.stat.OrderStatVo;
 import com.platform.service.ImsEweiShopOrderService;
+import com.platform.service.member.ImsEweiShopMemberService;
 import com.platform.service.stat.IOrderStatService;
 import com.platform.utils.CommissionCalUtil;
 import com.platform.utils.PageUtils;
 import com.platform.utils.Query;
 import com.platform.utils.R;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +44,9 @@ public class OrderStatController {
     @Autowired
     private IOrderStatService iOrderStatService;
 
+    @Autowired
+    private ImsEweiShopMemberService imsEweiShopMemberService;
+
     /**
      * 查看列表
      */
@@ -51,9 +58,78 @@ public class OrderStatController {
         Query query = new Query(params);
         List<OrderStatVo> list = iOrderStatService.queryList(query);
         int total = iOrderStatService.queryTotal(query);
+        setOrderAgentInfo(list);
         setOrderGoodsInfo(list);
         PageUtils pageUtil = new PageUtils(list, total, query.getLimit(), query.getPage());
         return R.ok().put("page", pageUtil);
+    }
+
+    ///设置代理商信息
+    private void setOrderAgentInfo( List<OrderStatVo> list){
+        if (null == list) return;
+
+        List<ImsEweiShopMemberEntity> agetList = null;
+
+
+
+        Map<String, Object> params = new HashMap<>();
+        //params.put("agentid",0);
+        params.put("isagent",1);
+        agetList = imsEweiShopMemberService.queryList(params); //所有代理商
+
+
+        for (OrderStatVo orderStatVo : list) {
+            ///取当前订单的代理商级别信息
+            if (null != agetList && agetList.size() > 0){
+                for (ImsEweiShopMemberEntity agent : agetList) {
+                    //一级代理商
+                    ImsEweiShopMemberEntity lv1 = null;
+                    //二级代理商
+                    ImsEweiShopMemberEntity lv2 = null;
+                    //三级代理商
+                    ImsEweiShopMemberEntity lv3 = null;
+
+                    if (agent.getId().intValue() == orderStatVo.getAgentid().intValue()){
+                        lv1 = agent;
+                        if (null != lv1.getAgentid()){
+                            //lv2 = lv1;
+                            for (ImsEweiShopMemberEntity ag1 : agetList) {
+                                if (ag1.getId().intValue() == lv1.getAgentid().intValue()){
+                                    //lv1 = null;
+                                    lv2 = ag1;
+                                    if (null != lv1.getAgentid()){
+//                                        lv3 = lv2;
+//                                        lv2 = null;
+//                                        lv2 = lv1;
+                                        for (ImsEweiShopMemberEntity ag2 : agetList) {
+                                            if (ag2.getId().intValue() == lv2.getAgentid().intValue()){
+                                                lv3 = ag2;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ///分配代理商信息
+                    if (null != lv1){
+                        orderStatVo.setAgentLv1(lv1.getLevel());
+                        orderStatVo.setAgentLv1Name(lv1.getRealname());
+                    }
+                    if (null != lv2){
+                        orderStatVo.setAgentLv2(lv2.getLevel());
+                        orderStatVo.setAgentLv2Name(lv2.getRealname());
+                    }
+                    if (null != lv3){
+                        orderStatVo.setAgentLv3(lv3.getLevel());
+                        orderStatVo.setAgentLv3Name(lv3.getRealname());
+                    }
+                }
+            }
+
+
+
+        }
     }
 
     ///设置商品信息
@@ -82,13 +158,33 @@ public class OrderStatController {
 
     ///设置佣金
     private void calCommission(OrderStatVo orderStatVo,BigDecimal pureProfit){
-        orderStatVo.setPlatformCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.PLATFORM_RATE));
+
+        BigDecimal platform = BigDecimal.ZERO;
         orderStatVo.setSalerCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.SALER_RATE));
         orderStatVo.setProvinceCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.PROVINCE_RATE));
         orderStatVo.setCityCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.CITY_RATE));
-        orderStatVo.setCommission1(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.COMMISSION1_RATE));
-        orderStatVo.setCommission2(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.COMMISSION2_RATE));
-        orderStatVo.setCommission3(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.COMMISSION3_RATE));
+
+        if(orderStatVo.getProvinceCommission() != null){platform =  pureProfit.subtract(orderStatVo.getProvinceCommission() );}
+        if(orderStatVo.getCityCommission() != null){platform =  pureProfit.subtract(orderStatVo.getCityCommission() );}
+        if(orderStatVo.getSalerCommission() != null){platform =  pureProfit.subtract(orderStatVo.getSalerCommission() );}
+
+        if (StringUtils.isNotBlank(orderStatVo.getAgentLv1Name())){
+            orderStatVo.setCommission1(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.COMMISSION1_RATE));
+            platform =  pureProfit.subtract(orderStatVo.getCommission1() );
+        }
+        if (StringUtils.isNotBlank(orderStatVo.getAgentLv2Name())){
+            orderStatVo.setCommission2(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.COMMISSION2_RATE));
+            platform =  pureProfit.subtract(orderStatVo.getCommission2() );
+        }
+        if (StringUtils.isNotBlank(orderStatVo.getAgentLv3Name())){
+            orderStatVo.setCommission3(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.COMMISSION3_RATE));
+            platform =  pureProfit.subtract(orderStatVo.getCommission3() );
+        }
+
+
+
+
+        orderStatVo.setPlatformCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.PLATFORM_RATE));
     }
 
 
