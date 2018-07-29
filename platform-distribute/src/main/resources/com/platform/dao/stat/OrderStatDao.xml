@@ -21,7 +21,7 @@
 			m.mobile AS mobile,
 			m.nickname AS nickname,
 			m.avatar AS avatar,
-			m.`level` AS level,
+			m.`agentlevel` AS level,
 			u.merchname AS merchname
 		FROM
 		ims_ewei_shop_order AS o
@@ -63,6 +63,7 @@
 			og.orderid AS orderid,
 			og.goodsid AS goodsid,
 			og.price AS price,
+			og.total AS  total,
 			g.marketprice AS marketprice,
 			g.costprice AS costprice,
 			g.title AS title ,

@@ -32,6 +32,9 @@ public class OrderGoodsVo implements Serializable {
     ////
     private String productsn;
 
+    ///件数
+    private Integer total;
+
 
     public Integer getOrderid() {
         return orderid;
@@ -111,5 +114,13 @@ public class OrderGoodsVo implements Serializable {
 
     public void setProductsn(String productsn) {
         this.productsn = productsn;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 }

@@ -1,6 +1,8 @@
 package com.platform.utils;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 分销计算器
@@ -12,7 +14,7 @@ public class CommissionCalUtil {
 
     private CommissionCalUtil(){}
 
-    public static final BigDecimal STANDARD_RATE = BigDecimal.valueOf(0.06); //标准率
+    public static final BigDecimal STANDARD_RATE = BigDecimal.valueOf(0.006); //标准率
 
     public static final BigDecimal SALER_RATE = BigDecimal.valueOf(0.62); //销售佣金率
 
@@ -27,6 +29,20 @@ public class CommissionCalUtil {
     public static final BigDecimal CITY_RATE = BigDecimal.valueOf(0.02); //市级佣金率
 
     public static final BigDecimal PLATFORM_RATE = BigDecimal.valueOf(0.14); //平台佣金率
+
+    public static final Map<String,BigDecimal> RATE_MAPS = new HashMap<String,BigDecimal>(){{
+        put("0_1",BigDecimal.valueOf(0.10));
+        put("0_2",BigDecimal.valueOf(0.05));
+        put("0_3",BigDecimal.valueOf(0.15));
+        put("3_1",BigDecimal.valueOf(0.10));
+        put("3_2",BigDecimal.valueOf(0.05));
+        put("3_3",BigDecimal.valueOf(0));
+        put("4_1",BigDecimal.valueOf(0.15));
+        put("4_2",BigDecimal.valueOf(0.05));
+        put("4_3",BigDecimal.valueOf(0.05));
+
+
+    }};
 
     /**
      * 计算纯利润

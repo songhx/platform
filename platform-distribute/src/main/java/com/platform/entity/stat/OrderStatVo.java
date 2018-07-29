@@ -23,6 +23,7 @@ public class OrderStatVo implements Serializable {
     private BigDecimal goodsprice;
     //
     private BigDecimal discountprice;
+
     //订单状态
     private Integer status;
     //支付方式
@@ -53,7 +54,7 @@ public class OrderStatVo implements Serializable {
 
 
     ////金额分成相关
-
+    private  BigDecimal pureProfit;
     //平台佣金
     private BigDecimal platformCommission;
     //一级代理商名字
@@ -327,5 +328,13 @@ public class OrderStatVo implements Serializable {
 
     public void setAgentLv3(Integer agentLv3) {
         this.agentLv3 = agentLv3;
+    }
+
+    public BigDecimal getPureProfit() {
+        return pureProfit;
+    }
+
+    public void setPureProfit(BigDecimal pureProfit) {
+        this.pureProfit = pureProfit;
     }
 }

@@ -9,8 +9,9 @@ $(function () {
 			{label: '商户号', name: 'agentid', index: 'agentid', width: '60px'},
             {label: '商品名称', name: 'orderGoodsVoList', index: 'price', width: '193px',formatter:formatTitle},
             {label: '商品编码', name: 'orderGoodsVoList', index: 'price', width: '180px',formatter:formatSN},
-            {label: '商品金额', name: 'price', index: 'price', width: '80px',formatter:formatDoubleNum},
+            {label: '订单金额', name: 'price', index: 'price', width: '80px',formatter:formatDoubleNum},
 			{label: '会员姓名', name: 'realname', index: 'realname', width: '65px'},
+            {label: '纯利润', name: 'pureProfit', index: 'price', width: '70px',formatter:formatDoubleNum},
 			{label: '平台佣金', name: 'platformCommission', index: 'price', width: '70px',formatter:formatDoubleNum},
             {label: '一级分销商姓名', name: 'agentLv1Name', index: '', width: '100px'},
             {label: '一级分销商', name: 'commission1', index: 'commission1', width: '90px',formatter:formatDoubleNum},
@@ -71,7 +72,7 @@ function formatTitle(item) {
     var title = "<div style='width: 188px;display:block;word-break: break-all;word-wrap: break-word;'>";
     if(item != null & item.length > 0){
         for (var  i = 0; i < item.length; i++){
-            title += item[i].title + "<br>";
+            title += item[i].title + " /" +  item[i].total + "件 /  零售价 " + item[i].marketprice + "  / 成本价 " + item[i].costprice + "<br>";
         }
     }
     title += "</div>";
@@ -97,6 +98,8 @@ function formatTime(v) {
 const  Levels = ['消费者', '门店店长', '超市店主']
 ///格式化
 function formatLevel(t) {
+    console.log("t---------"+t)
+    if(t == null){ return "";}
     if(t == 3) {
         t = 1;
     } else if(t == 4) {
