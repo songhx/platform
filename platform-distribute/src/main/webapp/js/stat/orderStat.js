@@ -100,14 +100,6 @@ const  Levels = ['消费者', '门店店长', '超市店主']
 function formatLevel(t) {
     console.log("t---------"+t)
     if(t == null){ return "";}
-    if(t == 3) {
-        t = 1;
-    } else if(t == 4) {
-        t = 2;
-    }else{
-        t = 0;
-    }
-
     return '<span>'+Levels[t]+'</span>';
 }
 ///订单状态

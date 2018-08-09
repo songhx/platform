@@ -1,10 +1,12 @@
 package com.platform.controller.stat;
 
 import com.platform.entity.ImsEweiShopOrderEntity;
+import com.platform.entity.distributor.DistributorRateEntity;
 import com.platform.entity.member.ImsEweiShopMemberEntity;
 import com.platform.entity.stat.OrderGoodsVo;
 import com.platform.entity.stat.OrderStatVo;
 import com.platform.service.ImsEweiShopOrderService;
+import com.platform.service.distributor.DistributorRateService;
 import com.platform.service.member.ImsEweiShopMemberService;
 import com.platform.service.stat.IOrderStatService;
 import com.platform.utils.CommissionCalUtil;
@@ -46,6 +48,9 @@ public class OrderStatController {
 
     @Autowired
     private ImsEweiShopMemberService imsEweiShopMemberService;
+
+    @Autowired
+    private DistributorRateService distributorRateService;
 
     /**
      * 查看列表
@@ -114,15 +119,15 @@ public class OrderStatController {
                     ///分配代理商信息
                     if (null != lv1){
                         orderStatVo.setAgentLv1(lv1.getAgentlevel());
-                        orderStatVo.setAgentLv1Name(lv1.getRealname());
+                        orderStatVo.setAgentLv1Name(lv1.getNickname());
                     }
                     if (null != lv2){
                         orderStatVo.setAgentLv2(lv2.getAgentlevel());
-                        orderStatVo.setAgentLv2Name(lv2.getRealname());
+                        orderStatVo.setAgentLv2Name(lv2.getNickname());
                     }
                     if (null != lv3){
                         orderStatVo.setAgentLv3(lv3.getAgentlevel());
-                        orderStatVo.setAgentLv3Name(lv3.getRealname());
+                        orderStatVo.setAgentLv3Name(lv3.getNickname());
                     }
                 }
             }
@@ -149,9 +154,24 @@ public class OrderStatController {
                     marketprice = marketprice.add(orderGoodsVo.getMarketprice().multiply(BigDecimal.valueOf(orderGoodsVo.getTotal())));
                     costprice  = costprice.add(orderGoodsVo.getCostprice().multiply(BigDecimal.valueOf(orderGoodsVo.getTotal())));
                 }
-                pureProfit = CommissionCalUtil.calPureProfit(marketprice,costprice);
-                orderStatVo.setPureProfit(pureProfit);
-                calCommission(orderStatVo,pureProfit);
+
+                DistributorRateEntity distributorRate = distributorRateService.queryObject(1);
+                if (null != distributorRate){
+                    Map<String,BigDecimal> distributorRateMap = new HashMap<String,BigDecimal>();
+                    distributorRateMap.put("0_1",distributorRate.getDistributorLv1S1());
+                    distributorRateMap.put("0_2",distributorRate.getDistributorLv1S2());
+                    distributorRateMap.put("0_3",distributorRate.getDistributorLv1S3());
+                    distributorRateMap.put("1_1",distributorRate.getDistributorLv2S1());
+                    distributorRateMap.put("1_2",distributorRate.getDistributorLv2S2());
+                    distributorRateMap.put("1_3",distributorRate.getDistributorLv2S3());
+                    distributorRateMap.put("2_1",distributorRate.getDistributorLv3S1());
+                    distributorRateMap.put("2_2",distributorRate.getDistributorLv3S2());
+                    distributorRateMap.put("2_3",distributorRate.getDistributorLv3S3());
+                    pureProfit = CommissionCalUtil.calPureProfit(distributorRate.getStandarRate(),marketprice,costprice);
+                    orderStatVo.setPureProfit(pureProfit);
+                    calCommission(orderStatVo,pureProfit,distributorRate,distributorRateMap);
+                }
+
                 orderStatVo.setOrderGoodsVoList(orderGoodsVos);
             }
 
@@ -159,27 +179,30 @@ public class OrderStatController {
     }
 
     ///设置佣金
-    private void calCommission(OrderStatVo orderStatVo,BigDecimal pureProfit){
+    private void calCommission(OrderStatVo orderStatVo, BigDecimal pureProfit,  DistributorRateEntity distributorRate,Map<String,BigDecimal> distributorRateMap){
+
+
+
 
         BigDecimal platform = BigDecimal.ZERO;
-        orderStatVo.setSalerCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.SALER_RATE));
-        orderStatVo.setProvinceCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.PROVINCE_RATE));
-        orderStatVo.setCityCommission(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.CITY_RATE));
+        orderStatVo.setSalerCommission(CommissionCalUtil.calCommissionProfit(pureProfit,distributorRate.getSlaerRate()));
+        orderStatVo.setProvinceCommission(CommissionCalUtil.calCommissionProfit(pureProfit,distributorRate.getProvinceRate()));
+        orderStatVo.setCityCommission(CommissionCalUtil.calCommissionProfit(pureProfit,distributorRate.getCityRate()));
 
         if(orderStatVo.getProvinceCommission() != null){platform =  pureProfit.subtract(orderStatVo.getProvinceCommission() );}
         if(orderStatVo.getCityCommission() != null){platform =  pureProfit.subtract(orderStatVo.getCityCommission() );}
         if(orderStatVo.getSalerCommission() != null){platform =  pureProfit.subtract(orderStatVo.getSalerCommission() );}
 
         if (StringUtils.isNotBlank(orderStatVo.getAgentLv1Name())){
-            orderStatVo.setCommission1(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.RATE_MAPS.get(String.valueOf(orderStatVo.getAgentLv1()).concat("_1"))));
+            orderStatVo.setCommission1(CommissionCalUtil.calCommissionProfit(pureProfit,distributorRateMap.get(String.valueOf(orderStatVo.getAgentLv1()).concat("_1"))));
             platform =  pureProfit.subtract(orderStatVo.getCommission1() );
         }
         if (StringUtils.isNotBlank(orderStatVo.getAgentLv2Name())){
-            orderStatVo.setCommission2(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.RATE_MAPS.get(String.valueOf(orderStatVo.getAgentLv1()).concat("_2"))));
+            orderStatVo.setCommission2(CommissionCalUtil.calCommissionProfit(pureProfit,distributorRateMap.get(String.valueOf(orderStatVo.getAgentLv1()).concat("_2"))));
             platform =  pureProfit.subtract(orderStatVo.getCommission2() );
         }
         if (StringUtils.isNotBlank(orderStatVo.getAgentLv3Name())){
-            orderStatVo.setCommission3(CommissionCalUtil.calCommissionProfit(pureProfit,CommissionCalUtil.RATE_MAPS.get(String.valueOf(orderStatVo.getAgentLv1()).concat("_3"))));
+            orderStatVo.setCommission3(CommissionCalUtil.calCommissionProfit(pureProfit,distributorRateMap.get(String.valueOf(orderStatVo.getAgentLv1()).concat("_3"))));
             platform =  pureProfit.subtract(orderStatVo.getCommission3() );
         }
 

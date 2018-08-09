@@ -6,7 +6,7 @@
 	<select id="queryList" resultType="com.platform.entity.stat.OrderStatVo">
 		SELECT
 			o.id AS id,
-			o.agentid AS agentid,
+			m.id AS agentid,
 			o.ordersn AS ordersn,
 			o.price AS price,
 			o.goodsprice AS goodsprice,
@@ -25,9 +25,8 @@
 			u.merchname AS merchname
 		FROM
 		ims_ewei_shop_order AS o
-		LEFT JOIN ims_ewei_shop_member AS m ON o.agentid = m.id
+		LEFT JOIN ims_ewei_shop_member AS m ON o.openid = m.openid
 		LEFT JOIN ims_ewei_shop_merch_user AS u ON o.merchid = u.id
-		WHERE o.agentid != 0
 		<if test="ordersn != null and ordersn.trim() != ''">
 			AND o.ordersn LIKE concat('%',#{ordersn},'%')
 		</if>
@@ -49,9 +48,8 @@
 		    COUNT(*)
 		FROM
 		ims_ewei_shop_order AS o
-		LEFT JOIN ims_ewei_shop_member AS m ON o.agentid = m.id
+		LEFT JOIN ims_ewei_shop_member AS m ON o.openid = m.openid
 		LEFT JOIN ims_ewei_shop_merch_user AS u ON o.merchid = u.id
-		WHERE o.agentid != 0
 		<if test="ordersn != null and ordersn.trim() != ''">
 			AND o.ordersn LIKE concat('%',#{ordersn},'%')
 		</if>

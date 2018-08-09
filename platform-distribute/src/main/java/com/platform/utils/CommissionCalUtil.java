@@ -31,15 +31,15 @@ public class CommissionCalUtil {
     public static final BigDecimal PLATFORM_RATE = BigDecimal.valueOf(0.14); //平台佣金率
 
     public static final Map<String,BigDecimal> RATE_MAPS = new HashMap<String,BigDecimal>(){{
-        put("0_1",BigDecimal.valueOf(0.10));
-        put("0_2",BigDecimal.valueOf(0.05));
-        put("0_3",BigDecimal.valueOf(0.15));
-        put("3_1",BigDecimal.valueOf(0.10));
+        put("1_1",BigDecimal.valueOf(0.10));
+        put("1_2",BigDecimal.valueOf(0.05));
+        put("1_3",BigDecimal.valueOf(0.15));
+        put("2_1",BigDecimal.valueOf(0.10));
+        put("2_2",BigDecimal.valueOf(0.05));
+        put("2_3",BigDecimal.valueOf(0));
+        put("3_1",BigDecimal.valueOf(0.15));
         put("3_2",BigDecimal.valueOf(0.05));
-        put("3_3",BigDecimal.valueOf(0));
-        put("4_1",BigDecimal.valueOf(0.15));
-        put("4_2",BigDecimal.valueOf(0.05));
-        put("4_3",BigDecimal.valueOf(0.05));
+        put("3_3",BigDecimal.valueOf(0.05));
 
 
     }};
@@ -50,11 +50,11 @@ public class CommissionCalUtil {
      * @param costprice 成本价
      * @return
      */
-    public static BigDecimal calPureProfit(BigDecimal marketprice , BigDecimal costprice ){
+    public static BigDecimal calPureProfit(BigDecimal rate , BigDecimal marketprice , BigDecimal costprice ){
         BigDecimal profit = new BigDecimal(0.00);
        //纯利润=零售价-成本价-零售价*0.06
         if (!marketprice.equals(BigDecimal.ZERO)){
-            profit = marketprice.subtract(costprice).subtract(marketprice.multiply(STANDARD_RATE));
+            profit = marketprice.subtract(costprice).subtract(marketprice.multiply(rate));
         }
         if (profit.compareTo(BigDecimal.ZERO) < 0){
             return BigDecimal.ZERO;
@@ -78,7 +78,7 @@ public class CommissionCalUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(calPureProfit(BigDecimal.valueOf(10.00),BigDecimal.valueOf(10.00)));
+        System.out.println(calPureProfit(STANDARD_RATE,BigDecimal.valueOf(10.00),BigDecimal.valueOf(10.00)));
     }
 
 }
