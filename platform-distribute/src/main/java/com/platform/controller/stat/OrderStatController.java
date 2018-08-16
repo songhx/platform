@@ -94,7 +94,8 @@ public class OrderStatController {
                     //三级代理商
                     ImsEweiShopMemberEntity lv3 = null;
 
-                    if (agent.getId().intValue() == orderStatVo.getAgentid().intValue()){
+                    if (agent.getId() != null && orderStatVo.getAgentid() != null &&
+                            agent.getId().intValue() == orderStatVo.getAgentid().intValue()){
                         lv1 = agent;
                         if (null != lv1.getAgentid()){
                             //lv2 = lv1;
@@ -151,8 +152,12 @@ public class OrderStatController {
                 BigDecimal pureProfit = BigDecimal.ZERO;
                 for (OrderGoodsVo orderGoodsVo : orderGoodsVos) {
                     //orderGoodsVo.setTitle(orderGoodsVo.getTitle() + " " + orderGoodsVo.getTotal() + "件");
-                    marketprice = marketprice.add(orderGoodsVo.getMarketprice().multiply(BigDecimal.valueOf(orderGoodsVo.getTotal())));
-                    costprice  = costprice.add(orderGoodsVo.getCostprice().multiply(BigDecimal.valueOf(orderGoodsVo.getTotal())));
+                    if ( null !=  orderGoodsVo.getMarketprice() && null != orderGoodsVo.getTotal()){
+                        marketprice = marketprice.add(orderGoodsVo.getMarketprice().multiply(BigDecimal.valueOf(orderGoodsVo.getTotal())));
+                    }
+                    if (null !=  orderGoodsVo.getCostprice() && null != orderGoodsVo.getTotal()){
+                        costprice  = costprice.add(orderGoodsVo.getCostprice().multiply(BigDecimal.valueOf(orderGoodsVo.getTotal())));
+                    }
                 }
 
                 DistributorRateEntity distributorRate = distributorRateService.queryObject(1);
