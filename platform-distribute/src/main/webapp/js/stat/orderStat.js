@@ -28,7 +28,6 @@ $(function () {
 			{label: '销售', name: 'salerCommission', index: 'commission1', width: '70px',formatter:formatDoubleNum},
 			{label: '省分销商', name: 'provinceCommission', index: 'commission2', width: '70px',formatter:formatDoubleNum},
 			{label: '市分销商', name: 'cityCommission', index: 'commission3', width: '70px',formatter:formatDoubleNum},
-			{label: '分销商等级', name: 'level', index: 'level', width: '65px',formatter:formatLevel},
             {label: '交易时间', name: 'createtime', index: 'createtime', width: '139px',formatter:formatTime},
             {label: '成交时间', name: 'finishtime', index: 'finishtime', width: '139px',formatter:formatTime},
             {label: '支付方式', name: 'paytype', index: 'paytype', width: '80px',formatter:formatPayType },

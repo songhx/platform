@@ -88,7 +88,7 @@ public class DESUtils
     public static void main(String[] args)
     {
         String name ="root";
-        String password="root";
+        String password="MuYouYou61MYY";
         String encryname = getEncryptString(name);
         String encrypassword = getEncryptString(password);
         System.out.println(encryname);
