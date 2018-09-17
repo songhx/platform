@@ -1,0 +1,122 @@
+package ${package}.web.controller.${tablePrefix};
+
+import org.slf4j.*;
+import java.util.List;
+import java.util.Map;
+import com.netease.ad.omp.web.aop.*;
+import com.netease.ad.omp.common.web.BaseController;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+
+import ${package}.entity.${tablePrefix}.${className};
+import ${package}.service.${tablePrefix}.I${className}Service;
+
+/**
+ *
+ * 接口简述
+ * <p>
+ *   ${comments}控制器
+ * </p>
+ *
+ * @Company 网易传媒
+ * @author ${author}
+ * @email ${email}
+ * @version 1.0
+ * @CreateDate ${datetime}
+ */
+@Controller
+@RequestMapping("${pathName}")
+public class ${className}Controller extends BaseController{
+
+    private static Logger logger = LoggerFactory.getLogger(${className}Controller.class);
+
+    @Autowired
+    private I${className}Service ${classname}Service;
+
+    /**
+     * 分页查看${comments}信息
+     */
+    @RequestMapping("/list")
+    //@CheckAuth(code= {AuthCodeConstants.})
+    @ResponseBody
+    public @ResponseBody Object list(@RequestBody @Validated({Group.First.class }) ${className} ${classname}, BindingResult bindResult, ResultObject result) {
+        //前端参数检查
+        if(validator(bindResult,result)) {return result;}
+
+        //分页逻辑封装
+
+        return result;
+    }
+
+    /**
+     * 查看信息
+     */
+    @RequestMapping("/info/{${pk.attrname}}")
+    //@CheckAuth(code= {AuthCodeConstants.})
+    @ResponseBody
+    public Object info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
+        ${className} ${classname} = ${classname}Service.selectByPrimaryKey(${pk.attrname});
+
+        return ${classname};
+    }
+
+    /**
+     * 保存
+     */
+    @RequestMapping("/save")
+    //@CheckAuth(code= {AuthCodeConstants.})
+    @ResponseBody
+    public Object save(@RequestBody @Validated({Group.First.class }) ${className} ${classname}, BindingResult bindResult, ResultObject result) {
+        //前端参数检查
+        if(validator(bindResult,result)) {return result;}
+
+        ${classname}Service.insertSelective(${classname});
+
+        return result;
+    }
+
+    /**
+     * 修改
+     */
+    @RequestMapping("/update")
+    //@CheckAuth(code= {AuthCodeConstants.})
+    @ResponseBody
+    public Object update(@RequestBody @Validated({Group.First.class }) ${className} ${classname}, BindingResult bindResult, ResultObject result) {
+        //前端参数检查
+        if(validator(bindResult,result)) {return result;}
+
+        ${classname}Service.updateByPrimaryKeySelective(${classname});
+
+        return result;
+    }
+
+    /**
+     * 删除
+     */
+    @RequestMapping("/delete")
+    //@CheckAuth(code= {AuthCodeConstants.})
+    @ResponseBody
+    public Object delete(@RequestBody ${pk.attrType}[]${pk.attrname}s, ResultObject result) {
+        ${classname}Service.deleteByPrimaryKey(${pk.attrname}s);
+
+        return result;
+    }
+
+    /**
+     * 查看所有列表
+     */
+    @RequestMapping("/queryAll")
+    @ResponseBody
+    public Object queryAll(@RequestBody  ${className} ${classname}, BindingResult bindResult, ResultObject result) {
+
+        List<${className}> list = ${classname}Service.select(${classname});
+
+        return result;
+    }
+}

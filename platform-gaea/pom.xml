@@ -13,4 +13,12 @@
     <packaging>jar</packaging>
     <description>项目生成器</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.platform</groupId>
+            <artifactId>platform-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+    
 </project>

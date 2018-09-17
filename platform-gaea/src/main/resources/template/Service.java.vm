@@ -1,0 +1,20 @@
+package ${package}.service.${tablePrefix};
+
+import com.netease.ad.omp.common.service.IBasicSetMapper;
+
+/**
+ *
+ * 接口简述
+ * <p>
+ *   ${comments}业务接口
+ * </p>
+ *
+ * @Company 网易传媒
+ * @author ${author}
+ * @email ${email}
+ * @version 1.0
+ * @CreateDate ${datetime}
+ */
+public interface I${className}Service {
+
+}

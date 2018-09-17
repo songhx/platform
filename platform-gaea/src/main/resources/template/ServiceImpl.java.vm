@@ -1,0 +1,28 @@
+package ${package}.service.${tablePrefix}.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+import ${package}.dao.${tablePrefix}.mapper.${className}Mapper
+import ${package}.entity.${tablePrefix}.${className};
+import ${package}.service.${tablePrefix}.I${className}Service;
+import com.netease.ad.omp.common.service.impl.BasicSetServiceImpl;
+
+/**
+ *
+ * 接口简述
+ * <p>
+ *   ${comments}业务接口实现类
+ * </p>
+ *
+ * @Company 网易传媒
+ * @author ${author}
+ * @email ${email}
+ * @version 1.0
+ * @CreateDate ${datetime}
+ */
+@Service("${classname}Service")
+public class ${className}ServiceImpl extends BasicSetServiceImpl<${className}> implements I${className}Service {
+
+}

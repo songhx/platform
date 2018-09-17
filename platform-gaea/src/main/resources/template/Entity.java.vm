@@ -1,25 +1,37 @@
-package ${package}.entity;
+package ${package}.entity.${tablePrefix};
 
+import javax.persistence.*;
 import java.com.Serializable;
 import java.util.Date;
+
 
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
 #end
 
 /**
- * ${comments}实体
- * 表名 ${tableName}
  *
+ * 类简述
+ * <p>
+ *   ${comments}
+ * </p>
+ *
+ * @Company 网易传媒
  * @author ${author}
  * @email ${email}
- * @date ${datetime}
+ * @version 1.0
+ * @CreateDate ${datetime}
  */
-public class ${className}Entity implements Serializable {
+@Table(name = "${tableName}")
+public class ${className} implements Serializable {
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
     //$column.comments
+    #if( !$column.columnKey && "PRI"== $column.columnKey)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    #end
     private $column.attrType $column.attrname;
 #end
 

@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>com.platform</groupId>
-            <artifactId>platform-gen</artifactId>
+            <artifactId>platform-gaea</artifactId>
             <version>1.0.0</version>
         </dependency>
 

@@ -1,5 +1,6 @@
 package com.platform.entity;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,18 @@ public class TableEntity implements Serializable {
     private Date createTime;
 
     //主键列
+    @Transient
     private ColumnEntity pkColumn;
+
+    //类名(第一个字母大写)
+    @Transient
+    private String className;
+    //类名(第一个字母小写)
+    @Transient
+    private String  aliasName;
+
+    //业务前缀
+    private String tablePrefix;
 
     //表字段
     private List<ColumnEntity> columnEntityList;
@@ -73,5 +85,43 @@ public class TableEntity implements Serializable {
 
     public void setColumnEntityList(List<ColumnEntity> columnEntityList) {
         this.columnEntityList = columnEntityList;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getAliasName() {
+        return aliasName;
+    }
+
+    public void setAliasName(String aliasName) {
+        this.aliasName = aliasName;
+    }
+
+    public String getTablePrefix() {
+        return tablePrefix;
+    }
+
+    public void setTablePrefix(String tablePrefix) {
+        this.tablePrefix = tablePrefix;
+    }
+
+    @Override
+    public String toString() {
+        return "TableEntity{" +
+                "tableName='" + tableName + '\'' +
+                ", comments='" + comments + '\'' +
+                ", engine='" + engine + '\'' +
+                ", createTime=" + createTime +
+                ", pkColumn=" + pkColumn +
+                ", className='" + className + '\'' +
+                ", aliasName='" + aliasName + '\'' +
+                ", tablePrefix='" + tablePrefix + '\'' +
+                '}';
     }
 }

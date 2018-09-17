@@ -17,8 +17,14 @@ public class ColumnEntity implements Serializable {
     private String comments;
     //列key
     private String columnKey;
-    //列extra
-    private String extra;
+
+    //属性名称
+    private String attrname;
+    //属性名称(设置get/set使用)
+    private String attrName;
+    //属性类型
+    private String attrType;
+
 
     public String getColumnName() {
         return columnName;
@@ -52,11 +58,27 @@ public class ColumnEntity implements Serializable {
         this.columnKey = columnKey;
     }
 
-    public String getExtra() {
-        return extra;
+    public String getAttrName() {
+        return attrName;
     }
 
-    public void setExtra(String extra) {
-        this.extra = extra;
+    public void setAttrName(String attrName) {
+        this.attrName = attrName;
+    }
+
+    public String getAttrType() {
+        return attrType;
+    }
+
+    public void setAttrType(String attrType) {
+        this.attrType = attrType;
+    }
+
+    public String getAttrname() {
+        return attrname;
+    }
+
+    public void setAttrname(String attrname) {
+        this.attrname = attrname;
     }
 }

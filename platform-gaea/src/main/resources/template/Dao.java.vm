@@ -1,0 +1,23 @@
+package ${package}.dao.${tablePrefix}.mapper;
+
+import com.netease.ad.omp.common.service.IBasicSetMapper;
+import ${package}.entity.${tablePrefix}.${className};
+import org.springframework.stereotype.Repository;
+
+/**
+ *
+ * 接口简述
+ * <p>
+ *   ${comments}数据接口
+ * </p>
+ *
+ * @Company 网易传媒
+ * @author ${author}
+ * @email ${email}
+ * @version 1.0
+ * @CreateDate ${datetime}
+ */
+@Repository
+public interface ${className}Mapper extends IBasicSetMapper<${className}> {
+
+}

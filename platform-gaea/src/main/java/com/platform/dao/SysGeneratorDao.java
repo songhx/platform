@@ -1,5 +1,8 @@
 package com.platform.dao;
 
+import com.platform.entity.ColumnEntity;
+import com.platform.entity.TableEntity;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +15,11 @@ import java.util.Map;
  */
 public interface SysGeneratorDao {
 
-    List<Map<String, Object>> queryList(Map<String, Object> map);
+    List<TableEntity> queryList(Map<String, Object> map);
 
     int queryTotal(Map<String, Object> map);
 
-    Map<String, String> queryTable(String tableName);
+    TableEntity queryTable(String tableName);
 
-    List<Map<String, String>> queryColumns(String tableName);
+    List<ColumnEntity> queryColumns(String tableName);
 }
