@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/platform.iml" filepath="$PROJECT_DIR$/platform.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform-carpool/platform-carpool.iml" filepath="$PROJECT_DIR$/platform-carpool/platform-carpool.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform-common/platform-common.iml" filepath="$PROJECT_DIR$/platform-common/platform-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/platform-ecarpool-api/platform-ecarpool-api.iml" filepath="$PROJECT_DIR$/platform-ecarpool-api/platform-ecarpool-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platform-credit-api/platform-credit-api.iml" filepath="$PROJECT_DIR$/platform-credit-api/platform-credit-api.iml" />
     </modules>
   </component>
 </project>

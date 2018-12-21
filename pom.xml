@@ -9,7 +9,7 @@
 
     <modules>
         <module>platform-common</module> <!-- 公共模块 -->
-        <module>platform-ecarpool-api</module>
+        <module>platform-credit-api</module>
     </modules>
 
     <properties>

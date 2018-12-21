@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="platform-credit-api:war">
+    <output-path>$PROJECT_DIR$/platform-credit-api/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>platform-credit-api</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="platform-ecarpool-api-1.0.0.war">
+      <element id="artifact" artifact-name="platform-credit-api:war exploded" />
+    </root>
+  </artifact>
+</component>
