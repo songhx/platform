@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
  * 名称：ResourceUtil <br>
  * 描述：参数工具类<br>
  *
- * @author 李鹏军
+ * @author bjsonghognxu
  * @version 1.0
  * @since 1.0.0
  */
