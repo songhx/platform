@@ -37,6 +37,30 @@ public class CreditInfo implements Serializable {
     public CreditInfo() {
     }
 
+    public CreditInfo(Integer id , String html) {
+        this.id = id;
+        this.html = html;
+    }
+
+    public CreditInfo(String pid, String bizNo, String version, String cardId,
+                      String phoneNumber, String userName, String attachmentCount,
+                      String attachment, String attachmentType, String noticeUrl,
+                      String signType, String sign, String creditQueryId) {
+        this.pid = pid;
+        this.bizNo = bizNo;
+        this.version = version;
+        this.cardId = cardId;
+        this.phoneNumber = phoneNumber;
+        this.userName = userName;
+        this.attachmentCount = attachmentCount;
+        this.attachment = attachment;
+        this.attachmentType = attachmentType;
+        this.noticeUrl = noticeUrl;
+        this.signType = signType;
+        this.sign = sign;
+        this.creditQueryId = creditQueryId;
+    }
+
     public Integer getId() {
         return id;
     }
