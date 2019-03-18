@@ -47,19 +47,19 @@ public class ApiAuthController extends ApiBaseAction {
     @RequestMapping("carpoolLogin")
     public Object carpoolLogin() {
         JSONObject jsonParam = this.getJsonRequest();
-        FullUserInfo fullUserInfo = null;
+        //FullUserInfo fullUserInfo = null;
+        UserInfo userInfo = null;
         String code = "";
         if (!StringUtils.isNullOrEmpty(jsonParam.getString("code"))) {
             code = jsonParam.getString("code");
         }
         if (null != jsonParam.get("userInfo")) {
-            fullUserInfo = jsonParam.getObject("userInfo", FullUserInfo.class);
+            userInfo = jsonParam.getObject("userInfo", UserInfo.class);
         }
 
 
 
         Map<String, Object> resultObj = new HashMap();
-        UserInfo userInfo = fullUserInfo.getUserInfo();
         if (null == userInfo){
             return  toResponsFail("登录无效参数");
         }
@@ -71,11 +71,6 @@ public class ApiAuthController extends ApiBaseAction {
         net.sf.json.JSONObject sessionData = WeixinUtil.httpRequest(requestUrl, "GET", null);
 
         if (null == sessionData || (sessionData.getString("openid") != null && StringUtils.isNullOrEmpty(sessionData.getString("openid")))) {
-            return toResponsFail("登录失败");
-        }
-        //验证用户信息完整性
-        String sha1 = CommonUtil.getSha1(fullUserInfo.getRawData() + sessionData.getString("session_key"));
-        if (!fullUserInfo.getSignature().equals(sha1)) {
             return toResponsFail("登录失败");
         }
 
