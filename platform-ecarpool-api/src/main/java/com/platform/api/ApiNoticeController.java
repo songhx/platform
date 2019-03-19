@@ -9,7 +9,6 @@ import com.platform.entity.Notice;
 import com.platform.service.INoticeService;
 import com.platform.util.ApiBaseAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,12 +37,12 @@ public class ApiNoticeController extends ApiBaseAction {
      * @return
      */
     @RequestMapping("list")
-    public Object list(@RequestBody NoticeVo noticeVo) {
+    public Object list(NoticeVo noticeVo) {
         PageHelper.startPage(noticeVo.getStart(), noticeVo.getLimit(), true, false); //设置分页
         Example example = new Example(Notice.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dataStatus", CommonConstant.USEABLE_STATUS);
-        example.setOrderByClause(" publishTime DESC"); ///创建时间倒叙输出
+        example.setOrderByClause(" createTime DESC"); ///创建时间倒叙输出
         List<Notice> list = iNoticeService.selectByExample(example);
 
         PageInfo<Notice> pageInfo = new PageInfo<>(list);

@@ -27,6 +27,7 @@ public class Article implements Serializable {
     private String  author; // 作者
     private Date createTime; // 创建时间
     private Date publishTime; // 发布时间
+    private Long viewNum; // 查看数量
     private Integer dataStatus; // 状态
 
     public Integer getId() {
@@ -99,5 +100,13 @@ public class Article implements Serializable {
 
     public void setDataStatus(Integer dataStatus) {
         this.dataStatus = dataStatus;
+    }
+
+    public Long getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(Long viewNum) {
+        this.viewNum = viewNum;
     }
 }

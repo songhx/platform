@@ -13,7 +13,7 @@ import java.util.Date;
  * @author bjsonghongxu
  * @create 2019-03-18 19:17
  **/
-@Table(name = "carpool_cms_article")
+@Table(name = "carpool_notice")
 public class Notice implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

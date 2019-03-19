@@ -36,7 +36,7 @@ public class ApiArticleController extends ApiBaseAction {
      * @return
      */
     @RequestMapping("list")
-    public Object list(@RequestBody ArticleVo articleVo) {
+    public Object list(ArticleVo articleVo) {
         PageHelper.startPage(articleVo.getStart(), articleVo.getLimit(), true, false); //设置分页
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -59,8 +59,21 @@ public class ApiArticleController extends ApiBaseAction {
      * @return
      */
     @RequestMapping("detail")
-    public Object detail(@RequestBody ArticleVo articleVo) {
+    public Object detail(ArticleVo articleVo) {
         articleVo.setDataStatus(CommonConstant.USEABLE_STATUS); //可用
         return toResponsSuccess(iArticleService.selectOne(articleVo));
+    }
+
+    /**
+     * 查看数量加1
+     * @param articleVo
+     * @return
+     */
+    @RequestMapping("view")
+    public Object view(@RequestBody ArticleVo articleVo) {
+        Article article = iArticleService.selectOne(articleVo);
+        articleVo.setViewNum(article.getViewNum() + 1);
+        iArticleService.updateByPrimaryKeySelective(articleVo);
+        return toResponsMsgSuccess("成功");
     }
 }
