@@ -5,7 +5,8 @@
 
 
     <!-- 查询拼车行程信息,只提供简单信息查询 -->
-    <select id="selectTrips" resultType="com.platform.entity.CarpoolPublish" parameterType="com.platform.dto.CarpoolPublishVo" >
+    <select id="selectTrips" resultType="com.platform.entity.CarpoolPublish"
+               parameterType="com.platform.dto.CarpoolPublishVo" >
         SELECT
             p.id AS id,
             p.mobile AS mobile,
@@ -55,6 +56,21 @@
             </foreach>
         </if>
         ORDER BY p.departure_time ASC
+    </select>
+
+    <select id="statCarpoolTimes" parameterType="com.platform.dto.CarpoolPublishVo"
+            resultType="com.platform.dto.StatCarpoolVo">
+
+        SELECT
+            user_type AS userType,
+            COUNT(id) AS num
+        FROM
+            carpool_publish
+        WHERE
+            `status` != 2
+            AND publish_user_id = #{publishUserId}
+        GROUP BY
+            user_type
     </select>
 
 

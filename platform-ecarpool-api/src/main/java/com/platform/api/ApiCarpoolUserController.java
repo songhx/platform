@@ -1,13 +1,12 @@
 package com.platform.api;
 
 import com.platform.constants.CommonConstant;
+import com.platform.dto.CarpoolPublishVo;
 import com.platform.entity.CarpoolCar;
 import com.platform.entity.CarpoolUser;
 import com.platform.service.ApiCarpoolUserService;
 import com.platform.service.CarpoolCarService;
 import com.platform.util.ApiBaseAction;
-import com.platform.utils.DateUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,25 +33,40 @@ public class ApiCarpoolUserController  extends ApiBaseAction {
     private CarpoolCarService carpoolCarService;
 
     /**
+     * 拼车统计
+     * @param carpoolPublish
+     * @return
+     */
+    @RequestMapping("stat")
+    public Object statCarpoolTimes(CarpoolPublishVo carpoolPublish ) {
+        return toResponsSuccess(apiCarpoolUserService.statCarpoolTimes(carpoolPublish));
+    }
+
+    /**
      * 查找拼车用户信息
      * @return
      */
     @RequestMapping("queryUser")
-    public Object queryUser(@RequestBody CarpoolUser user ) {
+    public Object queryUser(CarpoolUser user ) {
         user.setDataStatus(CommonConstant.USEABLE_STATUS);
         CarpoolUser carpoolUser = apiCarpoolUserService.selectOne(user);
-        List<CarpoolCar> carpoolCarList = null;
-        if(null != carpoolUser){
-            CarpoolCar carpoolCar = new CarpoolCar();
-            carpoolCar.setUserId(carpoolUser.getId());
-            carpoolCarList = carpoolCarService.select(carpoolCar);
-        }
         Map<String, Object> resultObj = new HashMap();
         resultObj.put("userInfo",carpoolUser);
-        resultObj.put("carpoolCar",(carpoolCarList != null && carpoolCarList.size() > 0) ? carpoolCarList.get(0) : null);
         return toResponsSuccess(resultObj);
     }
 
+    /**
+     * 查找车辆信息
+     * @param car
+     * @return
+     */
+    @RequestMapping("carInfo")
+    public Object queryUserCar(CarpoolCar car ) {
+        CarpoolCar carpoolCar = carpoolCarService.selectOne(car);
+        Map<String, Object> resultObj = new HashMap();
+        resultObj.put("carpoolCar",carpoolCar);
+        return toResponsSuccess(resultObj);
+    }
 
     /**
      * 完善用户信息
@@ -67,27 +80,29 @@ public class ApiCarpoolUserController  extends ApiBaseAction {
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
         carpoolUser.setUpdateTime(new Date());
+        carpoolUser.setIsRealName(CommonConstant.AUTHED);
         apiCarpoolUserService.updateByPrimaryKeySelective(carpoolUser);
         return toResponsSuccess("保存成功");
     }
 
+    /**
+     * 车主认证
+     * @param carpoolCar
+     * @return
+     */
     @RequestMapping("completUserCar")
     public Object completUserCar(@RequestBody CarpoolCar carpoolCar) {
-
-        if(StringUtils.isNotBlank(carpoolCar.getExpirationTimeStr())){
-            Date  expirationTime = DateUtils.strToDate(carpoolCar.getExpirationTimeStr());
-            carpoolCar.setExpirationTime(expirationTime);
-        }
         if (null == carpoolCar.getId()){
             carpoolCarService.insertSelective(carpoolCar);
         }else {
-            if (carpoolCar.getIsCarowner() != null && carpoolCar.getIsCarowner().intValue() == 1){ //是车主
-                carpoolCarService.updateByPrimaryKeySelective(carpoolCar);
-            }else {//不是删除以前的信息
-                carpoolCarService.delete(carpoolCar);
-            }
-
+            carpoolCarService.updateByPrimaryKeySelective(carpoolCar);
         }
+        //修改用户为车主认证成功
+        CarpoolUser carpoolUser = new CarpoolUser();
+        carpoolUser.setUpdateTime(new Date());
+        carpoolUser.setIsAuth(CommonConstant.AUTHED);
+        apiCarpoolUserService.updateByPrimaryKeySelective(carpoolUser);
+
         return toResponsSuccess("保存成功");
     }
 

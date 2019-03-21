@@ -1,11 +1,10 @@
 package com.platform.entity;
 
-import org.apache.commons.lang.StringUtils;
-
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by zuimeideshiguang on 18/2/13.
@@ -17,21 +16,15 @@ public class CarpoolCar implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id; // '自增id',
-
-    private Integer userId; // '发布人id',
-    private Integer carType; // '车辆类型  1 轿车 2 SUV  3 出租车',
-    private Integer carColor; // '车辆颜色 1 白色 2 黑色 3 红色  4 银色  5 灰色  6蓝色 7 其他',
-    private String carNo; // '车牌号',
+    private Integer userId; // '用户id',
+    private String carType; // '车辆类型
+    private String color; // 车辆颜色
+    private String plateNumberPrefix; // '车牌号前缀',
+    private String plateNumber; // '车牌号',
     private String carBrand; //品牌
-    private String otherType; // 其他类型
-    private String otherColor; //其他颜色
-    private BigDecimal carPrice;//车辆价格
-    private Date expirationTime;//驾照到期时间
-
-    @Transient
-    private Integer  isCarowner;
-    @Transient
-    private String  expirationTimeStr;
+    private String driverLicense;//驾驶证
+    private String drivingLicense;//行驶证
+    private Integer seatNums; //车座位数
 
     public Integer getId() {
         return id;
@@ -49,28 +42,36 @@ public class CarpoolCar implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getCarType() {
+    public String getCarType() {
         return carType;
     }
 
-    public void setCarType(Integer carType) {
+    public void setCarType(String carType) {
         this.carType = carType;
     }
 
-    public Integer getCarColor() {
-        return carColor;
+    public String getColor() {
+        return color;
     }
 
-    public void setCarColor(Integer carColor) {
-        this.carColor = carColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public String getCarNo() {
-        return carNo;
+    public String getPlateNumberPrefix() {
+        return plateNumberPrefix;
     }
 
-    public void setCarNo(String carNo) {
-        this.carNo = StringUtils.trimToNull(carNo);
+    public void setPlateNumberPrefix(String plateNumberPrefix) {
+        this.plateNumberPrefix = plateNumberPrefix;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
     }
 
     public String getCarBrand() {
@@ -78,54 +79,30 @@ public class CarpoolCar implements Serializable {
     }
 
     public void setCarBrand(String carBrand) {
-        this.carBrand = StringUtils.trimToNull(carBrand);
+        this.carBrand = carBrand;
     }
 
-    public String getOtherType() {
-        return otherType;
+    public String getDriverLicense() {
+        return driverLicense;
     }
 
-    public void setOtherType(String otherType) {
-        this.otherType = otherType;
+    public void setDriverLicense(String driverLicense) {
+        this.driverLicense = driverLicense;
     }
 
-    public String getOtherColor() {
-        return otherColor;
+    public String getDrivingLicense() {
+        return drivingLicense;
     }
 
-    public void setOtherColor(String otherColor) {
-        this.otherColor = otherColor;
+    public void setDrivingLicense(String drivingLicense) {
+        this.drivingLicense = drivingLicense;
     }
 
-    public BigDecimal getCarPrice() {
-        return carPrice;
+    public Integer getSeatNums() {
+        return seatNums;
     }
 
-    public void setCarPrice(BigDecimal carPrice) {
-        this.carPrice = carPrice;
-    }
-
-    public Date getExpirationTime() {
-        return expirationTime;
-    }
-
-    public void setExpirationTime(Date expirationTime) {
-        this.expirationTime = expirationTime;
-    }
-
-    public Integer getIsCarowner() {
-        return isCarowner;
-    }
-
-    public void setIsCarowner(Integer isCarowner) {
-        this.isCarowner = isCarowner;
-    }
-
-    public String getExpirationTimeStr() {
-        return expirationTimeStr;
-    }
-
-    public void setExpirationTimeStr(String expirationTimeStr) {
-        this.expirationTimeStr = StringUtils.trimToNull(expirationTimeStr);
+    public void setSeatNums(Integer seatNums) {
+        this.seatNums = seatNums;
     }
 }

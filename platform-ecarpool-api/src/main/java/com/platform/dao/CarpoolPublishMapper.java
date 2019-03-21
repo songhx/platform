@@ -1,6 +1,7 @@
 package com.platform.dao;
 
 import com.platform.dto.CarpoolPublishVo;
+import com.platform.dto.StatCarpoolVo;
 import com.platform.entity.CarpoolPublish;
 import com.platform.service.IBasicSetMapper;
 
@@ -17,4 +18,11 @@ public interface CarpoolPublishMapper extends IBasicSetMapper<CarpoolPublish> {
      * @return
      */
     List<CarpoolPublish> selectTrips(CarpoolPublishVo carpoolPublish);
+
+    /**
+     * 统计用户拼车次数
+     * @param carpoolPublish
+     * @return
+     */
+    List<StatCarpoolVo> statCarpoolTimes(CarpoolPublishVo carpoolPublish);
 }

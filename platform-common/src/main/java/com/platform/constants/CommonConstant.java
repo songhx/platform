@@ -17,4 +17,9 @@ public class CommonConstant {
     public static final  int  GENDER_MAN = 0;
     //女
     public static final  int  GENDER_WOMAN = 1;
+
+    //未认证
+    public static final  int  NOT_AUTH = 0;
+    //已认证
+    public static final  int  AUTHED = 1;
 }

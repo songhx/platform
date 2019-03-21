@@ -43,9 +43,6 @@ public class CarPoolUtil {
         if (carpoolCar == null) return null;
         CarpoolCarVo carpoolCarVo = new CarpoolCarVo();
         carpoolCarVo.setCarBrand(carpoolCar.getCarBrand());
-        carpoolCarVo.setCarColor((carpoolCar.getCarColor() != 10) ? COLORMAP.get(carpoolCar.getCarColor() ) : carpoolCar.getOtherColor());
-        carpoolCarVo.setCarNo(carpoolCar.getCarNo());
-        carpoolCarVo.setCarType((carpoolCar.getCarType() != 5) ? CARTYPEMAP.get(carpoolCar.getCarType()) : carpoolCar.getOtherType());
         return  carpoolCarVo;
     }
 }

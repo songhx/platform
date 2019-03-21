@@ -92,16 +92,15 @@ public class ApiAuthController extends ApiBaseAction {
             carpoolUser.setNickName(userInfo.getNickName());
             carpoolUser.setUpdateTime(time);
             apiCarpoolUserService.insert(carpoolUser);
-            userInfo.setWxOpenid(openid);
-            userInfo.setUserId(Long.valueOf(String.valueOf(carpoolUser.getId())));
-        }else {
-            userInfo.setMobile(carpoolUser.getMobile());
-            userInfo.setUserId(Long.parseLong(String.valueOf(carpoolUser.getId())));
-            userInfo.setAvatarUrl(carpoolUser.getAvatar());
-            userInfo.setNickName(carpoolUser.getNickName());
-            userInfo.setWxOpenid(carpoolUser.getWxOpenid());
         }
 
+        userInfo.setMobile(carpoolUser.getMobile());
+        userInfo.setUserId(Long.parseLong(String.valueOf(carpoolUser.getId())));
+        userInfo.setAvatarUrl(carpoolUser.getAvatar());
+        userInfo.setNickName(carpoolUser.getNickName());
+        userInfo.setWxOpenid(carpoolUser.getWxOpenid());
+        userInfo.setIsAuth(carpoolUser.getIsAuth());
+        userInfo.setIsRealName(carpoolUser.getIsRealName());
         Map<String, Object> tokenMap = tokenService.createToken(carpoolUser.getId());
         String token = MapUtils.getString(tokenMap, "token");
 

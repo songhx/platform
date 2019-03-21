@@ -1,6 +1,9 @@
 package com.platform.service;
 
+import com.platform.dto.CarpoolPublishVo;
 import com.platform.entity.CarpoolUser;
+
+import java.util.Map;
 
 
 /**
@@ -11,4 +14,11 @@ import com.platform.entity.CarpoolUser;
  **/
 
 public interface ApiCarpoolUserService extends IBasicSetMapper<CarpoolUser> {
+
+    /**
+     * 统计拼车次数
+     * @param carpoolPublish
+     * @return
+     */
+    Map<String,Object> statCarpoolTimes(CarpoolPublishVo carpoolPublish);
 }

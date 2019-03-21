@@ -28,6 +28,11 @@ public class UserInfo implements Serializable {
 
     private String wxOpenid;
 
+    private Integer isCarowner; //是否是车主  0 否 1 是
+    private Integer isRealName; //是否实名 0 否 1 是
+    private Integer isAuth; //是否认证 0 否 1 是
+
+
     public Long getUserId() {
         return userId;
     }
@@ -90,5 +95,29 @@ public class UserInfo implements Serializable {
 
     public void setWxOpenid(String wxOpenid) {
         this.wxOpenid = wxOpenid;
+    }
+
+    public Integer getIsCarowner() {
+        return isCarowner;
+    }
+
+    public void setIsCarowner(Integer isCarowner) {
+        this.isCarowner = isCarowner;
+    }
+
+    public Integer getIsRealName() {
+        return isRealName;
+    }
+
+    public void setIsRealName(Integer isRealName) {
+        this.isRealName = isRealName;
+    }
+
+    public Integer getIsAuth() {
+        return isAuth;
+    }
+
+    public void setIsAuth(Integer isAuth) {
+        this.isAuth = isAuth;
     }
 }

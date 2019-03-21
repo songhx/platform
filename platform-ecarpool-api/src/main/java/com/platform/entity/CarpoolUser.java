@@ -33,7 +33,11 @@ public class CarpoolUser implements Serializable {
     private Date createTime; // '创建时间',
     private Date updateTime; // '更新时间',
     private Integer dataStatus; // '数据状态 0  正常  1 删除',
-    private Integer isCarowner; //是否是车主  0 否 1 是
+    private Integer isRealName; //是否实名 0 否 1 是
+    private Integer isAuth; //是否认证 0 否 1 是
+    private String idCardFace; // 身份证正面
+    private String idCardBack; // 身份证背面
+
 
 
     public Integer getId() {
@@ -140,11 +144,36 @@ public class CarpoolUser implements Serializable {
         this.dataStatus = dataStatus;
     }
 
-    public Integer getIsCarowner() {
-        return isCarowner;
+
+    public Integer getIsRealName() {
+        return isRealName;
     }
 
-    public void setIsCarowner(Integer isCarowner) {
-        this.isCarowner = isCarowner;
+    public void setIsRealName(Integer isRealName) {
+        this.isRealName = isRealName;
+    }
+
+    public Integer getIsAuth() {
+        return isAuth;
+    }
+
+    public void setIsAuth(Integer isAuth) {
+        this.isAuth = isAuth;
+    }
+
+    public String getIdCardFace() {
+        return idCardFace;
+    }
+
+    public void setIdCardFace(String idCardFace) {
+        this.idCardFace = idCardFace;
+    }
+
+    public String getIdCardBack() {
+        return idCardBack;
+    }
+
+    public void setIdCardBack(String idCardBack) {
+        this.idCardBack = idCardBack;
     }
 }
