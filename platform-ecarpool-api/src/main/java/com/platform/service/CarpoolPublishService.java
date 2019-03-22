@@ -28,4 +28,11 @@ public interface CarpoolPublishService extends IBasicSetMapper<CarpoolPublish> {
      * 处理行程和预约单状态
      */
     void dealPublishAndOrderStatus();
+
+    /**
+     * 最近拼车信息
+     * @param carpoolPublish
+     * @return
+     */
+    Map<String, Object> queryPublishLatests(CarpoolPublishVo carpoolPublish);
 }

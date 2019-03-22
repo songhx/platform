@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
-import com.platform.dto.CarpoolCarVo;
 import com.platform.dto.CarpoolPublishVo;
 import com.platform.entity.CarpoolCar;
 import com.platform.entity.CarpoolPublish;
@@ -14,7 +13,6 @@ import com.platform.service.ApiCarpoolUserService;
 import com.platform.service.CarpoolCarService;
 import com.platform.service.CarpoolPublishService;
 import com.platform.util.ApiBaseAction;
-import com.platform.util.CarPoolUtil;
 import com.platform.utils.DateUtils;
 import com.platform.utils.GEOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -62,6 +60,16 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
         }
         if (StringUtils.isNotBlank(carpoolPublish.getDepartureTimeStr())){carpoolPublish.setDepartureTime(DateUtils.strToDate(carpoolPublish.getDepartureTimeStr()));}
         return toResponsSuccess(carpoolPublishService.queryPublishListByPage(carpoolPublish));
+    }
+
+    /**
+     * 查询最近的发布
+     * @param carpoolPublish
+     * @return
+     */
+    @RequestMapping("latest")
+    public Object queryLatest(@RequestBody CarpoolPublishVo carpoolPublish) {
+        return toResponsSuccess(carpoolPublishService.queryPublishLatests(carpoolPublish));
     }
 
     /**
@@ -140,10 +148,8 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
             return  toResponsFail("用户在系统中不存在，请先登录！");
         }
         //字符串转时间
-        if (StringUtils.isNotBlank(carpoolPublish.getDepartureTimeStr())){carpoolPublish.setDepartureTime(DateUtils.strToDate(carpoolPublish.getDepartureTimeStr()));}
+        fillGEOInfo(carpoolPublish);
         Date time = new Date();
-        carpoolPublish.setStartPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
-        carpoolPublish.setDestinationGeo(GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));
         carpoolPublish.setCreateTime(time);
         carpoolPublish.setUpdateTime(time);
         fillCarInfo(carpoolPublish); // 填充车辆信息
@@ -151,6 +157,18 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
         carpoolPublishService.insertSelective(carpoolPublish);
 
         return toResponsSuccess("发布成功！");
+    }
+
+    //填充信息
+    private void fillGEOInfo(CarpoolPublishVo carpoolPublish) {
+        if (StringUtils.isNotBlank(carpoolPublish.getDepartureTimeStr())){
+            carpoolPublish.setDepartureTime(DateUtils.strToDate(carpoolPublish.getDepartureTimeStr()));
+        }
+        Date time = new Date();
+        carpoolPublish.setStartPointGeo(
+                GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
+        carpoolPublish.setDestinationGeo(
+                GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));
     }
 
     /**
@@ -164,12 +182,8 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
         if (null == carpoolPublish.getId()){
             return  toResponsFail("参数错误！");
         }
-        //字符串转时间
-        if (StringUtils.isNotBlank(carpoolPublish.getDepartureTimeStr())){carpoolPublish.setDepartureTime(DateUtils.strToDate(carpoolPublish.getDepartureTimeStr()));}
-
         Date time = new Date();
-        carpoolPublish.setStartPointGeo(GEOUtils.cateGeoCode(carpoolPublish.getStartPointLongitude(),carpoolPublish.getStartPointLatitude()));
-        carpoolPublish.setDestinationGeo(GEOUtils.cateGeoCode(carpoolPublish.getDestinationLongitude(),carpoolPublish.getDestinationLatitude()));
+        fillGEOInfo(carpoolPublish);
         carpoolPublish.setUpdateTime(time);
         fillCarInfo(carpoolPublish); // 填充车辆信息
 
@@ -196,20 +210,23 @@ public class ApiCarpoolPublishController extends ApiBaseAction {
 
     //填充车辆信息
     private void fillCarInfo(CarpoolPublish carpoolPublish){
-        CarpoolCarVo carpoolCarVo = null;
-        CarpoolCar cc =  new CarpoolCar();
-        cc.setUserId(carpoolPublish.getPublishUserId());
-        if (carpoolPublish.getCarId() != null) {cc.setId(carpoolPublish.getCarId());}
-        List<CarpoolCar> carpoolCarList = carpoolCarService.select(cc);
-        if (carpoolCarList != null && carpoolCarList.size() > 0){
-            carpoolCarVo = CarPoolUtil.getCarInfo(carpoolCarList.get(0));
+        if (null != carpoolPublish.getUserType() && carpoolPublish.getUserType().intValue() == 1){
+            CarpoolCar carpoolCar = null;
+            CarpoolCar cc =  new CarpoolCar();
+            cc.setUserId(carpoolPublish.getPublishUserId());
+            if (carpoolPublish.getCarId() != null) {cc.setId(carpoolPublish.getCarId());}
+            List<CarpoolCar> carpoolCarList = carpoolCarService.select(cc);
+            if (carpoolCarList != null && carpoolCarList.size() > 0){
+                carpoolCar = carpoolCarList.get(0);
+            }
+            if (null != carpoolCar){
+                carpoolPublish.setCarBrand(carpoolCar.getCarBrand());
+                carpoolPublish.setCarColor(carpoolCar.getColor());
+                carpoolPublish.setPlateNumberPrefix(carpoolCar.getPlateNumberPrefix());
+                carpoolPublish.setPlateNumber(carpoolCar.getPlateNumber());
+                carpoolPublish.setCarType(carpoolCar.getCarType());
+            }
         }
 
-        if (null != carpoolCarVo){
-            carpoolPublish.setCarBrand(carpoolCarVo.getCarBrand());
-            carpoolPublish.setCarColor(carpoolCarVo.getCarColor());
-            carpoolPublish.setCarNo(carpoolCarVo.getCarNo());
-            carpoolPublish.setCarType(carpoolCarVo.getCarType());
-        }
     }
 }

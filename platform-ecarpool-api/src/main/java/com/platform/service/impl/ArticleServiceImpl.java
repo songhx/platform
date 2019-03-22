@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
  * @author bjsonghongxu
  * @create 2019-03-18 19:23
  **/
-@Service
+@Service("iArticleService")
 public class ArticleServiceImpl  extends BasicSetServiceImpl<Article> implements IArticleService {
 }

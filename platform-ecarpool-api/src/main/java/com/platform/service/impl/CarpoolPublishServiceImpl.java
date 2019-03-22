@@ -1,6 +1,8 @@
 package com.platform.service.impl;
 
 import com.github.abel533.entity.Example;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
 import com.platform.constants.TemplateMessageConstant;
@@ -17,6 +19,7 @@ import com.platform.utils.DateUtils;
 import com.platform.utils.GEOUtils;
 import com.platform.utils.StringUtils;
 import com.platform.weixin.templateMessage.WechatTemplateMsg;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -158,6 +161,28 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
 
           }
         }
+    }
+
+    @Override
+    public Map<String, Object> queryPublishLatests(CarpoolPublishVo carpoolPublish) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("carpoolPublish", queryCarpoolPublishInfos(carpoolPublish,CommonConstant.CAR_SEARCH_PERSON));
+        map.put("carpoolSubscribe",queryCarpoolPublishInfos(carpoolPublish,CommonConstant.PERSON_SEARCH_CAR));
+        return map;
+    }
+
+    private CarpoolPublish queryCarpoolPublishInfos(CarpoolPublishVo carpoolPublish, int type) {
+        PageHelper.startPage(1,1, true, false); //设置分页
+        Example example = new Example(CarpoolPublish.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("dataStatus", CommonConstant.USEABLE_STATUS);
+        criteria.andEqualTo("publishUserId",carpoolPublish.getPublishUserId());
+        criteria.andEqualTo("userType",type);
+        example.setOrderByClause(" createTime DESC"); ///创建时间倒叙输出
+        List<CarpoolPublish> list = carpoolPublishMapper.selectByExample(example);
+        PageInfo<CarpoolPublish> pageInfo = new PageInfo<>(list);
+        List<CarpoolPublish> publishList = pageInfo.getList();
+        return CollectionUtils.isNotEmpty(publishList) ? publishList.get(0) : null;
     }
 
 

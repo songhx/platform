@@ -184,7 +184,8 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
                 if (carpoolOrder.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ){
                     list.add(WechatTemplateMsg.item(StringUtils.NullToString(carpoolUser.getNickName(),"--"), "#000000")); //司机姓名
                     list.add(WechatTemplateMsg.item(StringUtils.NullToString(carpoolUser.getMobile(),"--"), "#000000"));//司机电话
-                    list.add(WechatTemplateMsg.item(StringUtils.NullToString(publish.getCarNo(),"--"), "#000000"));//车牌号码
+                    list.add(WechatTemplateMsg.item(StringUtils.NullToString(publish.getPlateNumberPrefix() + publish.getPlateNumber(),
+                            "--"), "#000000"));//车牌号码
                     list.add(WechatTemplateMsg.item(DateUtils.format(carpoolOrder.getDepartureTime(),DateUtils.DATE_TIME_PATTERN), "#000000"));//出发时间
                     list.add(WechatTemplateMsg.item(String.valueOf(carpoolOrder.getStartPoint()), "#000000"));//出发地点
                 }else{
@@ -349,8 +350,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
                     cuv.setByWays(carpoolPublish.getByWays());
                     cuv.setCarBrand(carpoolPublish.getCarBrand());
                     cuv.setCarColor(carpoolPublish.getCarColor());
-                    cuv.setCarNo(carpoolPublish.getCarNo());
-                    cuv.setCarbaseInfo(carpoolPublish.getCarbaseInfo());
+                    cuv.setCarNo(carpoolPublish.getPlateNumberPrefix() + carpoolPublish.getPlateNumber());
                     cuv.setCarType(carpoolPublish.getCarType());
                     cuv.setPublishBake(carpoolPublish.getBake());
                 }

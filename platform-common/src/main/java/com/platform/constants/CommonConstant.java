@@ -22,4 +22,9 @@ public class CommonConstant {
     public static final  int  NOT_AUTH = 0;
     //已认证
     public static final  int  AUTHED = 1;
+
+    //人找车
+    public static final  int  PERSON_SEARCH_CAR = 0;
+    //车找人
+    public static final  int  CAR_SEARCH_PERSON = 1;
 }

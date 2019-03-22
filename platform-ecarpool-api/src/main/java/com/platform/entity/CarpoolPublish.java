@@ -1,6 +1,5 @@
 package com.platform.entity;
 
-import com.platform.util.CarPoolUtil;
 import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
@@ -21,6 +20,7 @@ public class CarpoolPublish implements Serializable {
 
     private Integer publishUserId; // '发布人id',
     private Integer userType; // '用户类型  0 乘客 1司机',
+    private Integer type; // 拼车类型
     private String mobile; // '联系电话',
     private BigDecimal price;
     private String startPoint; // '具体的出发地点',
@@ -37,16 +37,19 @@ public class CarpoolPublish implements Serializable {
     private Integer backDate; // '返程日期',
     private String backTime; // '返程时分（精确到分钟）',
     private Integer passengerNum; // '乘客人数',
-    private String carType; // '车辆类型  1 轿车 2 SUV  3 出租车',
-    private String carColor; // '车辆颜色 1 白色 2 黑色 3 红色  4 银色  5 灰色  6蓝色 7 其他',
-    private String carNo; // '车牌号',
-    private String carBrand; //品牌
     private Integer status; // '拼车信息状态 0 发布中  1 完成  2 取消  3 过期',
     private String cancelReason;//取消原因
     private String bake; // '备注信息',
     private Date createTime; // '创建时间',
     private Date updateTime; // '更新时间',
     private Integer dataStatus; // '数据状态 0  正常  1 删除',
+
+    /************车辆信息*****************/
+    private String carType; // '车辆类型
+    private String plateNumberPrefix; // '车牌号前缀',
+    private String plateNumber; // '车牌号',
+    private String carColor; // '车辆颜色
+    private String carBrand; //品牌
 
 
     @Transient
@@ -61,8 +64,7 @@ public class CarpoolPublish implements Serializable {
     @Transient
     private String avatar; // '头像地址',
 
-    @Transient
-    private String carbaseInfo;
+
 
     public Integer getId() {
         return id;
@@ -70,6 +72,14 @@ public class CarpoolPublish implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getPublishUserId() {
@@ -240,14 +250,6 @@ public class CarpoolPublish implements Serializable {
         this.carBrand = carBrand;
     }
 
-    public String getCarNo() {
-        return carNo;
-    }
-
-    public void setCarNo(String carNo) {
-        this.carNo = carNo;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -329,10 +331,19 @@ public class CarpoolPublish implements Serializable {
         this.cancelReason = cancelReason;
     }
 
-    public String getCarbaseInfo() {
-        return this.carNo + "-" + this.carColor + "-" + this.carBrand + "(" +this.carType+")";
+    public String getPlateNumberPrefix() {
+        return plateNumberPrefix;
     }
 
-    public void setCarbaseInfo(String carbaseInfo) {
-        this.carbaseInfo = carbaseInfo;}
+    public void setPlateNumberPrefix(String plateNumberPrefix) {
+        this.plateNumberPrefix = plateNumberPrefix;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
 }

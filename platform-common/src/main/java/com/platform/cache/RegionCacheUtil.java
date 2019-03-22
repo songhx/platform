@@ -6,7 +6,6 @@ import com.platform.utils.SpringContextUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public class RegionCacheUtil implements InitializingBean {
     public static void init() {
         SysRegionDao regionDao = SpringContextUtils.getBean(SysRegionDao.class);
         if (null != regionDao) {
-            sysRegionEntityList = regionDao.queryList(new HashMap<String, Object>());
+           // sysRegionEntityList = regionDao.queryList(new HashMap<String, Object>());
         }
     }
 

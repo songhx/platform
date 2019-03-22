@@ -29,6 +29,9 @@
         <if test="status != null">
             AND p.`status` =  #{status}
         </if>
+        <if test="type != null">
+            AND p.type =  #{type}
+        </if>
         <if test="userType != null">
             AND p.user_type =  #{userType}
         </if>
