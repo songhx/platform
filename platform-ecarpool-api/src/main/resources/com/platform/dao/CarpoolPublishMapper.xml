@@ -20,7 +20,11 @@
             p.passenger_num AS passengerNum,
             p.create_time AS createTime,
             p.update_time AS updateTime,
-            u.nick_name AS userName
+            p.car_brand AS carBrand,
+            p.car_color AS carColor,
+            p.car_type AS carType,
+            u.nick_name AS userName,
+            u.avatar AS  avatar
         FROM carpool_publish AS p , carpool_user AS u
         WHERE
         p.publish_user_id = u.id
