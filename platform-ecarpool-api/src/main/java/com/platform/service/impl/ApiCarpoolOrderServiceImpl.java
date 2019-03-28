@@ -350,7 +350,8 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
                     cuv.setByWays(carpoolPublish.getByWays());
                     cuv.setCarBrand(carpoolPublish.getCarBrand());
                     cuv.setCarColor(carpoolPublish.getCarColor());
-                    cuv.setCarNo(carpoolPublish.getPlateNumberPrefix() + carpoolPublish.getPlateNumber());
+                    cuv.setPlateNumberPrefix(carpoolPublish.getPlateNumberPrefix());
+                    cuv.setPlateNumber(carpoolPublish.getPlateNumber());
                     cuv.setCarType(carpoolPublish.getCarType());
                     cuv.setPublishBake(carpoolPublish.getBake());
                 }

@@ -1,8 +1,6 @@
 package com.platform.cache;
 
-import com.platform.dao.SysRegionDao;
 import com.platform.entity.SysRegionEntity;
-import com.platform.utils.SpringContextUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.util.ArrayList;
@@ -17,10 +15,10 @@ public class RegionCacheUtil implements InitializingBean {
     public static List<SysRegionEntity> sysRegionEntityList;
 
     public static void init() {
-        SysRegionDao regionDao = SpringContextUtils.getBean(SysRegionDao.class);
-        if (null != regionDao) {
-           // sysRegionEntityList = regionDao.queryList(new HashMap<String, Object>());
-        }
+        //SysRegionDao regionDao = SpringContextUtils.getBean(SysRegionDao.class);
+//        if (null != regionDao) {
+//           // sysRegionEntityList = regionDao.queryList(new HashMap<String, Object>());
+//        }
     }
 
     /**

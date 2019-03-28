@@ -30,11 +30,11 @@ public class CarpoolUserOrderVo implements Serializable {
     private String cancelReason;//取消原因
     private String orderBake; // '备注信息',
     private String publishBake; // '备注信息',
-    private String carType; // '车辆类型  1 轿车 2 SUV  3 出租车',
-    private String carColor; // '车辆颜色 1 白色 2 黑色 3 红色  4 银色  5 灰色  6蓝色 7 其他',
-    private String carNo; // '车牌号',
+    private String carType; // '车辆类型
+    private String carColor; // '车辆颜色
+    private String plateNumberPrefix; // '车牌号前缀',
+    private String plateNumber; // '车牌号',
     private String carBrand; //品牌
-    private String carbaseInfo;
     private Integer userType; // '用户类型  0 乘客 1司机',
 
 
@@ -214,13 +214,6 @@ public class CarpoolUserOrderVo implements Serializable {
         this.carColor = carColor;
     }
 
-    public String getCarNo() {
-        return carNo;
-    }
-
-    public void setCarNo(String carNo) {
-        this.carNo = carNo;
-    }
 
     public String getCarBrand() {
         return carBrand;
@@ -238,13 +231,6 @@ public class CarpoolUserOrderVo implements Serializable {
         this.price = price;
     }
 
-    public String getCarbaseInfo() {
-        return carbaseInfo;
-    }
-
-    public void setCarbaseInfo(String carbaseInfo) {
-        this.carbaseInfo = carbaseInfo;
-    }
 
     public Integer getUserType() {
         return userType;
@@ -252,5 +238,21 @@ public class CarpoolUserOrderVo implements Serializable {
 
     public void setUserType(Integer userType) {
         this.userType = userType;
+    }
+
+    public String getPlateNumberPrefix() {
+        return plateNumberPrefix;
+    }
+
+    public void setPlateNumberPrefix(String plateNumberPrefix) {
+        this.plateNumberPrefix = plateNumberPrefix;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
     }
 }
