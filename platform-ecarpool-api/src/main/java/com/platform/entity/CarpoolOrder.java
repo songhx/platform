@@ -1,5 +1,6 @@
 package com.platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.GeneratedValue;

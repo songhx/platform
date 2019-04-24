@@ -91,26 +91,18 @@ public class ApiAuthController extends ApiBaseAction {
             carpoolUser.setCreateTime(time);
             carpoolUser.setNickName(userInfo.getNickName());
             carpoolUser.setUpdateTime(time);
-            apiCarpoolUserService.insert(carpoolUser);
+            apiCarpoolUserService.insertSelective(carpoolUser);
         }
 
-        userInfo.setMobile(carpoolUser.getMobile());
-        userInfo.setUserId(Long.parseLong(String.valueOf(carpoolUser.getId())));
-        userInfo.setAvatarUrl(carpoolUser.getAvatar());
-        userInfo.setNickName(carpoolUser.getNickName());
-        userInfo.setWxOpenid(carpoolUser.getWxOpenid());
-        userInfo.setIsAuth(carpoolUser.getIsAuth());
-        userInfo.setIsRealName(carpoolUser.getIsRealName());
         Map<String, Object> tokenMap = tokenService.createToken(carpoolUser.getId());
         String token = MapUtils.getString(tokenMap, "token");
 
         if (StringUtils.isNullOrEmpty(token)) {
             return toResponsFail("登录失败");
         }
-
         resultObj.put("wxOpendId",code);
         resultObj.put("token", token);
-        resultObj.put("userInfo", userInfo);
+        resultObj.put("userInfo", carpoolUser);
         resultObj.put("userId", carpoolUser.getId());
         return toResponsSuccess(resultObj);
     }

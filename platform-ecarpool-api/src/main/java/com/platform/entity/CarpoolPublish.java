@@ -1,5 +1,6 @@
 package com.platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ public class CarpoolPublish implements Serializable {
     private String destinationGeo; // '终点GEO编码',
     private String byWays; // '途经地方',
     private Integer schedule; // '车程安排  0 单程 1 往返',
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     private Date departureTime; // '出发时间',
     private Integer backDate; // '返程日期',
     private String backTime; // '返程时分（精确到分钟）',
@@ -40,7 +42,9 @@ public class CarpoolPublish implements Serializable {
     private Integer status; // '拼车信息状态 0 发布中  1 完成  2 取消  3 过期',
     private String cancelReason;//取消原因
     private String bake; // '备注信息',
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime; // '创建时间',
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime; // '更新时间',
     private Integer dataStatus; // '数据状态 0  正常  1 删除',
 

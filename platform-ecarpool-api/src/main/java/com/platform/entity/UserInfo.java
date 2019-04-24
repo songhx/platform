@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class UserInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long userId;
+    private Long id;
 
     //
     private String avatarUrl;
@@ -33,12 +33,12 @@ public class UserInfo implements Serializable {
     private Integer isAuth; //是否认证 0 否 1 是
 
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAvatarUrl() {
