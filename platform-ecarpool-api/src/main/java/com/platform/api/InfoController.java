@@ -8,7 +8,6 @@ import com.platform.dto.InfoVo;
 import com.platform.entity.ScInfo;
 import com.platform.service.IInfoService;
 import com.platform.util.ApiBaseAction;
-import com.platform.util.CommonUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +89,7 @@ public class InfoController extends ApiBaseAction {
         logger.debug("进入publish消息 ： 参数为 ： " + scInfo.toString());
         if (StringUtils.isBlank(scInfo.getAvatar())) {return toResponsFail("发布失败，用户信息不完整");}
         try {
-            scInfo.setAgreeNum(CommonUtil.getRamdomNum(10));
+            //scInfo.setAgreeNum(CommonUtil.getRamdomNum(10));
             scInfo.setCreateTime(new Date());
             scInfo.setDataStatus(CommonConstant.USEABLE_STATUS);
             iInfoService.insertSelective(scInfo);
