@@ -240,7 +240,7 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             if (rs > 0 && status.intValue() == CarpoolConstant.ORDER_SUCCESS_STATUS ){
                 //String page =   "pages/user/records/carpoolRecord";
                 String page =  "pages/user/orders/orderDetail?id="+order.getId() + "&formType=0";
-                sendTemplateMsg(cpr.getPublishUserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,page, confirmOrRefuseMsgData(order));
+                sendTemplateMsg(cpr.getPublishUserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,page, cancelMsgData(order));
             }
         }
 
