@@ -1,12 +1,11 @@
 package com.platform.thread;
 
-import javax.servlet.http.HttpServlet;
-
-
 import com.platform.utils.WeixinUtil;
 import com.platform.weixin.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServlet;
 
 /**
  * Servlet implementation class TokenThread
@@ -16,7 +15,7 @@ public class TokenThread extends HttpServlet implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(TokenThread.class);
 
-	private  static final  int  SLEEP_TIME = 60 * 1000; //60秒
+	private  static final  int  SLEEP_TIME = 60 * 1000 * 60 * 60 * 2; //两个小时
 	// 第三方用户唯一凭证
 	public static String appid = "";
 	// 第三方用户唯一凭证密钥

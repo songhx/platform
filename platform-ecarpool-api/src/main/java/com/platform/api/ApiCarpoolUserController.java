@@ -99,6 +99,7 @@ public class ApiCarpoolUserController  extends ApiBaseAction {
         }
         //修改用户为车主认证成功
         CarpoolUser carpoolUser = new CarpoolUser();
+        carpoolUser.setId(carpoolCar.getUserId());
         carpoolUser.setUpdateTime(new Date());
         carpoolUser.setIsAuth(CommonConstant.AUTHED);
         apiCarpoolUserService.updateByPrimaryKeySelective(carpoolUser);

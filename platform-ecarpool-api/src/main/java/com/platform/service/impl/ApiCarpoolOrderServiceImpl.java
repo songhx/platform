@@ -2,7 +2,6 @@ package com.platform.service.impl;
 
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
-import com.platform.constants.TemplateMessageConstant;
 import com.platform.dao.CarpoolOrderMapper;
 import com.platform.dao.CarpoolPublishMapper;
 import com.platform.dao.CarpoolUserMapper;
@@ -88,11 +87,11 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
          * 给发布人发送拼车请求消息
          */
         //String tmplId = TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID;
-        String tmplId = publish.getUserType().intValue() == 1 ? TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID : TemplateMessageConstant.CARPOOL_DRIVER_REQUEST_TMPL_ID; // 模板消息id
-        String page =  "pages/user/orders/orderDetail?id="+carpoolOrder.getId() + "&formType=0";
-
-
-        sendTemplateMsg(publish.getPublishUserId() , tmplId,page, createMsgData(carpoolOrder));
+//        String tmplId = publish.getUserType().intValue() == 1 ? TemplateMessageConstant.CARPOOL_REQUEST_TMPL_ID : TemplateMessageConstant.CARPOOL_DRIVER_REQUEST_TMPL_ID; // 模板消息id
+//        String page =  "pages/user/orders/orderDetail?id="+carpoolOrder.getId() + "&formType=0";
+//
+//
+//        sendTemplateMsg(publish.getPublishUserId() , tmplId,page, createMsgData(carpoolOrder));
     }
 
     ///预约消息封装
@@ -160,10 +159,10 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
                 carpoolPublishMapper.updateByPrimaryKeySelective(carpoolPublish);
             }
         }
-        String tmplId = (order.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ? TemplateMessageConstant.CARPOOL_SUCCESS_TMPL_ID : TemplateMessageConstant.CARPOOL_FAIL_TMPL_ID);
-        String page =   "pages/user/orders/orderDetail?id="+order.getId() + "&formType=1"; //"pages/user/orders/orders";
-
-        sendTemplateMsg(order.getOrderUserId() ,tmplId,page, confirmOrRefuseMsgData(order));
+//        String tmplId = (order.getStatus().intValue() == CarpoolConstant.FINISHED_STATUS ? TemplateMessageConstant.CARPOOL_SUCCESS_TMPL_ID : TemplateMessageConstant.CARPOOL_FAIL_TMPL_ID);
+//        String page =   "pages/user/orders/orderDetail?id="+order.getId() + "&formType=1"; //"pages/user/orders/orders";
+//
+//        sendTemplateMsg(order.getOrderUserId() ,tmplId,page, confirmOrRefuseMsgData(order));
     }
 
 
@@ -237,11 +236,11 @@ public class ApiCarpoolOrderServiceImpl extends BasicSetServiceImpl<CarpoolOrder
             }
 
             ///预约成功的单子需要给对方发消息
-            if (rs > 0 && status.intValue() == CarpoolConstant.ORDER_SUCCESS_STATUS ){
-                //String page =   "pages/user/records/carpoolRecord";
-                String page =  "pages/user/orders/orderDetail?id="+order.getId() + "&formType=0";
-                sendTemplateMsg(cpr.getPublishUserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,page, cancelMsgData(order));
-            }
+//            if (rs > 0 && status.intValue() == CarpoolConstant.ORDER_SUCCESS_STATUS ){
+//                //String page =   "pages/user/records/carpoolRecord";
+//                String page =  "pages/user/orders/orderDetail?id="+order.getId() + "&formType=0";
+//                sendTemplateMsg(cpr.getPublishUserId() ,TemplateMessageConstant.CARPOOL_ORDER_CANCEL_TMPL_ID,page, cancelMsgData(order));
+//            }
         }
 
 

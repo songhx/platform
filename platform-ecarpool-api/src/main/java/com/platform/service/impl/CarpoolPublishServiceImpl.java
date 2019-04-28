@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.platform.constants.CarpoolConstant;
 import com.platform.constants.CommonConstant;
-import com.platform.constants.TemplateMessageConstant;
 import com.platform.dao.CarpoolOrderMapper;
 import com.platform.dao.CarpoolPublishMapper;
 import com.platform.dao.CarpoolUserMapper;
@@ -94,8 +93,8 @@ public class CarpoolPublishServiceImpl extends BasicSetServiceImpl<CarpoolPublis
                     order.setStatus(CarpoolConstant.ORDER_CANCEL_STATUS);
                     order.setCancelReason("很抱歉因行程取消,预约被取消");
                     carpoolOrderMapper.updateByPrimaryKeySelective(order);
-                    String page =  "pages/user/orders/orderDetail?id="+carpoolOrder.getId() + "&formType=1";
-                    apiCarpoolOrderService.sendTemplateMsg(carpoolOrder.getOrderUserId(), TemplateMessageConstant.CARPOOL_PUBLISH_CANCEL_TMPL_ID,page,cancelMsgData(carpoolPublish,carpoolOrder));
+//                    String page =  "pages/user/orders/orderDetail?id="+carpoolOrder.getId() + "&formType=1";
+//                    apiCarpoolOrderService.sendTemplateMsg(carpoolOrder.getOrderUserId(), TemplateMessageConstant.CARPOOL_PUBLISH_CANCEL_TMPL_ID,page,cancelMsgData(carpoolPublish,carpoolOrder));
                 }
             }
 
